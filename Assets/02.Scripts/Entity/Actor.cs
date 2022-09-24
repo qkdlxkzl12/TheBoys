@@ -8,7 +8,7 @@ public class Actor : MonoBehaviour
     protected int hp;
     protected int attackDamage;
     protected int moveSpeed;
-    protected int attackDelay;
+    protected float attackDelay;
     public Actor()
     {
         this.hp = 1;
@@ -16,7 +16,7 @@ public class Actor : MonoBehaviour
         this.moveSpeed = 1;
         this.attackDelay = 1;
     }
-    public Actor(int hp, int attackDamage, int moveSpeed, int attackDelay)
+    public Actor(int hp, int attackDamage, int moveSpeed, float attackDelay)
     {
         this.hp = hp;
         this.attackDamage = attackDamage;
