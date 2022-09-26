@@ -10,10 +10,13 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public Action<GameObject> speicalAvility;
+
     [SerializeField]
     List<GameObject> L_enemyBullets;
+
     [SerializeField]
     GameObject Test1;
+
     private void Awake()
     {
         if(instance == null)
@@ -25,6 +28,7 @@ public class GameManager : MonoBehaviour
             Destroy(this);
         }
     }
+
     void Start()
     {
     }
