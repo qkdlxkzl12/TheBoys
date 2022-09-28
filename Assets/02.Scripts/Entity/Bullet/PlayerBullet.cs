@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBullet : Actor
+public class PlayerBullet : MonoBehaviour
 {
     [SerializeField]
     Element element;
@@ -20,11 +20,6 @@ public class EnemyBullet : Actor
     // Update is called once per frame
     void Update()
     {
-        //Test. 속성에 따른 맞는 매소드 전달
-        if (element == Element.Fire)
-            GameManager.instance.speicalAvility = TestAvility1;
-        else if(element == Element.Thunder)
-            GameManager.instance.speicalAvility = TestAvility2;
     }
 
     public void Init(Element element)
