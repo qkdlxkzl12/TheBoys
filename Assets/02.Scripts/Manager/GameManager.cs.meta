@@ -3,7 +3,8 @@ guid: 3e9f177ec9ac05b4284ea610562c358b
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - eBulletPrefab: {fileID: 2231771597775695767, guid: fb3cc611a3a7a014c99b433f00898f51, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
