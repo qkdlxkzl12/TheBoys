@@ -5,35 +5,35 @@ using System;
 
 public class Actor : MonoBehaviour
 {
-    protected int hp;
-    protected int attackDamage;
-    protected int moveSpeed;
-    protected float attackDelay;
+    protected int hp_;
+    protected int attackDamage_;
+    protected int moveSpeed_;
+    protected float attackDelay_;
 
     public Actor()
     {
-        this.hp = 1;
-        this.attackDamage = 1;
-        this.moveSpeed = 1;
-        this.attackDelay = 1;
+        hp_ = 1;
+        attackDamage_ = 1;
+        moveSpeed_ = 1;
+        attackDelay_ = 1;
     }
 
     public Actor(int hp, int attackDamage, int moveSpeed, float attackDelay)
     {
-        this.hp = hp;
-        this.attackDamage = attackDamage;
-        this.moveSpeed = moveSpeed;
-        this.attackDelay = attackDelay;
+        hp_ = hp;
+        attackDamage_ = attackDamage;
+        moveSpeed_ = moveSpeed;
+        attackDelay_ = attackDelay;
     }
 
     //대상을 공격함
     public void AttackTo(GameObject targetObj)
     {
-        Actor target = targetObj.GetComponent<Actor>();
-        if (target != null)
+        Actor target_ = targetObj.GetComponent<Actor>();
+        if (target_ != null)
         {
             this.OnAttack();
-            target.GetAttack(null);
+            target_.GetAttack(null);
         }
         else
         {
@@ -55,10 +55,10 @@ public class Actor : MonoBehaviour
     }
 
     //데미지를 받음
-    public void Damaged(int value_)
+    protected void Damaged(int value)
     {
-        hp -= value_;
-        if(hp <= 0)
+        hp_ -= value;
+        if(hp_ <= 0)
         {
             OnDie();
         }

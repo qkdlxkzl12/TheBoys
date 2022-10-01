@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 public enum Element { Iron, Thunder, Battery, Fire, Snowball } //은, 번개, 배터리, 화염, 눈덩이
-public enum BulletType { STRAIGHT, ROUND, TRACKING, } //일자, 변형, 반유도, 
+public enum BulletType { Straight, Round, Tracking, } //일자, 변형, 반유도, 
 
 public class GameManager : MonoBehaviour
 {
@@ -12,7 +12,8 @@ public class GameManager : MonoBehaviour
 
     public Action<GameObject> speicalAvility;
     public GameObject target { get; set; }
-    GameObject player;
+    public GameObject player;
+
     private void Awake()
     {
         if (instance == null)
@@ -54,9 +55,9 @@ public class GameManager : MonoBehaviour
 
 public static class GameManagerExtensions
 { 
-    public static Vector3 ToVec3(this Vector2 vec2)
+    public static Vector3 ToVec3(this Vector2 vec2, float z = 0)
     {
-        return new Vector3(vec2.x, vec2.y, 0);
+        return new Vector3(vec2.x, vec2.y, z);
     }
     public static Vector2 ToVec3(this Vector3 vec3)
     {

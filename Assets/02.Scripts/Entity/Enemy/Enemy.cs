@@ -20,6 +20,6 @@ public class Enemy : Actor
 
     IEnumerator Attack()
     {
-        yield return new WaitForSeconds(attackDelay);
+        yield return new WaitForSeconds(1);
     }
 }

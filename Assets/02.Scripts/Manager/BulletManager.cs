@@ -7,12 +7,12 @@ public class BulletManager : MonoBehaviour
     public static BulletManager instace;
 
     [SerializeField]
-    GameObject eBulletPrefab;
-    int poolEbulletCnt = 100;
+    GameObject eBulletPrefab_;
+    int poolEbulletCnt_ = 100;
     [HideInInspector]
-    public static List<GameObject> l_enemyBullets = new List<GameObject>();
+    public List<EnemyBullet> enemyBullets = new List<EnemyBullet>();
     [HideInInspector]
-    public static List<GameObject> l_playerBullets = new List<GameObject>();
+    public List<PlayerBullet> playerBullets = new List<PlayerBullet>();
     private void Awake()
     {
         if(instace == null)
@@ -25,44 +25,45 @@ public class BulletManager : MonoBehaviour
     {
         Init();
     }
-    void Init()
+    public void Init()
     {
-        for (int i = 0; i < poolEbulletCnt; i++)
+        for (int i = 0; i < poolEbulletCnt_; i++)
         {
-            var eBullet = Instantiate(eBulletPrefab);
-            l_enemyBullets.Add(eBullet);
-            eBullet.SetActive(false);
+            var Bullet = Instantiate(eBulletPrefab_);
+            enemyBullets.Add(Bullet.GetComponent<EnemyBullet>());
+            Bullet.SetActive(false);
         }
     }
+
     public void SpawnBulletType1(Vector3 spawnPos, Vector2 moveDir, int moveSpeed)
     {
         Bullet bullet = SelectBullet().GetComponent<Bullet>();
-        bullet.InitState(spawnPos, BulletType.STRAIGHT, moveDir, moveSpeed);
+        bullet.InitState(spawnPos, BulletType.Straight, moveDir, moveSpeed);
     }
     public void SpawnBulletType2(Vector3 spawnPos, int moveSpeed)
     {
         Bullet bullet = SelectBullet().GetComponent<Bullet>();
         Vector3 targetDir = GameManager.instance.target.transform.position - spawnPos;
         targetDir.Normalize();
-        bullet.InitState(spawnPos, BulletType.STRAIGHT, targetDir, moveSpeed);
+        bullet.InitState(spawnPos, BulletType.Straight, targetDir, moveSpeed);
     }
 
     public void SpawnBulletType3(Vector3 spawnPos, Vector2 moveDir,int moveSpeed, float chageAmount)
     {
         Bullet bullet = SelectBullet().GetComponent<Bullet>();
-        bullet.InitState(spawnPos, BulletType.ROUND, moveDir, moveSpeed, chageAmount);
+        bullet.InitState(spawnPos, BulletType.Round, moveDir, moveSpeed, chageAmount);
     }
 
-    GameObject SelectBullet()
+    public EnemyBullet SelectBullet()
     {
-        foreach(GameObject bullet in l_enemyBullets)
+        foreach(EnemyBullet bullet in enemyBullets)
         {
-            if (!bullet.activeSelf)
+            if (!bullet.gameObject.activeSelf)
                 return bullet;
         }
-        var eBullet = Instantiate(eBulletPrefab);
-        l_enemyBullets.Add(eBullet);
-        eBullet.SetActive(false);
-        return eBullet;
+        var Bullet = Instantiate(eBulletPrefab_).GetComponent<EnemyBullet>();
+        enemyBullets.Add(Bullet);
+        Bullet.gameObject.SetActive(false);
+        return Bullet;
     }
 }

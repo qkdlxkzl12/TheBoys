@@ -15,22 +15,22 @@ public class PlayerMovement : Actor
         //이동 제어
         if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) )
         {
-            Player.transform.Translate(0, (moveSpeed * SpeedPower) * Time.deltaTime, 0);
+            Player.transform.Translate(0, (moveSpeed_ * SpeedPower) * Time.deltaTime, 0);
         }
 
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
-            Player.transform.Translate(-(moveSpeed * SpeedPower) * Time.deltaTime, 0, 0);
+            Player.transform.Translate(-(moveSpeed_ * SpeedPower) * Time.deltaTime, 0, 0);
         }
 
         if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
-            Player.transform.Translate(0, -(moveSpeed * SpeedPower) * Time.deltaTime, 0);
+            Player.transform.Translate(0, -(moveSpeed_ * SpeedPower) * Time.deltaTime, 0);
         }
 
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
-            Player.transform.Translate((moveSpeed * SpeedPower) * Time.deltaTime, 0, 0);
+            Player.transform.Translate((moveSpeed_ * SpeedPower) * Time.deltaTime, 0, 0);
         }
 
     }
