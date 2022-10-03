@@ -5,25 +5,25 @@ using System;
 
 public class Actor : MonoBehaviour
 {
-    protected int hp_;
-    protected int attackDamage_;
-    protected int moveSpeed_;
-    protected float attackDelay_;
+    protected int hp;
+    protected int attackDamage;
+    protected int moveSpeed;
+    protected float attackDelay;
 
     public Actor()
     {
-        hp_ = 1;
-        attackDamage_ = 1;
-        moveSpeed_ = 1;
-        attackDelay_ = 1;
+        hp = 1;
+        attackDamage = 1;
+        moveSpeed = 1;
+        attackDelay = 1;
     }
 
     public Actor(int hp, int attackDamage, int moveSpeed, float attackDelay)
     {
-        hp_ = hp;
-        attackDamage_ = attackDamage;
-        moveSpeed_ = moveSpeed;
-        attackDelay_ = attackDelay;
+        this.hp = hp;
+        this.attackDamage = attackDamage;
+        this.moveSpeed = moveSpeed;
+        this.attackDelay = attackDelay;
     }
 
     //대상을 공격함
@@ -57,8 +57,8 @@ public class Actor : MonoBehaviour
     //데미지를 받음
     protected void Damaged(int value)
     {
-        hp_ -= value;
-        if(hp_ <= 0)
+        hp -= value;
+        if(hp <= 0)
         {
             OnDie();
         }

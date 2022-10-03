@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 public enum Element { Iron, Thunder, Battery, Fire, Snowball } //은, 번개, 배터리, 화염, 눈덩이
-public enum BulletType { Straight, Round, Tracking, } //일자, 변형, 반유도, 
+public enum BulletType { Straight, Target, Round, Tracking, } //일자, 변형, 반유도, 
 
 public class GameManager : MonoBehaviour
 {
@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 
     public Action<GameObject> speicalAvility;
     public GameObject target { get; set; }
-    public GameObject player;
+    public GameObject player { get; set; }
 
     private void Awake()
     {
@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
+        Test();
     }
 
     void Update()
@@ -38,37 +39,40 @@ public class GameManager : MonoBehaviour
     //유도의 대상을 갱신 시켜줌
     public void ReloadTarget()
     {
-        GameObject _target = GameObject.FindGameObjectWithTag("Target");
-        target = _target != null ? _target : player;
+        GameObject target = GameObject.FindGameObjectWithTag("Target");
+        this.target = target != null ? target : player;
     }
     public void Test()
     {
-        Vector3 vec3 = new Vector3(0, 5, 0);
+        Vector3 vec3 = new Vector3(8, 0, 0);
         Vector2 vec2 = new Vector2(1, -2);
-        int speed = 7;
-
-        BulletManager.instace.SpawnBulletType1(vec3, vec2, speed);
-        BulletManager.instace.SpawnBulletType2(vec3, speed);
-        BulletManager.instace.SpawnBulletType3(vec3, vec2, speed, 30);
+        int speed = 13;
+        //for (int i = 0; i < 10; i++)
+        //{
+        //    var b = BulletManager.instace.SelectBullet().SetModeTargeting(vec3, speed);
+        //    Vector2 v = new Vector2(Mathf.Sin(Mathf.Deg2Rad * 36 * i), Mathf.Cos(Mathf.Deg2Rad * 36 * i));
+        //    b.SetPositioning(v * 3, 1f); 
+        //}
+        //BulletManager.instace.SelectBullet().SpawnBulletStaright(vec3, vec2, speed);
+        BulletManager.instace.SelectBullet().SetModetWave(vec3, vec2, speed, 30);
     }
 }
 
 public static class GameManagerExtensions
-{ 
+{
+    //벡터2를 벡터2로 변환
     public static Vector3 ToVec3(this Vector2 vec2, float z = 0)
     {
         return new Vector3(vec2.x, vec2.y, z);
     }
-    public static Vector2 ToVec3(this Vector3 vec3)
+    //벡터3을 벡터2로 변환
+    public static Vector2 ToVec2(this Vector3 vec3)
     {
         return new Vector2(vec3.x, vec3.y);
     }
-
-    public static float AngleBetween(this Vector2 vec, Vector2 standard)
+    //방향벡터에 각도 만큼 더한 방향 벡터를 반환
+    public static Vector2 AddDegree(this Vector2 vec2, float degree)
     {
-        Vector2 v = vec - standard;
-        float angle = 2 * Mathf.Atan2(v.y, v.x) * Mathf.Rad2Deg;
-        
-        return angle > 180 ? angle - 360 : angle;
+        return Quaternion.AngleAxis(degree, Vector3.forward) * vec2;
     }
 }

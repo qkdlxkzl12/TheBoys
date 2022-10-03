@@ -21,42 +21,42 @@ public class PlayerMovement : Actor
 
         if (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.LeftArrow)) //ºÏ¼­
         {
-            Player.transform.Translate(-(moveSpeed_ * SpeedPower_Diagonal) * Time.deltaTime, (moveSpeed_ * SpeedPower_Diagonal) * Time.deltaTime, 0);
+            Player.transform.Translate(-(moveSpeed * SpeedPower_Diagonal) * Time.deltaTime, (moveSpeed * SpeedPower_Diagonal) * Time.deltaTime, 0);
         }
 
         else if (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.RightArrow)) //ºÏµ¿
         {
-            Player.transform.Translate((moveSpeed_ * SpeedPower_Diagonal) * Time.deltaTime, (moveSpeed_ * SpeedPower_Diagonal) * Time.deltaTime, 0);
+            Player.transform.Translate((moveSpeed * SpeedPower_Diagonal) * Time.deltaTime, (moveSpeed * SpeedPower_Diagonal) * Time.deltaTime, 0);
         }
 
         else if (Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.RightArrow)) // ³²µ¿
         {
-            Player.transform.Translate((moveSpeed_ * SpeedPower_Diagonal) * Time.deltaTime, -(moveSpeed_ * SpeedPower_Diagonal) * Time.deltaTime, 0);
+            Player.transform.Translate((moveSpeed * SpeedPower_Diagonal) * Time.deltaTime, -(moveSpeed * SpeedPower_Diagonal) * Time.deltaTime, 0);
         }
 
         else if (Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.LeftArrow)) //³²¼­
         {
-            Player.transform.Translate(-(moveSpeed_ * SpeedPower_Diagonal) * Time.deltaTime, -(moveSpeed_ * SpeedPower_Diagonal) * Time.deltaTime, 0);
+            Player.transform.Translate(-(moveSpeed * SpeedPower_Diagonal) * Time.deltaTime, -(moveSpeed * SpeedPower_Diagonal) * Time.deltaTime, 0);
         }
 
         else if ( Input.GetKey(KeyCode.UpArrow)) //À§
         {
-            Player.transform.Translate(0, (moveSpeed_ * SpeedPower) * Time.deltaTime, 0);
+            Player.transform.Translate(0, (moveSpeed * SpeedPower) * Time.deltaTime, 0);
         }
 
         else if (Input.GetKey(KeyCode.LeftArrow)) //¿Þ
         {
-            Player.transform.Translate(-(moveSpeed_ * SpeedPower) * Time.deltaTime, 0, 0);
+            Player.transform.Translate(-(moveSpeed * SpeedPower) * Time.deltaTime, 0, 0);
         }
 
         else if (Input.GetKey(KeyCode.DownArrow)) //¾Æ·¡
         {
-            Player.transform.Translate(0, -(moveSpeed_ * SpeedPower) * Time.deltaTime, 0);
+            Player.transform.Translate(0, -(moveSpeed * SpeedPower) * Time.deltaTime, 0);
         }
 
         else if (Input.GetKey(KeyCode.RightArrow)) //¿À¸¥
         {
-            Player.transform.Translate((moveSpeed_ * SpeedPower) * Time.deltaTime, 0, 0);
+            Player.transform.Translate((moveSpeed * SpeedPower) * Time.deltaTime, 0, 0);
         }
 
         else

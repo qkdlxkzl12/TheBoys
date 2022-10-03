@@ -7,8 +7,8 @@ public class BulletManager : MonoBehaviour
     public static BulletManager instace;
 
     [SerializeField]
-    GameObject eBulletPrefab_;
-    int poolEbulletCnt_ = 100;
+    GameObject eBulletPrefab;
+    int poolBulletCnt = 10;
     [HideInInspector]
     public List<EnemyBullet> enemyBullets = new List<EnemyBullet>();
     [HideInInspector]
@@ -27,43 +27,35 @@ public class BulletManager : MonoBehaviour
     }
     public void Init()
     {
-        for (int i = 0; i < poolEbulletCnt_; i++)
+        for (int i = 0; i < poolBulletCnt; i++)
         {
-            var Bullet = Instantiate(eBulletPrefab_);
+            var Bullet = Instantiate(eBulletPrefab);
             enemyBullets.Add(Bullet.GetComponent<EnemyBullet>());
             Bullet.SetActive(false);
         }
     }
-
-    public void SpawnBulletType1(Vector3 spawnPos, Vector2 moveDir, int moveSpeed)
-    {
-        Bullet bullet = SelectBullet().GetComponent<Bullet>();
-        bullet.InitState(spawnPos, BulletType.Straight, moveDir, moveSpeed);
-    }
-    public void SpawnBulletType2(Vector3 spawnPos, int moveSpeed)
-    {
-        Bullet bullet = SelectBullet().GetComponent<Bullet>();
-        Vector3 targetDir = GameManager.instance.target.transform.position - spawnPos;
-        targetDir.Normalize();
-        bullet.InitState(spawnPos, BulletType.Straight, targetDir, moveSpeed);
-    }
-
-    public void SpawnBulletType3(Vector3 spawnPos, Vector2 moveDir,int moveSpeed, float chageAmount)
-    {
-        Bullet bullet = SelectBullet().GetComponent<Bullet>();
-        bullet.InitState(spawnPos, BulletType.Round, moveDir, moveSpeed, chageAmount);
-    }
+    //
 
     public EnemyBullet SelectBullet()
     {
-        foreach(EnemyBullet bullet in enemyBullets)
+        EnemyBullet newBullet = Instantiate(eBulletPrefab).GetComponent<EnemyBullet>();
+        enemyBullets.Add(newBullet);
+        newBullet.gameObject.SetActive(false);
+        return newBullet;
+    }
+
+    public void FireRadial(Vector3 spawnPos, int moveSpeed, Vector2 centerDir,int cnt, int elapsedDgree = 15)
+    {
+        for (int i = 0; i < cnt; i++)
         {
-            if (!bullet.gameObject.activeSelf)
-                return bullet;
+            EnemyBullet bullet = SelectBullet();
+            //bullet.SetModeStaright(spawnPos,centerDir + elapsedDgree * i,moveSpeed);
         }
-        var Bullet = Instantiate(eBulletPrefab_).GetComponent<EnemyBullet>();
-        enemyBullets.Add(Bullet);
-        Bullet.gameObject.SetActive(false);
-        return Bullet;
+        //bullet.SpawnBulletType1();
+    }
+
+    public void ExecutePattern(string patterName)
+    {
+
     }
 }
