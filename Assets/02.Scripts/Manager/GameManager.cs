@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
 public enum Element { Iron, Thunder, Battery, Fire, Snowball } //은, 번개, 배터리, 화염, 눈덩이
 public enum BulletType { Straight, Target, Round, Tracking, } //일자, 변형, 반유도, 
 
@@ -42,19 +41,35 @@ public class GameManager : MonoBehaviour
         GameObject target = GameObject.FindGameObjectWithTag("Target");
         this.target = target != null ? target : player;
     }
+
+    [ContextMenu("Test")]
     public void Test()
     {
         Vector3 vec3 = new Vector3(8, 0, 0);
         Vector2 vec2 = new Vector2(1, -2);
         int speed = 13;
-        //for (int i = 0; i < 10; i++)
-        //{
-        //    var b = BulletManager.instace.SelectBullet().SetModeTargeting(vec3, speed);
-        //    Vector2 v = new Vector2(Mathf.Sin(Mathf.Deg2Rad * 36 * i), Mathf.Cos(Mathf.Deg2Rad * 36 * i));
-        //    b.SetPositioning(v * 3, 1f); 
-        //}
-        //BulletManager.instace.SelectBullet().SpawnBulletStaright(vec3, vec2, speed);
-        BulletManager.instace.SelectBullet().SetModetWave(vec3, vec2, speed, 30);
+        float test = 18f;
+
+        //BulletManager.instance.SelectBullet().SetModeTracking(vec3, 8);
+        //BulletManager.instance.FireRadial(vec3, speed, vec3.DistanceWithTarget(), 5, 10);
+
+        BulletManager.instance.FireRadialWithWave(vec3, 5, vec3.DistanceWithTarget(), 10, 30, 15);
+        BulletManager.instance.FireRadialWithWave(vec3, 5, vec3.DistanceWithTarget() + test.ToVec2().ToVec3(), 10, -30, 15);
+        Invoke("Test2", 1f);
+        Invoke("Test2", 1.7f);
+        Invoke("Test2", 2.4f);
+
+        //BulletManager.instance.FireRadialWithWave(vec3, speed, vec3.DistanceWithTarget(), 10, 30, 10);
+        //BulletManager.instance.AddPositioning(3,1);
+        //BulletManager.instance.FireRadialWithWave(vec3, speed, vec3.DistanceWithTarget() + test.ToVec2().ToVec3(), 10, -30, 10);
+        //BulletManager.instance.AddPositioning(1.5f,1);
+    }
+
+    public void Test2()
+    {
+        Vector3 vec3 = new Vector3(8, 0, 0);
+        int speed = 13;
+        BulletManager.instance.FireRadial(vec3, speed, vec3.DistanceWithTarget(), 7, 8);
     }
 }
 
@@ -74,5 +89,18 @@ public static class GameManagerExtensions
     public static Vector2 AddDegree(this Vector2 vec2, float degree)
     {
         return Quaternion.AngleAxis(degree, Vector3.forward) * vec2;
+    }
+    public static Vector2 ToVec2(this float f)
+    {
+        return Quaternion.AngleAxis(f, Vector3.forward) * Vector2.left;
+    }
+
+    public static float ToDeg(this Vector2 vec2)
+    {
+        return Mathf.Sign(-1 * vec2.y) * Vector2.Angle(Vector2.left, vec2);
+    }
+    static public Vector3 DistanceWithTarget(this Vector3 vec3)
+    {
+        return GameManager.instance.target.transform.position - vec3;
     }
 }

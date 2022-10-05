@@ -50,30 +50,40 @@ public class EnemyBullet : Bullet
 
     public EnemyBullet SetModeTargeting(Vector3 spawnPos, int moveSpeed)
     {
-        Vector3 targetDir = GameManager.instance.target.transform.position - spawnPos;
+        Vector3 targetDir = spawnPos.DistanceWithTarget();
         targetDir.Normalize();
         InitState(spawnPos, BulletType.Target, targetDir, moveSpeed);
         return this;
     }
 
-    public EnemyBullet SetModetWave(Vector3 spawnPos, Vector2 moveDir, int moveSpeed, float chageAmount)
+    public EnemyBullet SetModeWave(Vector3 spawnPos, Vector2 moveDir, int moveSpeed, float chageAmount)
     {
         InitState(spawnPos, BulletType.Round, moveDir, moveSpeed, chageAmount);
         duringFiring += () =>
         {
             //현재 방향을 Vector2.Down 기준의 각도를 구함
             //구한 각도에 회전량을 더해줌
-            Vector3 newDirection = this.moveDirection.AddDegree(this.changeAmount * Time.deltaTime);
+            Vector3 newDirection = moveDirection.AddDegree(this.changeAmount * Time.deltaTime);
 
-            this.moveDirection = newDirection;
-            this.moveDirection.Normalize();
+            moveDirection = newDirection.normalized;
         };
         return this;
     }
 
     //미작성
-    public EnemyBullet SetModeTracking()
+    public EnemyBullet SetModeTracking(Vector3 spawnPos, int moveSpeed)
     {
+        Vector3 v = transform.position.DistanceWithTarget();
+        v.Normalize();
+        InitState(spawnPos, BulletType.Target, v, moveSpeed);
+        duringFiring += () =>
+        {
+            Vector3 v = transform.position.DistanceWithTarget();
+            v.Normalize();
+            Vector3 newDirection = Vector3.Slerp(moveDirection, v, 2f * Time.deltaTime);
+            Debug.Log(newDirection.ToVec2());
+            moveDirection = newDirection.normalized;
+        };
         return this;
     }
 
