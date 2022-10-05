@@ -10,7 +10,7 @@ public class PlayerStatus : Actor
 
     void Start()
     {
-        Player_HP = hp_;
+        Player_HP = hp;
     }
 
 
