@@ -1,24 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
-public class PlayerMovement : Actor
+public class PlayerGlobal : Actor
 {
 
-    public GameObject Player; //public으로 게임오브젝트 지정
-    public float SpeedPower; // 추가 속도 (너무 느려서;;)
+    public GameObject Player;
+
+    public int Add_Hp; // 추가 체력
+
+    public float SpeedPower;//추가 이동속도
+    public float Add_SpeedPower;// 정규화 보정
+
     float SpeedPower_Diagonal; // 정규화용
 
     private void Awake()
     {
-        SpeedPower_Diagonal = SpeedPower * 0.75f; // 정규화 및 초당 이동량 보정
+        SpeedPower_Diagonal = SpeedPower * Add_SpeedPower; // 정규화 및 초당 이동량 보정
     }
 
+    private void Start()
+    {
+        hp += Add_Hp;
+    }
 
-    void Update()
+    private void OnCollisionEnter2D(Collision2D coll)
     {
 
+        if (coll.gameObject.CompareTag("EnemyBullet"))
+        {
+            Damaged(1);
+            Destroy(coll.gameObject);
+        }
+
+    }
+
+    void FixedUpdate() // 이동
+    {
         if (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.LeftArrow)) //북서
         {
             Player.transform.Translate(-(moveSpeed * SpeedPower_Diagonal) * Time.deltaTime, (moveSpeed * SpeedPower_Diagonal) * Time.deltaTime, 0);
@@ -39,7 +57,7 @@ public class PlayerMovement : Actor
             Player.transform.Translate(-(moveSpeed * SpeedPower_Diagonal) * Time.deltaTime, -(moveSpeed * SpeedPower_Diagonal) * Time.deltaTime, 0);
         }
 
-        else if ( Input.GetKey(KeyCode.UpArrow)) //위
+        else if (Input.GetKey(KeyCode.UpArrow)) //위
         {
             Player.transform.Translate(0, (moveSpeed * SpeedPower) * Time.deltaTime, 0);
         }
@@ -61,8 +79,9 @@ public class PlayerMovement : Actor
 
         else
         {
-        
-        }
 
+        }
     }
 }
+
+
