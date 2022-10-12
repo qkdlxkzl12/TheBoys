@@ -5,12 +5,13 @@ using UnityEngine;
 public class PlayerGlobal : Actor
 {
 
-    public GameObject Player;
+    GameObject Player;
 
     public int Add_Hp; // 추가 체력
 
     public float SpeedPower;//추가 이동속도
     public float Add_SpeedPower;// 정규화 보정
+    public bool Move_Type; //이동 방식) True : 벡터 , False : 원시적
 
     float SpeedPower_Diagonal; // 정규화용
 
@@ -21,21 +22,39 @@ public class PlayerGlobal : Actor
 
     private void Start()
     {
+        Player = GameManager.instance.player; // 전달
         hp += Add_Hp;
     }
 
-    private void OnCollisionEnter2D(Collision2D coll)
+    private void OnCollisionEnter2D(Collision2D coll) // 피격
     {
 
         if (coll.gameObject.CompareTag("EnemyBullet"))
         {
-            Damaged(1);
-            Destroy(coll.gameObject);
+            AttackTo(Player);
+            Destroy(coll.gameObject); // 총알 삭제
         }
 
     }
 
     void FixedUpdate() // 이동
+    {
+        if (Move_Type)
+        {
+            Vector2 Vectors = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxisRaw("Vertical"));
+            Vectors.Normalize();
+            transform.Translate(Vectors * (SpeedPower_Diagonal) * Time.deltaTime);
+
+        }
+
+        else
+        {
+             Regular_Move();
+        }
+            
+    }
+
+    void Regular_Move()
     {
         if (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.LeftArrow)) //북서
         {
@@ -82,6 +101,7 @@ public class PlayerGlobal : Actor
 
         }
     }
+
 }
 
 
