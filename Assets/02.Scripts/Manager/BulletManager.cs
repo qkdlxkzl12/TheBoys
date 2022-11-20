@@ -30,12 +30,18 @@ public class BulletManager : MonoBehaviour
     {
         for (int i = 0; i < poolBulletCnt; i++)
         {
-            var Bullet = Instantiate(eBulletPrefab);
-            enemyBullets.Add(Bullet.GetComponent<EnemyBullet>());
-            Bullet.SetActive(false);
+            CreateBullet();
         }
     }
-    //
+
+    private EnemyBullet CreateBullet()
+    {
+        GameObject obj = Instantiate(eBulletPrefab,GameObject.Find("Bullets").transform);
+        EnemyBullet bullet = obj.GetComponent<EnemyBullet>();
+        enemyBullets.Add(bullet);
+        obj.SetActive(false);
+        return bullet;
+    }
 
     public EnemyBullet SelectBullet()
     {
@@ -47,25 +53,23 @@ public class BulletManager : MonoBehaviour
                 return bullet;
             }
         }
-        EnemyBullet newBullet = Instantiate(eBulletPrefab).GetComponent<EnemyBullet>();
-        enemyBullets.Add(newBullet);
-        newBullet.gameObject.SetActive(false);
-        useEnemyBullets.Add((EnemyBullet)newBullet);
+        EnemyBullet newBullet = CreateBullet();
+        useEnemyBullets.Add(newBullet);
         return newBullet;
     }
-
     public void FireRadial(Vector3 spawnPos, int moveSpeed, Vector2 centerDir, int cnt, int elapsedDegree = 10)
     {
         if (useEnemyBullets != null)
+        {
             useEnemyBullets.Clear();
-        for (int i = 0; i < cnt; i++)
+        }
+            for (int i = 0; i < cnt; i++)
         {
             EnemyBullet bullet = SelectBullet();
             float angle = centerDir.ToDeg() - ((cnt - 1) * elapsedDegree / 2) + (elapsedDegree * i);
             bullet.SetModeStaright(spawnPos, angle.ToVec2(), moveSpeed);
         }
     }
-
     public void FireRadialWithWave(Vector3 spawnPos, int moveSpeed, Vector2 centerDir, int cnt, float changeAmount, int elapsedDegree = 10)
     {
         if (useEnemyBullets != null)
@@ -78,14 +82,16 @@ public class BulletManager : MonoBehaviour
             float angle = centerDir.ToDeg() - ((cnt - 1) * elapsedDegree / 2) + (elapsedDegree * i);
             bullet.SetModeWave(spawnPos, angle.ToVec2(), moveSpeed, changeAmount);
         }
-        Debug.Log(useEnemyBullets.Count);
     }
-
     public void FireTracking(Vector3 spawnPos, int moveSpeed)
     {
-        //
+        if(useEnemyBullets == null)
+        {
+            useEnemyBullets.Clear();
+        }
+        EnemyBullet bullet = SelectBullet();
+        bullet.SetModeTracking(spawnPos, moveSpeed);
     }
-
     public void ExecutePositioning(float distance, float second)
     {
         if (useEnemyBullets == null)

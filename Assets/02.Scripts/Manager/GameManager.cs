@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
     {
         y = UnityEngine.Random.Range(-4, 4);
         vec3 = new Vector3(8, y, 0);
-        BulletManager.instance.SelectBullet().SetModeTracking(vec3, 13);
+        BulletManager.instance.FireTracking(vec3, 13);
     }
 }
 

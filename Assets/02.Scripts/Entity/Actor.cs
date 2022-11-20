@@ -33,7 +33,7 @@ public class Actor : MonoBehaviour
         if (target_ != null)
         {
             this.OnAttack();
-            target_.GetAttack(null);
+            target_.GetAttack();
         }
         else
         {
@@ -45,12 +45,12 @@ public class Actor : MonoBehaviour
 
     public void OnAttack()
     {
-        //특성 등 전달
+        //특성 등 전달(내부적으로 상속으로 구현)
     }
 
-    public void GetAttack(Func<int> attackType)
+    public void GetAttack()
     {
-        //Action과 Delegate를 이용한 공격시 특수한 효과 구현(더생각해봐야함)
+        //피격 받을 시 데미지 말고 다른 것이 있으면 내부적으로 상속으로 구현)
         Damaged(1);
     }
 
