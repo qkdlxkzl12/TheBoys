@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class PlayerGlobal : Actor
 {
-
     GameObject Player;
 
-    public int Add_Hp; // 추가 체력
-
+    public int Add_HP;
     public float SpeedPower;//추가 이동속도
     public float Add_SpeedPower;// 정규화 보정
     public bool Move_Type; //이동 방식) True : 벡터 , False : 원시적
@@ -16,10 +14,7 @@ public class PlayerGlobal : Actor
     float SpeedPower_Diagonal; // 정규화용
 
     bool DamageTime = false; //피격 데미지 쿨타임용
-    
-    bool Healing = false; //자동힐 제어용
-    IEnumerator Heal;
-    bool First_Hit;
+    bool Healing = true;
 
     private void Awake()
     {
@@ -29,67 +24,61 @@ public class PlayerGlobal : Actor
     private void Start()
     {
         Player = GameManager.instance.player; // 전달
-        hp += Add_Hp;
-        First_Hit = true;
-    }
-
-    private void OnCollisionEnter2D(Collision2D coll) // 피격
-    {
-
-        if (coll.gameObject.CompareTag("EnemyBullet"))
-        {
-            if (DamageTime == false) //피격 데미지 쿨타임 여부
-            {
-
-                if(First_Hit == false) //첫 피격 여부
-                    StopCoroutine(Heal);
-                else
-                    First_Hit = false;
-
-                Heal = AutoHeal(); //코루틴 재활용
-                StartCoroutine(Heal);//자동 회복 갱신
-
-                DamageTime = true;
-                AttackTo(Player);
-
-                StartCoroutine(DamageCoolTime()); //피격 데미지 쿨타임 시작
-
-                Debug.Log(hp);
-            }
-
-            Destroy(coll.gameObject); // 총알 삭제
-        }
-
-    }
-
-    IEnumerator DamageCoolTime() //피격 데미지 쿨타임
-    {
-        yield return new WaitForSeconds(0.5f);
-        DamageTime = false;
-    }
-
-    IEnumerator AutoHeal() //시간 경과 후 회복
-    {
-        Healing = false;
-        yield return new WaitForSeconds(5f);
-        Healing = true;
+        hp += Add_HP;
     }
 
     private void Update()
     {
 
-        if(Healing == true && hp <= 2)
+        if (Healing == true && hp <= 2)
         {
-            hp = 3;
-            Debug.Log("회복됨");
+            if (hp == 1)
+                hp += 2;
+            else if (hp == 2)
+                hp += 1;
+
+            Debug.Log("회복됨 : " + hp);
         }
 
-        if(Input.GetKeyDown(KeyCode.Tab))
+    }
+
+    private void OnTriggerEnter2D(Collider2D coll)  // 피격
+    {
+        if (coll.gameObject.CompareTag("EnemyBullet"))
         {
-            Debug.Log(hp);
+            Destroy(coll.gameObject);
+            Hit_System();
         }
     }
 
+    void DamageCoolTime() //피격 데미지 쿨타임용
+    {
+        DamageTime = false;
+        Debug.Log("무적시간 비활성화");
+    }
+
+    void Heal() //힐 용
+    {
+        Healing = true;
+    }
+
+    void Hit_System()
+    {
+        if (DamageTime == false) //피격 데미지 쿨타임 여부
+        {
+            AttackTo(Player);
+            Debug.Log(hp);
+
+            CancelInvoke("Heal");
+        }
+
+        Debug.Log("무적시간 활성화");
+        DamageTime = true;  //데미지 쿨타임 시작
+        Invoke("DamageCoolTime", 0.5f);
+
+        Healing = false;
+        Invoke("Heal", 5f);
+    }
 
     void FixedUpdate() // 이동
     {

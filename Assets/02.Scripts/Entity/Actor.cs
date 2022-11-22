@@ -67,6 +67,7 @@ public class Actor : MonoBehaviour
     //액터가 죽을 때
     virtual protected void OnDie()
     {
+        Debug.Log(gameObject.name + "Die");
         Destroy(gameObject);
     }
 
