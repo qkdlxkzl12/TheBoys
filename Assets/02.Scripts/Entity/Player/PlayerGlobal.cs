@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerGlobal : Actor
 {
@@ -13,24 +14,37 @@ public class PlayerGlobal : Actor
 
     float SpeedPower_Diagonal; // 정규화용
 
+    public GameObject Bullet; //총알 프리팹
+
+    public int Mag; //탄창 밀집 개수
+    Queue<char> Magazine = new Queue<char>(); //탄창 큐
+
     bool DamageTime = false; //피격 데미지 쿨타임용
     bool Healing = true;
 
+    
     private void Awake()
     {
         SpeedPower_Diagonal = SpeedPower * Add_SpeedPower; // 정규화 및 초당 이동량 보정
+
+        for (int i = 1; i <= Mag; i++)
+        {
+            Magazine.Enqueue('●');
+            Debug.Log("장전");
+        }
     }
 
     private void Start()
     {
         Player = GameManager.instance.player; // 전달
         hp += Add_HP;
+
     }
 
     private void Update()
     {
 
-        if (Healing == true && hp <= 2)
+        if (Healing == true && hp <= 2) //자동 회복
         {
             if (hp == 1)
                 hp += 2;
@@ -40,15 +54,32 @@ public class PlayerGlobal : Actor
             Debug.Log("회복됨 : " + hp);
         }
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (Magazine != null)
+            {
+                Debug.Log(Magazine.Dequeue());
+                Magazine.Enqueue('●');
+            }
+            else
+                Debug.Log("탄창빔");
+
+        }
     }
 
-    private void OnTriggerEnter2D(Collider2D coll)  // 피격
+    private void OnTriggerEnter2D(Collider2D coll)  // 피격 혹은 획득
     {
         if (coll.gameObject.CompareTag("EnemyBullet"))
         {
             Destroy(coll.gameObject);
             Hit_System();
         }
+
+        if(coll.gameObject.CompareTag("Item") && coll.name == "임시 아이템")
+        {
+            Debug.Log("특수 총알 장전");
+            Magazine.Enqueue('◎');
+        }    
     }
 
     void DamageCoolTime() //피격 데미지 쿨타임용
