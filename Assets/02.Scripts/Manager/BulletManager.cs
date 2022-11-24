@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class BulletManager : MonoBehaviour
 {
@@ -36,7 +37,7 @@ public class BulletManager : MonoBehaviour
 
     private EnemyBullet CreateBullet()
     {
-        GameObject obj = Instantiate(eBulletPrefab,GameObject.Find("Bullets").transform);
+        GameObject obj = Instantiate(eBulletPrefab, GameObject.Find("Bullets").transform);
         EnemyBullet bullet = obj.GetComponent<EnemyBullet>();
         enemyBullets.Add(bullet);
         obj.SetActive(false);
@@ -57,13 +58,13 @@ public class BulletManager : MonoBehaviour
         useEnemyBullets.Add(newBullet);
         return newBullet;
     }
-    public void FireRadial(Vector3 spawnPos, int moveSpeed, Vector2 centerDir, int cnt, int elapsedDegree = 10)
+    public void FireRadial(Vector3 spawnPos, int moveSpeed, int cnt, Vector2 centerDir, int elapsedDegree = 10)
     {
         if (useEnemyBullets != null)
         {
             useEnemyBullets.Clear();
         }
-            for (int i = 0; i < cnt; i++)
+        for (int i = 0; i < cnt; i++)
         {
             EnemyBullet bullet = SelectBullet();
             float angle = centerDir.ToDeg() - ((cnt - 1) * elapsedDegree / 2) + (elapsedDegree * i);
@@ -83,28 +84,42 @@ public class BulletManager : MonoBehaviour
             bullet.SetModeWave(spawnPos, angle.ToVec2(), moveSpeed, changeAmount);
         }
     }
-    public void FireTracking(Vector3 spawnPos, int moveSpeed)
+    public void FireTracking(Vector3 spawnPos, int moveSpeed, Vector2 startDir = default(Vector2))
     {
-        if(useEnemyBullets == null)
+        if (useEnemyBullets == null)
+        {
+            useEnemyBullets.Clear();
+        }
+        if (startDir == default(Vector2))
+        {
+            startDir = spawnPos.DistanceWithTarget();
+        }
+        EnemyBullet bullet = SelectBullet();
+        bullet.SetModeTracking(spawnPos, moveSpeed, startDir);
+    }
+
+    public void FireTargeting(Vector3 spawnPos, int moveSpeed)
+    {
+        if (useEnemyBullets == null)
         {
             useEnemyBullets.Clear();
         }
         EnemyBullet bullet = SelectBullet();
-        bullet.SetModeTracking(spawnPos, moveSpeed);
+        bullet.SetModeTargeting(spawnPos, moveSpeed);
     }
-    public void ExecutePositioning(float distance, float second)
+    public void ExecutePositioning(float distance, float time)
     {
         if (useEnemyBullets == null)
         {
             Debug.LogError("[ERROR:008]used enemy bullet isn't exist.  but call ExecutePositioning");
             return;
-        }    
+        }
         for (int i = 0; i < useEnemyBullets.Count; i++)
         {
             EnemyBullet bullet = useEnemyBullets[i] as EnemyBullet;
             float angle = (360 / useEnemyBullets.Count) * i;
             Vector2 v = new Vector2(Mathf.Sin(Mathf.Deg2Rad * angle), Mathf.Cos(Mathf.Deg2Rad * angle)).AddDegree(90);
-            bullet.SetPositioning(v * distance, second);
+            bullet.SetPositioning(v * distance, time);
         }
         useEnemyBullets.Clear();
     }

@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
         speed = 13;
         test = 18f;
         vec3 = new Vector3(8, 0, 0);
-        BulletManager.instance.FireRadial(vec3, speed, vec3.DistanceWithTarget(), 5, 10);
+        BulletManager.instance.FireRadial(vec3, speed, 5, vec3.DistanceWithTarget(), 10);
     }
     public void Test2()
     {
@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
     {
         vec3 = new Vector3(6, 0, 0);
         speed = 13;
-        BulletManager.instance.FireRadial(vec3, speed, vec3.DistanceWithTarget(), 7, 8);
+        BulletManager.instance.FireRadial(vec3, speed, 7, vec3.DistanceWithTarget(), 8);
     }
     public void Test3()
     {
@@ -98,6 +98,18 @@ public class GameManager : MonoBehaviour
         y = UnityEngine.Random.Range(-4, 4);
         vec3 = new Vector3(8, y, 0);
         BulletManager.instance.FireTracking(vec3, 13);
+    }
+
+
+    public IEnumerator Repeat(Action func, int repeat, float delay)
+    {
+        int curRepeat = 0;
+        while (curRepeat < repeat)
+        {
+            func();
+            curRepeat++;
+            yield return new WaitForSeconds(delay);
+        }
     }
 }
 

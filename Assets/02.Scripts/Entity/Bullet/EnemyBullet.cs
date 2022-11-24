@@ -71,20 +71,20 @@ public class EnemyBullet : Bullet
     }
 
     //¹ÌÀÛ¼º
-    public EnemyBullet SetModeTracking(Vector3 spawnPos, int moveSpeed)
+    public EnemyBullet SetModeTracking(Vector3 spawnPos, int moveSpeed, Vector2 startDir)
     {
-        //
-        Vector3 targetV = spawnPos.DistanceWithTarget();
-        targetV.Normalize();
-        InitState(spawnPos, BulletType.Target, targetV, moveSpeed);
+        startDir.Normalize();
+        moveDirection = spawnPos;
+        InitState(spawnPos, BulletType.Target, startDir, moveSpeed);
         
         duringFiring += () =>
         {
-            if (transform.position.x - 2 > GameManager.instance.player.transform.position.x)
+            if (transform.position.x - 1.5 > GameManager.instance.player.transform.position.x)
             {
+                float distanceY = Mathf.Abs(transform.position.y - GameManager.instance.target.transform.position.y) * 0.6f;
                 Vector3 targetV = transform.position.DistanceWithTarget();
                 targetV.Normalize();
-                Vector3 newDirection = Vector3.Slerp(moveDirection, targetV, 0.6f);
+                Vector3 newDirection = Vector3.Slerp(moveDirection, targetV, 2 * Time.deltaTime * distanceY);
                 moveDirection = newDirection.normalized;
             }
         };
