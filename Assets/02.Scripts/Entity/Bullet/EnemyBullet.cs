@@ -125,6 +125,6 @@ public class EnemyBullet : Bullet
         gameObject.SetActive(false);
         duringFiring = null;
         StopAllCoroutines();
-        Debug.Log(gameObject.name + "¸¦ ¼û±è");
+        //Debug.Log(gameObject.name + "¸¦ ¼û±è");
     }
 }
