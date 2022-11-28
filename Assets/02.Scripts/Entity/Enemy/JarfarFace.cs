@@ -13,12 +13,13 @@ public class JarfarFace : MonoBehaviour
         sr = gameObject.GetComponent<SpriteRenderer>();
         EnterSeq = DOTween.Sequence()
             .SetAutoKill(false)
-            .Append(transform.DOScale(0, 1f).SetEase(Ease.OutCirc).From(false))
-            .Join(sr.DOFade(0, 1f))
             .OnStart(() => {
                 transform.localScale = Vector3.one;
-                sr.color = new Color(1,1,1,1) ;
-            });
+                sr.color = new Color(1, 1, 1, 1);
+            })
+            .Append(transform.DOScale(0, 1.5f).SetEase(Ease.OutCirc).From(false))
+            .Join(sr.DOFade(0, 1f))
+            .OnComplete(() => gameObject.SetActive(false) );
             
     }   
 
@@ -27,7 +28,9 @@ public class JarfarFace : MonoBehaviour
         EnterSeq.Restart();
     }
 
-    private void OnDisable()
+    public void Use()
     {
+        gameObject.SetActive(true);
     }
+    
 }

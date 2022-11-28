@@ -5,25 +5,24 @@ using System;
 
 public class Actor : MonoBehaviour
 {
-    protected int hp;
+    protected int maxHp;
+    protected int curHp;
+    protected int hp; //임시
+    protected int moveSpeed; //임시
     protected int attackDamage;
-    protected int moveSpeed;
-    protected float attackDelay;
 
     public Actor()
     {
-        hp = 1;
+        maxHp = 5;
+        curHp = maxHp;
         attackDamage = 1;
-        moveSpeed = 1;
-        attackDelay = 1;
     }
 
-    public Actor(int hp, int attackDamage, int moveSpeed, float attackDelay)
+    public Actor(int hp, int attackDamage)
     {
-        this.hp = hp;
+        maxHp = hp;
+        curHp = maxHp;
         this.attackDamage = attackDamage;
-        this.moveSpeed = moveSpeed;
-        this.attackDelay = attackDelay;
     }
 
     //대상을 공격함
@@ -33,7 +32,7 @@ public class Actor : MonoBehaviour
         if (target_ != null)
         {
             this.OnAttack();
-            target_.GetAttack();
+            target_.TakeAttack(this.attackDamage);
         }
         else
         {
@@ -43,25 +42,32 @@ public class Actor : MonoBehaviour
 
     }
 
-    public void OnAttack()
+    virtual public void OnAttack()
     {
-        //특성 등 전달(내부적으로 상속으로 구현)
+        //공격 시 발생하는 이벤트 작성(상속 후 내부적으로 구현)
     }
 
-    public void GetAttack()
+    virtual public void TakeAttack(int damage)
     {
-        //피격 받을 시 데미지 말고 다른 것이 있으면 내부적으로 상속으로 구현)
-        Damaged(1);
+        //공격을 받으면 발생하는 이벤트
+        Damaged(damage);
     }
 
     //데미지를 받음
-    protected void Damaged(int value)
+    virtual protected void Damaged(int value)
     {
-        hp -= value;
-        if(hp <= 0)
+        curHp -= value;
+        if(curHp <= 0)
         {
             OnDie();
         }
+    }
+
+    protected void Healing(int value)
+    {
+        curHp += value;
+        if(curHp > maxHp)
+            curHp = maxHp;
     }
 
     //액터가 죽을 때
