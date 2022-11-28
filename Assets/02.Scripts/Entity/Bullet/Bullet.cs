@@ -14,9 +14,6 @@ public class Bullet : Actor
     }
     
     //총알이 발사하기위해 값들 조정
-    
-
-
 
     private void OnBecameInvisible()
     {
