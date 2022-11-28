@@ -7,6 +7,7 @@ public class PlayerGlobal : Actor
 {
     GameObject Player;
 
+    //기본
     public int Add_HP; //추가 체력
     public float SpeedPower;//추가 이동속도
     public float Add_SpeedPower;// 정규화 보정
@@ -14,16 +15,23 @@ public class PlayerGlobal : Actor
 
     float SpeedPower_Diagonal; // 정규화용
 
-    public GameObject[] Bullet; //총알 프리팹
-
+    //총알
     public int Mag; //탄창 밀집 개수
     List<int> Magazine = new List<int>(); //탄창 큐
     Queue<int> Ready_Slot = new Queue<int>(); //탄창에 장전될 다음 총알들
 
-    public SpriteRenderer[] Chamber; // 표시할 스프라이트 
+    //public SpriteRenderer[] Chamber; // 표시할 스프라이트 
 
+
+    //피격 
     bool DamageTime = false; //피격 데미지 쿨타임용
     bool Healing = true;
+
+
+    //버프
+    BuffManager Buff;
+    public bool Buff_Illusion = false;
+   
 
     private void Awake()
     {
@@ -40,6 +48,8 @@ public class PlayerGlobal : Actor
     {
         Player = GameManager.instance.player; // 전달
         hp += Add_HP;
+
+        Buff = GameObject.Find("BuffManager").GetComponent<BuffManager>();
     }
 
     private void Update()
@@ -61,10 +71,15 @@ public class PlayerGlobal : Actor
             {
 
                 Shooting_System();
-                Magazine_UI();
 
             }
         }
+
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            Buff.DeBuff(Buffs.Illusion, 5f);
+        }
+
     }
 
     void Hit_System()
@@ -100,29 +115,6 @@ public class PlayerGlobal : Actor
         {
             Debug.Log("다음에 장전될 총알 : " + i);
         }
-    }
-
-    void Magazine_UI()
-    { 
-       for (int i = 0; i < Chamber.Length; i++)
-        {
-            if (Magazine[i] == 0)
-            {
-                Chamber[i].color = new Color(1, 1, 1, 1);
-            }
-            else if (Magazine[i] == 1)
-            {
-                Chamber[i].color = new Color(1, 0, 0, 1);
-            }
-            else if (Magazine[i] == 2)
-            {
-                Chamber[i].color = new Color(0, 1, 0, 1);
-            }
-            else if (Magazine[i] == 3)
-            {
-                Chamber[i].color = new Color(0, 0, 1, 1);
-            }
-        }    
     }
 
     private void OnTriggerEnter2D(Collider2D coll)  // 피격 혹은 획득
@@ -169,9 +161,19 @@ public class PlayerGlobal : Actor
     {
         if (Move_Type)
         {
-            Vector2 Vectors = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxisRaw("Vertical"));
-            Vectors.Normalize();
-            transform.Translate(Vectors * (SpeedPower_Diagonal) * Time.deltaTime);
+            if (Buff_Illusion == false)
+            {
+                Vector2 Vectors = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+                Vectors.Normalize();
+                transform.Translate(Vectors * (SpeedPower_Diagonal) * Time.deltaTime);
+            }
+            else if(Buff_Illusion == true)
+            {
+                Vector2 Vectors = new Vector2(-Input.GetAxisRaw("Horizontal"), -Input.GetAxisRaw("Vertical"));
+                Vectors.Normalize();
+                transform.Translate(Vectors * (SpeedPower_Diagonal) * Time.deltaTime);
+            }
+
         }
 
         else
