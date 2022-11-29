@@ -2176,33 +2176,5 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 3452882612565690855, guid: a1876a43232fa3747881a307124e8700, type: 3}
-      propertyPath: Move_Type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3452882612565690855, guid: a1876a43232fa3747881a307124e8700, type: 3}
-      propertyPath: Chamber.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3452882612565690855, guid: a1876a43232fa3747881a307124e8700, type: 3}
-      propertyPath: Chamber.Array.data[0]
-      value: 
-      objectReference: {fileID: 1744320453}
-    - target: {fileID: 3452882612565690855, guid: a1876a43232fa3747881a307124e8700, type: 3}
-      propertyPath: Chamber.Array.data[1]
-      value: 
-      objectReference: {fileID: 1187485907}
-    - target: {fileID: 3452882612565690855, guid: a1876a43232fa3747881a307124e8700, type: 3}
-      propertyPath: Chamber.Array.data[2]
-      value: 
-      objectReference: {fileID: 1198709078}
-    - target: {fileID: 3452882612565690855, guid: a1876a43232fa3747881a307124e8700, type: 3}
-      propertyPath: Chamber.Array.data[3]
-      value: 
-      objectReference: {fileID: 1465186691}
-    - target: {fileID: 3452882612565690855, guid: a1876a43232fa3747881a307124e8700, type: 3}
-      propertyPath: Chamber.Array.data[4]
-      value: 
-      objectReference: {fileID: 211136869}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1876a43232fa3747881a307124e8700, type: 3}
