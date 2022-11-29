@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-public enum Element { Iron, Thunder, Battery, Fire, Snowball } //은, 번개, 배터리, 화염, 눈덩이
+public enum Element { Iron, Thunder, Battery, Fire, Snowball, Normal } //은, 번개, 배터리, 화염, 눈덩이, 일반
 public enum BulletType { Straight, Target, Round, Tracking, } //일자, 변형, 반유도, 
 
 public class GameManager : MonoBehaviour

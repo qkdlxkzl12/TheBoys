@@ -15,23 +15,33 @@ public class PlayerGlobal : Actor
 
     float SpeedPower_Diagonal; // 정규화용
 
-    //총알
+    public bool onDead = false;
+
+
+    //사격
+    public GameObject[] P_Bullet;
+
+    public bool Can_Shoot = true;
+    public float Shooting_Time;
+
     public int Mag; //탄창 밀집 개수
-    List<int> Magazine = new List<int>(); //탄창 큐
-    Queue<int> Ready_Slot = new Queue<int>(); //탄창에 장전될 다음 총알들
+    List<Element> Magazine = new List<Element>(); //탄창 큐
+    Queue<Element> Ready_Slot = new Queue<Element>(); //탄창에 장전될 다음 총알들
 
     //public SpriteRenderer[] Chamber; // 표시할 스프라이트 
 
 
     //피격 
     bool DamageTime = false; //피격 데미지 쿨타임용
-    bool Healing = true;
+    public bool Can_Heal = true;
 
 
     //버프
     BuffManager Buff;
+
+    [HideInInspector]
     public bool Buff_Illusion = false;
-   
+
 
     private void Awake()
     {
@@ -39,8 +49,8 @@ public class PlayerGlobal : Actor
 
         for (int i = 1; i <= Mag; i++)
         {
-            Magazine.Add(0);
-            Debug.Log("기본 총알 장전");
+            Magazine.Add(Element.Normal);
+            Debug.Log("기본 총알 장전 : " + Magazine[0]);
         }
     }
 
@@ -55,7 +65,7 @@ public class PlayerGlobal : Actor
     private void Update()
     {
 
-        if (Healing == true && hp <= 2) //자동 회복
+        if (Can_Heal == true && hp <= 2) //자동 회복
         {
             if (hp == 1)
                 hp += 2;
@@ -65,15 +75,12 @@ public class PlayerGlobal : Actor
             Debug.Log("회복됨 : " + hp);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (Magazine != null)
+            if (Magazine != null && Can_Shoot == true)
             {
 
-                Shooting_System();
+                Invoke("Shooting_System", Shooting_Time);
 
             }
-        }
 
         if(Input.GetKeyDown(KeyCode.Tab))
         {
@@ -96,26 +103,32 @@ public class PlayerGlobal : Actor
         DamageTime = true;  //데미지 쿨타임 시작
         Invoke("DamageCoolTime", 0.5f);
 
-        Healing = false;
+        Can_Heal = false;
         Invoke("Heal", 5f);
     }
 
-    void Shooting_System()
+    public void Shooting_System()
     {
-        Debug.Log("해당 총알 발사 : " + Magazine[0]);
+        if (Magazine[0] == Element.Normal) //기본 총알 발사
+            Ready_Slot.Enqueue(Element.Normal); //기본 총알 대기
 
-        if (Magazine[0] == 0) //기본 총알 발사
-            Ready_Slot.Enqueue(0);
+       if (Magazine[0] == Element.Normal)
+            Instantiate(P_Bullet[0], Player.transform);
+       else if (Magazine[0] == Element.Iron)
+            Instantiate(P_Bullet[1], Player.transform);
+        else if (Magazine[0] == Element.Battery)
+            Instantiate(P_Bullet[2], Player.transform);
+        else if (Magazine[0] == Element.Fire)
+            Instantiate(P_Bullet[3], Player.transform);
+        else if (Magazine[0] == Element.Snowball)
+            Instantiate(P_Bullet[4], Player.transform);
+       else
+            Instantiate(P_Bullet[0], Player.transform);
 
         Magazine.RemoveAt(0);
         Magazine.Add(Ready_Slot.Dequeue());
-        Debug.Log("해당 총알 장전 : " + Magazine[4]);
-
-        foreach (int i in Ready_Slot)
-        {
-            Debug.Log("다음에 장전될 총알 : " + i);
-        }
     }
+
 
     private void OnTriggerEnter2D(Collider2D coll)  // 피격 혹은 획득
     {
@@ -125,25 +138,8 @@ public class PlayerGlobal : Actor
             Hit_System();
         }
 
-        if(coll.gameObject.CompareTag("Item") && coll.name == "임시 아이템(Red)")
-        {
-            Ready_Slot.Enqueue(1);
-            Debug.Log("붉은 총알 장전");
-        }
 
-        if (coll.gameObject.CompareTag("Item") && coll.name == "임시 아이템(Green)")
-        {
-            Ready_Slot.Enqueue(2);
-            Debug.Log("녹록 총알 장전");
-        }
-
-        if (coll.gameObject.CompareTag("Item") && coll.name == "임시 아이템(Blue)")
-        {
-            Ready_Slot.Enqueue(3);
-            Debug.Log("푸른 총알 장전");
-        }
     }
-
 
     void DamageCoolTime() //피격 데미지 쿨타임용
     {
@@ -153,7 +149,7 @@ public class PlayerGlobal : Actor
 
     void Heal() //힐 용
     {
-        Healing = true;
+        Can_Heal = true;
     }
 
 
@@ -186,42 +182,42 @@ public class PlayerGlobal : Actor
     {
         if (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.LeftArrow)) //북서
         {
-            Player.transform.Translate(-(moveSpeed * SpeedPower_Diagonal) * Time.deltaTime, (moveSpeed * SpeedPower_Diagonal) * Time.deltaTime, 0);
+            Player.transform.Translate(-(SpeedPower_Diagonal) * Time.deltaTime, (SpeedPower_Diagonal) * Time.deltaTime, 0);
         }
 
         else if (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.RightArrow)) //북동
         {
-            Player.transform.Translate((moveSpeed * SpeedPower_Diagonal) * Time.deltaTime, (moveSpeed * SpeedPower_Diagonal) * Time.deltaTime, 0);
+            Player.transform.Translate((SpeedPower_Diagonal) * Time.deltaTime, (SpeedPower_Diagonal) * Time.deltaTime, 0);
         }
 
         else if (Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.RightArrow)) // 남동
         {
-            Player.transform.Translate((moveSpeed * SpeedPower_Diagonal) * Time.deltaTime, -(moveSpeed * SpeedPower_Diagonal) * Time.deltaTime, 0);
+            Player.transform.Translate((SpeedPower_Diagonal) * Time.deltaTime, -(SpeedPower_Diagonal) * Time.deltaTime, 0);
         }
 
         else if (Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.LeftArrow)) //남서
         {
-            Player.transform.Translate(-(moveSpeed * SpeedPower_Diagonal) * Time.deltaTime, -(moveSpeed * SpeedPower_Diagonal) * Time.deltaTime, 0);
+            Player.transform.Translate(-(SpeedPower_Diagonal) * Time.deltaTime, -(SpeedPower_Diagonal) * Time.deltaTime, 0);
         }
 
         else if (Input.GetKey(KeyCode.UpArrow)) //위
         {
-            Player.transform.Translate(0, (moveSpeed * SpeedPower) * Time.deltaTime, 0);
+            Player.transform.Translate(0, (SpeedPower) * Time.deltaTime, 0);
         }
 
         else if (Input.GetKey(KeyCode.LeftArrow)) //왼
         {
-            Player.transform.Translate(-(moveSpeed * SpeedPower) * Time.deltaTime, 0, 0);
+            Player.transform.Translate(-(SpeedPower) * Time.deltaTime, 0, 0);
         }
 
         else if (Input.GetKey(KeyCode.DownArrow)) //아래
         {
-            Player.transform.Translate(0, -(moveSpeed * SpeedPower) * Time.deltaTime, 0);
+            Player.transform.Translate(0, -(SpeedPower) * Time.deltaTime, 0);
         }
 
         else if (Input.GetKey(KeyCode.RightArrow)) //오른
         {
-            Player.transform.Translate((moveSpeed * SpeedPower) * Time.deltaTime, 0, 0);
+            Player.transform.Translate((SpeedPower) * Time.deltaTime, 0, 0);
         }
 
         else

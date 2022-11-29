@@ -8,6 +8,7 @@ TagManager:
   - Target
   - Boss
   - Item
+  - PlayerBullet
   layers:
   - Default
   - TransparentFX
