@@ -5,10 +5,14 @@ using System;
 using DG.Tweening;
 
 enum JarfarAnimState { Idle, Teleport, TeleportAttack, Illusion, AdvanceSummon, WieldAttack }
+enum TeleportType {Default, Target, Up, Down}
 public class Jafar : Boss
 {
     [SerializeField]
     JarfarFace face;
+    [SerializeField]
+    JafarLazer lazer;
+
     Jafar() : base(100, 10, "Jafar") { }
     float thinkTime;
     Animator animator;
@@ -37,8 +41,8 @@ public class Jafar : Boss
     protected override IEnumerator ChoseAction()
     {
         SetAnimation(JarfarAnimState.Idle);
-        int chose = UnityEngine.Random.Range(1,100);
-        switch (chose/25)
+        int chose = 0; //UnityEngine.Random.Range(1,100);
+        switch (chose)
         {
             case 0:
                 action = () => SetAnimation(JarfarAnimState.TeleportAttack);
@@ -74,6 +78,8 @@ public class Jafar : Boss
                 break;
             case 4:
                 action = () => SetAnimation(JarfarAnimState.Teleport);
+                //lazer.target = gameObject.transform;
+                //lazer.gameObject.SetActive(true);
                 thinkTime = 2f;
                 break;
         }
@@ -145,5 +151,44 @@ public class Jafar : Boss
         face.Use();
         repeatCnt--;
         animator.SetInteger("SkillRepeat", repeatCnt);
+    }
+
+    IEnumerator TelleportAttack(float time)
+    {
+        animator.SetInteger("SkillRepeat", 1);
+        float remainTime = time;
+        while(remainTime > 0)
+        {
+            remainTime -= Time.deltaTime;
+            yield return null;
+        }
+        animator.SetInteger("SkillRepeat",0);
+    }
+
+    void Telleport(TeleportType type)
+    {
+        switch (type)
+        {
+            case TeleportType.Default:
+                transform.position = initPos;
+                break;
+            case TeleportType.Target:
+                Vector3 vec = new Vector3(transform.position.x, GameManager.instance.target.transform.position.y, 0);
+                transform.position = vec;
+                break;
+            case TeleportType.Up:
+                break;
+            case TeleportType.Down:
+                break;
+            default:
+                break;
+        }
+    }
+
+    void FireLazer()
+    {
+        float durationTime = 2f;
+        StartCoroutine(TelleportAttack(durationTime));
+        lazer.Fire(durationTime);
     }
 }

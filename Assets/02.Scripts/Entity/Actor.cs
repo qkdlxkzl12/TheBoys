@@ -24,22 +24,19 @@ public class Actor : MonoBehaviour
         curHp = maxHp;
         this.attackDamage = attackDamage;
     }
+    public void AttackTo(GameObject test) { }
 
     //대상을 공격함
-    public void AttackTo(GameObject targetObj)
+    public void AttackTo(Actor target)
     {
-        Actor target_ = targetObj.GetComponent<Actor>();
-        if (target_ != null)
+        //대상이 Actor타입이 아닐 경우
+        if (target == null)
         {
-            this.OnAttack();
-            target_.TakeAttack(this.attackDamage);
+            Debug.LogError("[ERROR:001]" + target.name + "'s type is not Actor");
+            return;
         }
-        else
-        {
-            //대상이 Actor타입이 아닐 경우
-            Debug.LogError("[ERROR:001]" + targetObj.name + "'s type is not Actor");
-        }
-
+        this.OnAttack();
+        target.TakeAttack(this.attackDamage);
     }
 
     virtual public void OnAttack()

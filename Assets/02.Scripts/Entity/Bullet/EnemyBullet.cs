@@ -7,7 +7,6 @@ public class EnemyBullet : Bullet
 {
     private BulletType type;
     private Vector2 moveDirection;
-    //Actor.moveSpeed;
     private float changeAmount;
     private Action duringFiring;
     private Coroutine coroutine;

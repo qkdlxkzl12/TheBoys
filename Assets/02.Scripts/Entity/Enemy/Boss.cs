@@ -7,12 +7,12 @@ using DG.Tweening;
 
 public class Boss : Enemy
 {
-    Vector3 initPos { get; } = new Vector3(7, 0, 0);
-    Vector3 comeoutPos { get; } = new Vector3(16, 5, 0);
+    protected Vector3 initPos { get; } = new Vector3(7, 0, 0);
+    private Vector3 comeoutPos { get; } = new Vector3(16, 5, 0);
     protected Sequence comeoutSeq;
     [SerializeField]
-    string bossName;
-    Slider bossSlider;
+    private string bossName;
+    private Slider bossSlider;
 
     protected virtual void Start()
     {

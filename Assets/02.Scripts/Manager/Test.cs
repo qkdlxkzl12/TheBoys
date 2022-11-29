@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Test : MonoBehaviour
+public class Test : Actor
 {
+    Test() : base() { }
+
     [SerializeField]
-    int moveSpeed;
+    new int moveSpeed;
 
     [SerializeField]
     GameObject obj;
