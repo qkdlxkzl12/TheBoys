@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 3452882612565690841}
   - component: {fileID: 3452882612565690840}
   - component: {fileID: 3452882612565690843}
-  - component: {fileID: 3452882612565690842}
+  - component: {fileID: 5457551817475836966}
   - component: {fileID: 3452882612565690855}
+  - component: {fileID: 7873142421257204111}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -76,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: -1675895476, guid: 61d16c46038c7054ab7c2998b8cb1869, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -108,8 +109,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &3452882612565690842
-CircleCollider2D:
+--- !u!70 &5457551817475836966
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -119,11 +120,11 @@ CircleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 1
+  m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
+  m_Offset: {x: 0.058571916, y: 0.79071265}
+  m_Size: {x: 4.9828935, y: 3.5772004}
+  m_Direction: 1
 --- !u!114 &3452882612565690855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,3 +149,23 @@ MonoBehaviour:
   Mag: 1
   Can_Heal: 1
   Buff_Illusion: 0
+--- !u!95 &7873142421257204111
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3452882612565690846}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ef65447a7a211ac499d521f7e6fe797c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

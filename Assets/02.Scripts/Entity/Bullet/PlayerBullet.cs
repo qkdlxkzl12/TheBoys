@@ -4,26 +4,34 @@ using UnityEngine;
 
 public class PlayerBullet : Bullet
 {
+    public GameObject me;
+
     public Element element;
     public BulletType type;
 
-    //public Sprite
+    public float MoveSpeed;
+
+    //public anime
 
     Vector2 direction;
     float value;
 
-    float DeadTime = 15f;
 
     //public EnemyBullet(int hp, int attackDamage, int moveSpeed, float attackDelay) : base(hp, attackDamage, moveSpeed, attackDelay)
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
+        me.transform.parent = null;
+    }
+
+    void FixedUpdate()
+    {
+        
+        me.transform.Translate(MoveSpeed * Time.deltaTime, 0, 0);
 
     }
 
