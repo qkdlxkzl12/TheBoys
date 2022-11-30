@@ -70,8 +70,19 @@ public class Actor : MonoBehaviour
     //액터가 죽을 때
     virtual protected void OnDie()
     {
-        Debug.Log(gameObject.name + "Die");
-        Destroy(gameObject);
+        if(gameObject.tag == "Player") //플레이어 전용
+        {
+            gameObject.GetComponent<PlayerGlobal>().Dead_Event();
+        }   
+        else
+        {
+            Debug.Log(gameObject.name + "Die");
+            Destroy(gameObject);
+        }
     }
 
+
+
 }
+
+
