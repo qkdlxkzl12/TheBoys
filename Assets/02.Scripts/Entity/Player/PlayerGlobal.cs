@@ -8,7 +8,7 @@ public class PlayerGlobal : Actor
     GameObject Player;
 
     //기본
-    public int Add_HP; //추가 체력
+    public int Basic_HP; //기본 체력
     public float SpeedPower;//추가 이동속도
     public float Add_SpeedPower;// 정규화 보정
     public bool Move_Type; //이동 방식) True : 벡터 , False : 원시적
@@ -52,12 +52,14 @@ public class PlayerGlobal : Actor
             Magazine.Add(Element.Normal);
             Debug.Log("기본 총알 장전 : " + Magazine[0]);
         }
+
+        curHp = Basic_HP;
+        attackDamage = 1;
     }
 
     private void Start()
     {
         Player = GameManager.instance.player; // 전달
-        hp += Add_HP;
 
         Buff = GameObject.Find("BuffManager").GetComponent<BuffManager>();
     }
@@ -65,20 +67,16 @@ public class PlayerGlobal : Actor
     private void Update()
     {
 
-        if (Can_Heal == true && hp <= 2) //자동 회복
+        if (Can_Heal == true && curHp != Basic_HP) //자동 회복
         {
-            if (hp == 1)
-                hp += 2;
-            else if (hp == 2)
-                hp += 1;
-
-            Debug.Log("회복됨 : " + hp);
+            curHp = Basic_HP;
+            Debug.Log("회복됨 : " + curHp);
         }
 
             if (Magazine != null && Can_Shoot == true)
             {
 
-                Invoke("Shooting_System", Shooting_Time);
+               // Invoke("Shooting_System", Shooting_Time);
 
             }
 
@@ -93,8 +91,8 @@ public class PlayerGlobal : Actor
     {
         if (DamageTime == false) //피격 데미지 쿨타임 여부
         {
-            AttackTo(Player);
-            Debug.Log(hp);
+            AttackTo(Player.GetComponent<Actor>());
+            Debug.Log(curHp);
 
             CancelInvoke("Heal");
         }
