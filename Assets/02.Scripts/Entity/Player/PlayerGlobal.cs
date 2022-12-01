@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+public enum Trait { 보호막, 돋보기, RTX, 벼락, 광란, 없음 }
+public enum Synergy { 은총, 천체망, 과충전, 전격, 폭격, 없음 }
+
 public class PlayerGlobal : Actor
 {
     GameObject Player;
+    [HideInInspector]
     public Animator Anime;
 
     //기본
@@ -16,8 +20,9 @@ public class PlayerGlobal : Actor
     public bool Can_Move = true;
     public bool Move_Type; //이동 방식) True : 벡터 , False : 원시적
 
-    float SpeedPower_Diagonal; // 정규화용
+    public bool Dead_Statue = false;
 
+    float SpeedPower_Diagonal; // 정규화용
 
     //사격
     public GameObject[] P_Bullet;
@@ -40,6 +45,18 @@ public class PlayerGlobal : Actor
 
     [HideInInspector]
     public bool Buff_Illusion = false;
+
+
+    //특성
+    public Trait trait;
+
+    [HideInInspector]
+    public int Shield; //쉴드량
+    //public float Shiled_Time;
+
+
+    //시너지
+    public Synergy synergy;
 
 
     private void Awake()
@@ -65,6 +82,7 @@ public class PlayerGlobal : Actor
 
         Buff = GameObject.Find("BuffManager").GetComponent<BuffManager>();
 
+        Trait_System();
         Shooting_System();
     }
 
@@ -105,48 +123,85 @@ public class PlayerGlobal : Actor
     public void Shooting_System()
     {
         GameObject Inst_Bullets;
-        
-        if (Can_Shoot == true)
+
+        IEnumerator Shot()
         {
-            if (Magazine[0] == Element.Normal) //기본 총알 발사
-                Ready_Slot.Enqueue(Element.Normal); //기본 총알 대기
+            yield return new WaitForSeconds(Shooting_Time);
 
-            if (Magazine[0] == Element.Normal)
-                Inst_Bullets = Instantiate(P_Bullet[0], Player.transform);
-            else if (Magazine[0] == Element.Iron)
-                Inst_Bullets = Instantiate(P_Bullet[1], Player.transform);
-            else if (Magazine[0] == Element.Battery)
-                Inst_Bullets = Instantiate(P_Bullet[2], Player.transform);
-            else if (Magazine[0] == Element.Fire)
-                Inst_Bullets = Instantiate(P_Bullet[3], Player.transform);
-            else if (Magazine[0] == Element.Snowball)
-                Inst_Bullets = Instantiate(P_Bullet[4], Player.transform);
-            else
-                Inst_Bullets = Instantiate(P_Bullet[0], Player.transform);
+            if (Can_Shoot == true)
+            {
+                if (Magazine[0] == Element.Normal) //기본 총알 발사
+                    Ready_Slot.Enqueue(Element.Normal); //기본 총알 대기
 
-            Inst_Bullets.transform.position = Player.transform.position;
+                if (Magazine[0] == Element.Normal)
+                    Inst_Bullets = Instantiate(P_Bullet[0], Player.transform);
+                else if (Magazine[0] == Element.Iron)
+                    Inst_Bullets = Instantiate(P_Bullet[1], Player.transform);
+                else if (Magazine[0] == Element.Battery)
+                    Inst_Bullets = Instantiate(P_Bullet[2], Player.transform);
+                else if (Magazine[0] == Element.Fire)
+                    Inst_Bullets = Instantiate(P_Bullet[3], Player.transform);
+                else if (Magazine[0] == Element.Snowball)
+                    Inst_Bullets = Instantiate(P_Bullet[4], Player.transform);
+                else
+                    Inst_Bullets = Instantiate(P_Bullet[0], Player.transform);
 
-            Magazine.RemoveAt(0);
-            Magazine.Add(Ready_Slot.Dequeue());
+                Inst_Bullets.transform.position = Player.transform.position;
+
+                Magazine.RemoveAt(0);
+                Magazine.Add(Ready_Slot.Dequeue());
+            }
+
+            StartCoroutine(Shot());
         }
 
-        Invoke("Shooting_System", Shooting_Time);
+        StartCoroutine(Shot());
+    }
+
+    public bool Trait_System()
+    {
+        if(trait == Trait.보호막)
+        {
+            Shield += 1; //여기서 함수 짜고 재귀
+        }
+        else if (trait == Trait.돋보기)
+        {
+            return true; //플레이어 불렛에서 사용
+        }
+        else if (trait == Trait.RTX)
+        {
+            //여기서 함수 짜고 재귀
+        }
+        else if (trait == Trait.벼락)
+        {
+           //적 찾고 랜덤으로 벼락. 근데 적 태그는 뭐고 자파르는 왜 따로 분류?
+        }
+        else if (trait == Trait.광란)
+        {
+            Shooting_Time *= Random.Range(1.05f, 1.1f);
+        }
+
+        return false;
     }
 
     public void Dead_Event()
     {
+        Dead_Statue = true;
         Anime.SetBool("OnDead", true);
         Can_Shoot = false;
         Can_Move = false;
-
+            
         IEnumerator Dead()
         {
+            
+
             //사망 시 이벤트 추가 필요
             yield return new WaitForSeconds(1.5f);
             Destroy(Player);
         }
 
-        StartCoroutine(Dead());
+        if(Dead_Statue == false)
+            StartCoroutine(Dead());
     }
 
 
@@ -251,5 +306,3 @@ public class PlayerGlobal : Actor
     }
 
 }
-
-

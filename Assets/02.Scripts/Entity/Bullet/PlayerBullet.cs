@@ -26,6 +26,7 @@ public class PlayerBullet : Bullet
     private void Start()
     {
         me.transform.parent = null;
+        Init(element);
     }
 
     void FixedUpdate()
@@ -38,6 +39,31 @@ public class PlayerBullet : Bullet
     public void Init(Element element)
     {
         this.element = element;
+        
+        if(element == Element.Normal)
+        {
+            //?
+        }
+        else if (element == Element.Iron)
+        {
+            
+        }
+        else if (element == Element.Thunder)
+        {
+
+        }
+        else if (element == Element.Battery)
+        {
+
+        }
+        else if (element == Element.Fire)
+        {
+
+        }
+        else if (element == Element.Snowball)
+        {
+
+        }
     }
 
     //Test. 임시 불속성 매소드
