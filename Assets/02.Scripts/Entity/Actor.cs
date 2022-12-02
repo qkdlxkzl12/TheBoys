@@ -47,13 +47,37 @@ public class Actor : MonoBehaviour
     virtual public void TakeAttack(int damage)
     {
         //공격을 받으면 발생하는 이벤트
+
+        if (gameObject.tag == "Player") //?
+        {
+            PlayerGlobal player = gameObject.GetComponent<PlayerGlobal>();
+
+
+        }
+
         Damaged(damage);
     }
 
     //데미지를 받음
     virtual protected void Damaged(int value)
     {
-        curHp -= value;
+        if(gameObject.tag == "Player") // 플레이어 보호막 특성 및 은총 시너지 발동
+        {
+            PlayerGlobal player = gameObject.GetComponent<PlayerGlobal>();
+
+            if (player.Shield > 0)
+            {
+                player.Shield -= value;
+
+                if (player.synergy == Synergy.은총 && player.Shield <= 0)
+                {
+                    //총알 제거
+                }
+            }
+        }
+        else
+            curHp -= value;
+
         if(curHp <= 0)
         {
             OnDie();
@@ -70,8 +94,19 @@ public class Actor : MonoBehaviour
     //액터가 죽을 때
     virtual protected void OnDie()
     {
-        Debug.Log(gameObject.name + "Die");
-        Destroy(gameObject);
+        if(gameObject.tag == "Player") //플레이어 전용 데드 이벤트
+        {
+            gameObject.GetComponent<PlayerGlobal>().Dead_Event();
+        }   
+        else
+        {
+            Debug.Log(gameObject.name + "Die");
+            Destroy(gameObject);
+        }
     }
 
+
+
 }
+
+
