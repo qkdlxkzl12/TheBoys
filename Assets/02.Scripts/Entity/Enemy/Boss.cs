@@ -48,11 +48,15 @@ public class Boss : Enemy
 
     override protected void Damaged(int value)
     {
-        curHp -= value;
+        base.Damaged(value);
         bossSlider.value = curHp;
-        if (curHp <= 0)
-        {
-            OnDie();
-        }
+    }
+
+    protected override void OnDie()
+    {
+        //애니메이션 실행
+        
+        //삭제
+        base.OnDie();
     }
 }

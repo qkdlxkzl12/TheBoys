@@ -13,7 +13,7 @@ public class Jafar : Boss
     [SerializeField]
     JafarLazer lazer;
 
-    Jafar() : base(100, 10, "Jafar") { }
+    Jafar() : base(100, 10, "<b>사악한 마법사 : 자파</b>") { }
     float thinkTime;
     Animator animator;
     Action action;
@@ -41,11 +41,12 @@ public class Jafar : Boss
     protected override IEnumerator ChoseAction()
     {
         SetAnimation(JarfarAnimState.Idle);
-        int chose = 0; //UnityEngine.Random.Range(1,100);
-        switch (chose)
+        int chose = UnityEngine.Random.Range(1,100);
+        switch (chose/25)
         {
             case 0:
                 action = () => SetAnimation(JarfarAnimState.TeleportAttack);
+                repeatCnt = 3;
                 thinkTime = 2f;
                 break;
             case 1:
@@ -78,8 +79,6 @@ public class Jafar : Boss
                 break;
             case 4:
                 action = () => SetAnimation(JarfarAnimState.Teleport);
-                //lazer.target = gameObject.transform;
-                //lazer.gameObject.SetActive(true);
                 thinkTime = 2f;
                 break;
         }
@@ -155,14 +154,16 @@ public class Jafar : Boss
 
     IEnumerator TelleportAttack(float time)
     {
-        animator.SetInteger("SkillRepeat", 1);
+        animator.SetBool("IsFireLazer", true);
         float remainTime = time;
         while(remainTime > 0)
         {
             remainTime -= Time.deltaTime;
             yield return null;
         }
-        animator.SetInteger("SkillRepeat",0);
+        repeatCnt--;
+        animator.SetInteger("SkillRepeat", repeatCnt);
+        animator.SetBool("IsFireLazer", false);
     }
 
     void Telleport(TeleportType type)
@@ -187,7 +188,7 @@ public class Jafar : Boss
 
     void FireLazer()
     {
-        float durationTime = 2f;
+        float durationTime = 1.4f;
         StartCoroutine(TelleportAttack(durationTime));
         lazer.Fire(durationTime);
     }
