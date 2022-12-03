@@ -266,7 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d986e0393642cc4ea45830e7a0c7c1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossName: Jafar
+  bossName: "\uC0AC\uC545\uD55C \uB9C8\uBC95\uC0AC : \uC790\uD30C"
   face: {fileID: 8027784622327910957}
   lazer: {fileID: 5838527963420743001}
   fireOffset: {x: -2, y: 0.25, z: 0}
