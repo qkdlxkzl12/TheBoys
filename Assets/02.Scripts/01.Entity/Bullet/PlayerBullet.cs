@@ -1,5 +1,7 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerBullet : Bullet
@@ -27,7 +29,14 @@ public class PlayerBullet : Bullet
     {
         me.transform.parent = null;
         Init(element);
+
+        if(GameManager.instance.player.GetComponent<PlayerGlobal>().trait == Trait.돋보기) //돋보기 특성
+        {
+            me.transform.localScale = new Vector2(me.transform.localScale.x * 2, me.transform.localScale.y * 2);
+        }    
+
     }
+
 
     void FixedUpdate()
     {
@@ -35,6 +44,7 @@ public class PlayerBullet : Bullet
         me.transform.Translate(MoveSpeed * Time.deltaTime, 0, 0);
 
     }
+
 
     public void Init(Element element)
     {
@@ -44,7 +54,7 @@ public class PlayerBullet : Bullet
         {
             //?
         }
-        else if (element == Element.Iron)
+        else if (element == Element.Silver)
         {
             
         }
@@ -65,6 +75,31 @@ public class PlayerBullet : Bullet
 
         }
     }
+
+
+    private void OnTriggerEnter2D(Collider2D coll)  // 피격 혹은 획득
+    {
+        if (coll.gameObject.CompareTag("Player") || coll.gameObject.CompareTag("Item") || coll.gameObject.CompareTag("Untagged"))
+        {
+            
+        }
+        else
+        {
+            Actor act = coll.GetComponent<Actor>();
+
+            AttackTo(act);
+
+            if(GameManager.instance.player.GetComponent<PlayerGlobal>().trait == Trait.돋보기)
+            {
+                AttackTo(act); //데미지 증가 (일단 이렇게 구현)
+            }
+
+            if (coll.gameObject.CompareTag("EnemyBullet"))
+                Destroy(coll.gameObject);
+            Destroy(me.gameObject);
+        }
+    }
+
 
     //Test. 임시 불속성 매소드
     void TestAvility1(GameObject obj)
