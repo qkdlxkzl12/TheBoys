@@ -47,14 +47,6 @@ public class Actor : MonoBehaviour
     virtual public void TakeAttack(int damage)
     {
         //공격을 받으면 발생하는 이벤트
-
-        if (gameObject.tag == "Player") //?
-        {
-            PlayerGlobal player = gameObject.GetComponent<PlayerGlobal>();
-
-
-        }
-
         Damaged(damage);
     }
 
@@ -66,6 +58,7 @@ public class Actor : MonoBehaviour
         {
             OnDie();
         }
+
     }
 
     protected void Healing(int value)
@@ -78,18 +71,9 @@ public class Actor : MonoBehaviour
     //액터가 죽을 때
     virtual protected void OnDie()
     {
-        if(gameObject.tag == "Player") //플레이어 전용 데드 이벤트
-        {
-            gameObject.GetComponent<PlayerGlobal>().Dead_Event();
-        }   
-        else
-        {
             Debug.Log(gameObject.name + "Die");
             Destroy(gameObject);
-        }
     }
-
-
 
 }
 

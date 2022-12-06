@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public enum Buffs {Illusion, }
+public enum Buffs {Illusion, Flame}
 
 public class BuffManager : MonoBehaviour
 {
