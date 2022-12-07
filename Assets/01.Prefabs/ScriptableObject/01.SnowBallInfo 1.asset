@@ -15,7 +15,7 @@ MonoBehaviour:
   image: {fileID: 1526753481, guid: 97216867d38e7a644803848280f2606b, type: 3}
   name: "\uB208\uB369\uC774"
   type: 0
-  curLevel: 0
+  curLevel: 3
   lore:
   - "\uC810\uC810 \uCEE4\uC9C0\uBA74\uC11C \uAC15\uB825\uD574\uC9C0\uB294\n\uB208\uB369\uC774\uB97C
     2\uAC1C \uD68D\uB4DD\uD569\uB2C8\uB2E4."
