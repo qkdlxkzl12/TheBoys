@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacteristicManager : MonoBehaviour
 {
     [SerializeField]
-    private CharacteristicInfo info;
+    private CharacteristicInfo[] info;
     // Start is called before the first frame update
     void Start()
     {

@@ -22,6 +22,9 @@ public class Test : Actor
     float height;
     [SerializeField]
     int sign;
+
+    [SerializeField]
+    SlotMachineManager slotMachineManager;
     void Start()
     {
 
@@ -36,6 +39,8 @@ public class Test : Actor
             dirVec.Normalize();
             transform.position += dirVec * moveSpeed * Time.deltaTime;
         }
+        if (Input.GetKeyDown(KeyCode.R))
+            slotMachineManager.StartMachine();
     }
 
     [ContextMenu("TestBullet")]

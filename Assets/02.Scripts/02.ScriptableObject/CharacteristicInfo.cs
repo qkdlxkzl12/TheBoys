@@ -4,20 +4,20 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public enum CharacteristicType { Magic, Passive }
+public enum CharacteristicType { Magic, Passive, Awakening }
 
 
-[System.Serializable, CreateAssetMenu(fileName = "BossInfo", menuName = "Scriptable Object/BossInfo")]
+[System.Serializable, CreateAssetMenu(fileName = "CharacteristicInfo", menuName = "Scriptable Object/CharacteristicInfo")]
 public class CharacteristicInfo : ScriptableObject
 {
     [SerializeField]
-    private Sprite image;
-    private Sprite Image { get { return image; } }
+    protected Sprite image;
+    public Sprite Image { get { return image; } }
     [SerializeField]
-    private string name;
+    protected string name;
     public string Name { get { return name; }  }
     [SerializeField]
-    private CharacteristicType type;
+    protected CharacteristicType type;
     public string Type
     {
         get
@@ -28,14 +28,16 @@ public class CharacteristicInfo : ScriptableObject
                     return "마법";
                 case CharacteristicType.Passive:
                     return "고유";
+                case CharacteristicType.Awakening:
+                    return "초월";
                 default:
                     return "";
             }
-        } 
+        }
     }
-    private int maxLevel;
+    protected int maxLevel;
     [SerializeField]
-    private int curLevel = 0;
+    protected int curLevel = 0;
     [SerializeField, Multiline(3)]
     private string[] lore;
     public string Lore
@@ -48,5 +50,51 @@ public class CharacteristicInfo : ScriptableObject
                 return "";
         } 
     }
-   
+
+    protected void Awake()
+    {
+        switch (type)
+        {
+            case CharacteristicType.Magic:
+                maxLevel = 5;
+                break;
+            case CharacteristicType.Passive:
+                maxLevel = 1;
+                break;
+            case CharacteristicType.Awakening:
+                maxLevel = 1;
+                break;
+            default:
+                maxLevel = -1;
+                break;
+        }
+    }
+
+    public bool IsSatisfyAwaken()
+    {
+        switch (type)
+        {
+            case CharacteristicType.Magic:
+                    return curLevel >= 3 ? true : false;
+            case CharacteristicType.Passive:
+                return curLevel >= 1 ? true : false;
+            case CharacteristicType.Awakening:
+                Debug.LogError("얘기치않은 접근이 발견되었습니다.(특성)");
+                return false;
+            default:
+                return false;
+
+        }
+    }
+
+    public virtual bool IsCanAcheive()
+    {
+            return curLevel < maxLevel;
+    }
+
+    public void LevelUp()
+    {
+        curLevel++;
+        //특성 레벨 효과 부여
+    }
 }

@@ -41,7 +41,7 @@ public class Jafar : Boss
     protected override IEnumerator ChoseAction()
     {
         SetAnimation(JarfarAnimState.Idle);
-        int chose = UnityEngine.Random.Range(1,100);
+        int chose = UnityEngine.Random.Range(75,100);
         switch (chose/25)
         {
             case 0:
