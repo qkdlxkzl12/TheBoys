@@ -20,6 +20,10 @@ public class PlayerGlobal : Actor
     public float SpeedPower;//추가 이동속도
     public float Add_SpeedPower;// 정규화 보정
 
+    //public int[] Level; //레벨
+    //public int Exp;
+    //public int[] Max_Exp;
+
     public bool Can_Move = true;
     public bool Move_Type; //이동 방식) True : 벡터 , False : 원시적
 
@@ -50,15 +54,16 @@ public class PlayerGlobal : Actor
     public bool Buff_Illusion = false;
 
 
-    //총알
-    //public bool Silver_Bullet == false;
+    //총알 
+    public bool Silver_Bullet = false;
 
     //특성
     public Trait trait;
 
-    [HideInInspector]
-    public int Shield; //쉴드량
+    int Shield = 1; //쉴드량
     float Shield_Time = 3f; //쉴드 주기
+
+    float Thunder_Time = 5f; //탐색 주기
 
     //시너지
     public Synergy synergy;
@@ -102,7 +107,7 @@ public class PlayerGlobal : Actor
 
         if(Input.GetKeyDown(KeyCode.Tab))
         {
-            Buff.DeBuff(Buffs.Illusion, 5f);
+            Ready_Slot.Enqueue(Element.Snowball);
         }
 
     }
@@ -143,13 +148,15 @@ public class PlayerGlobal : Actor
                 if (Magazine[0] == Element.Normal)
                     Inst_Bullets = Instantiate(P_Bullet[0], Player.transform);
                 else if (Magazine[0] == Element.Silver)
-                    Inst_Bullets = Instantiate(P_Bullet[1], Player.transform);
+                    Inst_Bullets = Instantiate(P_Bullet[1], Player.transform);            
                 else if (Magazine[0] == Element.Battery)
                     Inst_Bullets = Instantiate(P_Bullet[2], Player.transform);
                 else if (Magazine[0] == Element.Fire)
                     Inst_Bullets = Instantiate(P_Bullet[3], Player.transform);
                 else if (Magazine[0] == Element.Snowball)
                     Inst_Bullets = Instantiate(P_Bullet[4], Player.transform);
+                else if (Magazine[0] == Element.Thunder)
+                    Inst_Bullets = Instantiate(P_Bullet[5], Player.transform);
                 else
                     Inst_Bullets = Instantiate(P_Bullet[0], Player.transform);
 
@@ -165,7 +172,7 @@ public class PlayerGlobal : Actor
         StartCoroutine(Shot());
     }
 
-    public bool Trait_System()
+    public void Trait_System()
     {
         if(trait == Trait.보호막)
         {
@@ -191,7 +198,7 @@ public class PlayerGlobal : Actor
         }
         else if (trait == Trait.돋보기)
         {
-            return true; //플레이어 불렛에서 사용
+            //플레이어 불렛에서 사용
         }
         else if (trait == Trait.RTX)
         {
@@ -200,14 +207,13 @@ public class PlayerGlobal : Actor
         }
         else if (trait == Trait.벼락)
         {
-           //적 찾고 랜덤으로 벼락. 근데 적 태그는 뭐고 자파르는 왜 따로 분류?
+
+            Invoke("Trait_System", Thunder_Time);
         }
         else if (trait == Trait.광란)
         {
             Shooting_Time *= (1f - Random.Range(0.2f, 0.3f));
         }
-
-        return false;
     }
 
     public void Dead_Event()
@@ -310,6 +316,7 @@ public class PlayerGlobal : Actor
                     foreach (GameObject i in E_Bullets)
                         Destroy(i);
 
+                    //player.synergy = Synergy.없음;
                     Invoke("Trait_System", Shield_Time);
                 }
             }

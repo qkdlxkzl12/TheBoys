@@ -60,7 +60,9 @@ public class RTX100 : MonoBehaviour
         {
             yield return new WaitForSeconds(Shooting_Time);
 
-            Instantiate(RTX_Bullets, new Vector3 (me.transform.position.x, me.transform.position.y, me.transform.position.z), Quaternion.identity);
+            GameObject RB = Instantiate(RTX_Bullets, new Vector3 (me.transform.position.x, me.transform.position.y, me.transform.position.z), Quaternion.identity);
+
+            RB.GetComponent<SpriteRenderer>().color = new Color32(16, 16, 16, 255);
 
             StartCoroutine(Shot());
         }
