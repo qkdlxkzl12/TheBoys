@@ -63,7 +63,7 @@ public class PlayerGlobal : Actor
     int Shield = 1; //½¯µå·®
     float Shield_Time = 3f; //½¯µå ÁÖ±â
 
-    float Thunder_Time = 5f; //Å½»ö ÁÖ±â
+
 
     //½Ã³ÊÁö
     public Synergy synergy;
@@ -196,21 +196,24 @@ public class PlayerGlobal : Actor
                 }
             }
         }
-        else if (trait == Trait.µ¸º¸±â)
+
+        if (trait == Trait.µ¸º¸±â)
         {
             //ÇÃ·¹ÀÌ¾î ºÒ·¿¿¡¼­ »ç¿ë
         }
-        else if (trait == Trait.RTX)
+
+        if (trait == Trait.RTX)
         {
-            GameObject Rtx = Player.transform.GetChild(0).gameObject;
+            GameObject Rtx = Player.transform.Find("RTX").gameObject;
             Rtx.SetActive(true);
         }
-        else if (trait == Trait.º­¶ô)
-        {
 
-            Invoke("Trait_System", Thunder_Time);
+        if (trait == Trait.º­¶ô)
+        {
+            //¹Ì»ç¿ë
         }
-        else if (trait == Trait.±¤¶õ)
+
+        if (trait == Trait.±¤¶õ)
         {
             Shooting_Time *= (1f - Random.Range(0.2f, 0.3f));
         }

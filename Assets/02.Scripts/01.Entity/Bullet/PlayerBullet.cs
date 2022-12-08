@@ -51,7 +51,8 @@ public class PlayerBullet : Bullet
 
         if(SnowBall)
         {
-            me.transform.localScale = new Vector2(me.transform.localScale.x * SnowBallScale, me.transform.localScale.y * SnowBallScale);
+            if(SnowBallScale != 0)
+                me.transform.localScale = new Vector2(me.transform.localScale.x * SnowBallScale, me.transform.localScale.y * SnowBallScale);
         }
 
     }
