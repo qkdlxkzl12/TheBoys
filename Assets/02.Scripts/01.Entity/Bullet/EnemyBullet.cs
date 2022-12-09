@@ -114,7 +114,7 @@ public class EnemyBullet : Bullet
         coroutine = null;
     }
 
-    public void ExstraMove(Vector2 vec )
+    public void ExstraMove(Vector2 vec)
     {
 
     }
