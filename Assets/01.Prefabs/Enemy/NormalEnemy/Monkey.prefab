@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -3645480920963152709}
   - component: {fileID: -5840697072023073541}
   m_Layer: 0
-  m_Name: Razoul
+  m_Name: Monkey
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,8 +30,8 @@ Transform:
   m_GameObject: {fileID: 5931281190413278267}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -48,15 +48,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb5c1d85bb13c7e48834e08f4985b009, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 0.5
-  AttackSpeed: 1.25
+  curHp: 0
+  Max_Hp: 7
+  MoveSpeed: 1
+  AttackSpeed: 1.5
   MoveLoadingTime: 1.5
   Can_Act: 0
   AttackTypeRaven: 0
-  AttackTypeLazoul: 1
+  AttackTypeLazoul: 0
   Me: {fileID: 5931281190413278267}
   Anime: {fileID: 2797661804945463626}
-  Knives: {fileID: 2231771597775695767, guid: 2991590e559203540ac4d0e27bbc97a9, type: 3}
+  Knives: {fileID: 2231771597775695767, guid: 06f132397d9bdce4da8dd9236fce586f, type: 3}
   Player: {fileID: 0}
   Fire: 0
   FireStack: 0
@@ -102,7 +104,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -1209464678, guid: 63f67fc7af34d1f429a95a44634de16e, type: 3}
+  m_Sprite: {fileID: -1377373519, guid: 942dbe3d73710f348bbf7cd7d1ce964c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -123,7 +125,7 @@ Animator:
   m_GameObject: {fileID: 5931281190413278267}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 65bbd9a5a1186d943946c7d971602fb6, type: 2}
+  m_Controller: {fileID: 9100000, guid: 525e188323e527a4699d43fd4053256a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -153,7 +155,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!70 &-5840697072023073541
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -167,6 +169,6 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.003501892, y: -0.16808048}
-  m_Size: {x: 0.92095417, y: 1.3126111}
-  m_Direction: 0
+  m_Offset: {x: 0.025328273, y: -0.06803886}
+  m_Size: {x: 1.6182187, y: 0.98882264}
+  m_Direction: 1

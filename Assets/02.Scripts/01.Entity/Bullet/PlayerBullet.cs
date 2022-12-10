@@ -99,6 +99,11 @@ public class PlayerBullet : Bullet
         {
             Actor act = coll.GetComponent<Actor>();
 
+            if (coll.gameObject.CompareTag("Enemy"))
+            {
+                OnDeadChecking(coll);
+            }
+
             AttackTo(act);
 
             if(element == Element.Snowball)
@@ -122,6 +127,64 @@ public class PlayerBullet : Bullet
         }
     }
 
+
+    void OnDeadChecking(Collider2D coll)
+    {
+        Actor act = coll.GetComponent<Actor>();
+
+        if (element != Element.Silver && GameManager.instance.player.GetComponent<PlayerGlobal>().Silver_Bullet == true)
+        {
+            if (element == Element.Snowball)
+            {
+                if (GameManager.instance.player.GetComponent<PlayerGlobal>().synergy == Synergy.눈보라)
+                {
+                    if (act.curHp <= 4)
+                    {
+                        act.curHp = 666;
+                        coll.gameObject.GetComponent<Enemy>().OnDead();
+                    }
+                }
+                else
+                    if (act.curHp <= 3)
+                {
+                    act.curHp = 666;
+                    coll.gameObject.GetComponent<Enemy>().OnDead();
+                }
+            }
+            else
+                if (act.curHp <= 2)
+            {
+                act.curHp = 666;
+                coll.gameObject.GetComponent<Enemy>().OnDead();
+            }
+        }
+        else
+        {
+            if (element == Element.Snowball)
+            {
+                if (GameManager.instance.player.GetComponent<PlayerGlobal>().synergy == Synergy.눈보라)
+                {
+                    if (act.curHp <= 3)
+                    {
+                        act.curHp = 666;
+                        coll.gameObject.GetComponent<Enemy>().OnDead();
+                    }
+                }
+                else
+                    if (act.curHp <= 2)
+                {
+                    act.curHp = 666;
+                    coll.gameObject.GetComponent<Enemy>().OnDead();
+                }
+            }
+            else
+                if (act.curHp <= 1)
+            {
+                act.curHp = 666;
+                coll.gameObject.GetComponent<Enemy>().OnDead();
+            }
+        }
+    }
 
     //Test. 임시 불속성 매소드
     void TestAvility1(GameObject obj)

@@ -6,7 +6,8 @@ using System;
 public class Actor : MonoBehaviour
 {
     protected int maxHp;
-    protected int curHp;
+    [HideInInspector]
+    public int curHp;
     protected int hp; //임시
     protected int moveSpeed; //임시
     protected int attackDamage;

@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class 임시발사 : MonoBehaviour
+public class NormalFire : MonoBehaviour
 {
     public GameObject me;
+    public float Speed;
 
     void FixedUpdate()
     {
-        me.transform.Translate(Vector2.up * 40 * Time.deltaTime);
+        me.transform.Translate(Vector2.up * Speed * Time.deltaTime);
     }
 
     private void OnBecameInvisible()
