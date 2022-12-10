@@ -15,7 +15,7 @@ public class CharacteristicInfo : ScriptableObject
     public Sprite Image { get { return image; } }
     [SerializeField]
     protected string name;
-    public string Name { get { return name; }  }
+    public string Name { get { return (curLevel + 1 == maxLevel ? "Max " : $"Lv{curLevel+1} ") + name; }  }
     [SerializeField]
     protected CharacteristicType type;
     public string Type

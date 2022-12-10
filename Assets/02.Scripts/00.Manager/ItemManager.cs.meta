@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 3bbf34bdb3ab2704c9ea7997b5c6a314
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - expPrefab: {fileID: 6817893382915424811, guid: dd5e49a180fc1b54c9af7aa731c765d2, type: 3}
+  - traitOrbsPrefab: {fileID: 912188223211985701, guid: 40607a98f417a134397b3049c8c1294e, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

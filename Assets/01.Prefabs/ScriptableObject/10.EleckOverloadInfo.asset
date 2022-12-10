@@ -21,5 +21,5 @@ MonoBehaviour:
     \uACE0\uC7A5\uB0B4\uD2B8\uB9BD\uB2C8\uB2E4.\n\uB85C\uBD07\uC774 \uC544\uB2C8\uC5EC\uB3C4
     \uB9D0\uC774\uC8E0"
   baseCharacteristic:
-  - {fileID: 11400000, guid: 09dba2bb104804d4bbb695dcca223d76, type: 2}
-  - {fileID: 11400000, guid: a8ed19b71f976b04d934fbaf323a9b89, type: 2}
+  - {fileID: 11400000, guid: 79ac60fe42ccdc64e8253fff6cf4dc00, type: 2}
+  - {fileID: 11400000, guid: 04fc579ce9c603c439cb94c09c81975b, type: 2}

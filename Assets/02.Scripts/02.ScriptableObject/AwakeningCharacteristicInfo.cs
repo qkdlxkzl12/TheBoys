@@ -13,11 +13,13 @@ public class AwakeningCharacteristicInfo : CharacteristicInfo
         {
             Debug.LogError("Basee characteristic is stranged.");
         }
-        base.Awake();
         base.type = CharacteristicType.Awakening;
+        base.Awake();
     }
     public override bool IsCanAcheive()
     {
+        if(base.IsCanAcheive() == false)
+            return false;
         foreach(var characteristic in baseCharacteristic)
         {
             if(characteristic.IsSatisfyAwaken() == false)

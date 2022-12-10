@@ -6,6 +6,8 @@ using TMPro;
 
 public class SlotMachineManager : MonoBehaviour
 {
+    public static SlotMachineManager instance;
+
     [SerializeField]
     Transform selectBoard;
     const float slotHeight = 78;
@@ -23,6 +25,13 @@ public class SlotMachineManager : MonoBehaviour
 
     public List< CharacteristicInfo> abilityInfos; //슬롯의 사진들 .. 룰렛 초기화 할때 이미지 넘겨주기
 
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(this);
+    }
     private void Start()
     {
         selectAbilityInfo.Add(new CharacteristicInfo());
@@ -87,6 +96,7 @@ public class SlotMachineManager : MonoBehaviour
         for (int i = 0; i < slotAvilityObject.Length; i++)
         {
             slots[i].interactable = false;
+            avilitySelectButton[i].SetActive(false);
             slotAvilityObject[i].anchoredPosition = Vector3.up * slotHeight * 3;
         }
         InitSlot();
@@ -97,6 +107,16 @@ public class SlotMachineManager : MonoBehaviour
         StartCoroutine(SpinSlot(1, waitTime));
         StartCoroutine(SpinSlot(2, waitTime));
     }
+
+    //능력 최종 선택
+    public void ChooseAbility(int slotIndex)
+    {
+        selectAbilityInfo[slotIndex].LevelUp();
+        selectBoard.gameObject.SetActive(false);
+        transform.GetChild(0).gameObject.SetActive(false);
+        Time.timeScale = 1;
+    }
+
     public void SelectSlot(int i)
     {
         selectBoard.gameObject.SetActive(true);
@@ -109,6 +129,7 @@ public class SlotMachineManager : MonoBehaviour
         loreText.text = $"<b>{selectAbilityInfo[i].Lore}</b>";
     }
 
+    //슬롯 시작
     public void StartMachine()
     {
         Init();

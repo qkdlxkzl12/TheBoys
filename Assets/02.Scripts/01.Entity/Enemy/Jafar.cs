@@ -13,7 +13,7 @@ public class Jafar : Boss
     [SerializeField]
     JafarLazer lazer;
 
-    Jafar() : base(100, 10, "사악한 마법사 : 자파") { }
+    public Jafar() : base(100, 10, "사악한 마법사 : 자파") { }
     float thinkTime;
     Animator animator;
     Action action;
