@@ -52,6 +52,8 @@ MonoBehaviour:
   AttackSpeed: 1.25
   MoveLoadingTime: 1.5
   Can_Act: 0
+  AttackTypeRaven: 0
+  AttackTypeLazoul: 1
   Me: {fileID: 5931281190413278267}
   Anime: {fileID: 2797661804945463626}
   Knives: {fileID: 2231771597775695767, guid: 2991590e559203540ac4d0e27bbc97a9, type: 3}
