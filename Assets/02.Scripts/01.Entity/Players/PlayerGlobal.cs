@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEditor.Build;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public enum Trait { 보호막, 돋보기, RTX, 벼락, 광란, 없음 }
 public enum Synergy { 은총, 눈보라, 고장, 전격, 폭격, 없음 }
@@ -63,7 +64,7 @@ public class PlayerGlobal : Actor
     int Shield = 1; //쉴드량
     float Shield_Time = 3f; //쉴드 주기
 
-    float Thunder_Time = 5f; //탐색 주기
+    GameObject Rtx; //RTX
 
     //시너지
     public Synergy synergy;
@@ -79,7 +80,6 @@ public class PlayerGlobal : Actor
             Debug.Log("기본 총알 장전 : " + Magazine[0]);
         }
 
-        curHp = Basic_HP;
         attackDamage = 1;
     }
 
@@ -92,17 +92,18 @@ public class PlayerGlobal : Actor
 
         Buff = GameObject.Find("BuffManager").GetComponent<BuffManager>();
 
+        Rtx = Player.transform.Find("RTX").gameObject;
+
         Trait_System();
         Shooting_System();
     }
 
     private void Update()
     {
-
-        if (Can_Heal == true && curHp != Basic_HP) //자동 회복
+        if (Can_Heal == true && Basic_HP != 3) //자동 회복
         {
-            curHp = Basic_HP;
-            Debug.Log("회복됨 : " + curHp);
+            Basic_HP = 3;
+            Debug.Log("회복됨 : " + Basic_HP);
         }
 
         if(Input.GetKeyDown(KeyCode.Tab))
@@ -116,8 +117,8 @@ public class PlayerGlobal : Actor
     {
         if (DamageTime == false) //피격 데미지 쿨타임 여부
         {
-            AttackTo(Player.GetComponent<Actor>());
-            Debug.Log(curHp);
+            Damaged(1);
+            Debug.Log(Basic_HP);
 
             CancelInvoke("Heal");
         }
@@ -160,7 +161,8 @@ public class PlayerGlobal : Actor
                 else
                     Inst_Bullets = Instantiate(P_Bullet[0], Player.transform);
 
-                Inst_Bullets.transform.position = Player.transform.position;
+                Vector2 FireHole = new Vector2(Player.transform.position.x + 1.5f, Player.transform.position.y - 0.5f);
+                Inst_Bullets.transform.position = FireHole;
 
                 Magazine.RemoveAt(0);
                 Magazine.Add(Ready_Slot.Dequeue());
@@ -196,21 +198,23 @@ public class PlayerGlobal : Actor
                 }
             }
         }
-        else if (trait == Trait.돋보기)
+
+        if (trait == Trait.돋보기)
         {
             //플레이어 불렛에서 사용
         }
-        else if (trait == Trait.RTX)
+
+        if (trait == Trait.RTX)
         {
-            GameObject Rtx = Player.transform.GetChild(0).gameObject;
             Rtx.SetActive(true);
         }
-        else if (trait == Trait.벼락)
-        {
 
-            Invoke("Trait_System", Thunder_Time);
+        if (trait == Trait.벼락)
+        {
+            //미사용
         }
-        else if (trait == Trait.광란)
+
+        if (trait == Trait.광란)
         {
             Shooting_Time *= (1f - Random.Range(0.2f, 0.3f));
         }
@@ -222,10 +226,10 @@ public class PlayerGlobal : Actor
         Anime.SetBool("OnDead", true);
         Can_Shoot = false;
         Can_Move = false;
-            
+        Rtx.SetActive(false);
+
         IEnumerator Dead()
         {
-            
 
             //사망 시 이벤트 추가 필요
             yield return new WaitForSeconds(1.5f);
@@ -270,61 +274,28 @@ public class PlayerGlobal : Actor
         Can_Heal = true;
     }
 
-     new public void AttackTo(Actor target)
-    {
-        //대상이 Actor타입이 아닐 경우
-        if (target == null)
-        {
-            Debug.LogError("[ERROR:001]" + target.name + "'s type is not Actor");
-            return;
-        }
-        this.OnAttack();
-        target.TakeAttack(this.attackDamage);
-    }
-
-    override public void OnAttack()
-    {
-        //공격 시 발생하는 이벤트 작성(상속 후 내부적으로 구현)
-    }
-
-    override public void TakeAttack(int damage)
-    {
-        //공격을 받으면 발생하는 이벤트
-
-        if (gameObject.tag == "Player") //?
-        {
-            PlayerGlobal player = gameObject.GetComponent<PlayerGlobal>();
-        }
-
-        Damaged(damage);
-    }
 
     //데미지를 받음
     override protected void Damaged(int value)
     {
-        if (gameObject.tag == "Player")
+        if (Shield > 0)
         {
-            PlayerGlobal player = gameObject.GetComponent<PlayerGlobal>();
+            Shield -= value;
 
-            if (player.Shield > 0)
+            if (synergy == Synergy.은총 && Shield <= 0)
             {
-                player.Shield -= value;
+                GameObject[] E_Bullets = GameObject.FindGameObjectsWithTag("EnemyBullet");
+                foreach (GameObject i in E_Bullets)
+                    Destroy(i);
 
-                if (player.synergy == Synergy.은총 && player.Shield <= 0)
-                {
-                    GameObject[] E_Bullets = GameObject.FindGameObjectsWithTag("EnemyBullet");
-                    foreach (GameObject i in E_Bullets)
-                        Destroy(i);
-
-                    //player.synergy = Synergy.없음;
-                    Invoke("Trait_System", Shield_Time);
-                }
+                //player.synergy = Synergy.없음;
+                Invoke("Trait_System", Shield_Time);
             }
         }
         else
-            curHp -= value;
+            Basic_HP -= value;
 
-        if (curHp <= 0)
+        if (Basic_HP <= 0)
         {
             OnDie();
         }

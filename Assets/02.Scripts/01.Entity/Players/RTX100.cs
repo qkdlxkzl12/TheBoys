@@ -7,11 +7,12 @@ public class RTX100 : MonoBehaviour
 {
     public GameObject me;
 
-    public GameObject player;       //기준행성 (토성)
-    public float speed;             //회전 속도
+    public GameObject player;
+    public float speed;
 
     public GameObject RTX_Bullets;
     public float Shooting_Time;
+    public bool Can_Shoot = false;
 
     public float Broken_Time;
 
@@ -28,6 +29,8 @@ public class RTX100 : MonoBehaviour
             turnOn_2 = true;
             Broken_Synergy();
         }
+
+        Targeting();
     }
 
     void Update()
@@ -40,17 +43,44 @@ public class RTX100 : MonoBehaviour
             turnOn_2 = true;
             Broken_Synergy();
         }
+
     }
 
     void FixedUpdate()
     { 
-        OrbitAround();
+        Targeting();
     }
 
     private void OnTriggerEnter2D(Collider2D coll)  // 피격 혹은 획득
     {
         if (coll.gameObject.CompareTag("EnemyBullet"))
             Destroy(coll.gameObject);
+    }
+
+    void Targeting()
+    {
+        GameObject[] E_Targets = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject Boss = GameObject.FindGameObjectWithTag("Boss");
+
+        transform.RotateAround(player.transform.position, Vector3.back, speed * Time.deltaTime);
+
+        if (E_Targets.Length >= 1)
+        {
+            Can_Shoot = true;
+
+            if (Boss != null)
+            {
+                E_Targets[0] = Boss;
+            }
+
+            Vector3 d = E_Targets[0].transform.position - me.transform.position;
+
+            float angle = Mathf.Atan2(d.y, d.x) * Mathf.Rad2Deg;
+
+            me.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        }
+        else
+            Can_Shoot = false;
     }
 
     void Shooting_Function()
@@ -60,9 +90,8 @@ public class RTX100 : MonoBehaviour
         {
             yield return new WaitForSeconds(Shooting_Time);
 
-            GameObject RB = Instantiate(RTX_Bullets, new Vector3 (me.transform.position.x, me.transform.position.y, me.transform.position.z), Quaternion.identity);
-
-            RB.GetComponent<SpriteRenderer>().color = new Color32(16, 16, 16, 255);
+            if(Can_Shoot)
+                Instantiate(RTX_Bullets, new Vector3 (me.transform.position.x, me.transform.position.y, me.transform.position.z), me.transform.rotation);
 
             StartCoroutine(Shot());
         }
@@ -91,11 +120,6 @@ public class RTX100 : MonoBehaviour
             StartCoroutine(Broke());
         }
         StartCoroutine(Broke());
-    }
-
-    void OrbitAround()
-    {
-        transform.RotateAround(player.transform.position, Vector3.back, speed * Time.deltaTime);
     }
 
 }

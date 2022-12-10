@@ -51,7 +51,8 @@ public class PlayerBullet : Bullet
 
         if(SnowBall)
         {
-            me.transform.localScale = new Vector2(me.transform.localScale.x * SnowBallScale, me.transform.localScale.y * SnowBallScale);
+            if(SnowBallScale != 0)
+                me.transform.localScale = new Vector2(me.transform.localScale.x * SnowBallScale, me.transform.localScale.y * SnowBallScale);
         }
 
     }
@@ -90,7 +91,7 @@ public class PlayerBullet : Bullet
 
     private void OnTriggerEnter2D(Collider2D coll)  // ÇÇ°Ý È¤Àº È¹µæ
     {
-        if (coll.gameObject.CompareTag("Player") || coll.gameObject.CompareTag("Item") || coll.gameObject.CompareTag("Untagged"))
+        if (coll.gameObject.CompareTag("Player") || coll.gameObject.CompareTag("Item") || coll.gameObject.CompareTag("Untagged") || coll.gameObject.CompareTag("PlayerBullet"))
         {
             
         }
@@ -116,9 +117,8 @@ public class PlayerBullet : Bullet
                 AttackTo(act);
             }
 
-            if (coll.gameObject.CompareTag("EnemyBullet"))
-                Destroy(coll.gameObject);
-            Destroy(me.gameObject);
+            if(coll.gameObject.CompareTag("Enemy") || coll.gameObject.CompareTag("Boss"))
+                Destroy(me.gameObject);
         }
     }
 
