@@ -7,9 +7,19 @@ public class NormalFire : MonoBehaviour
     public GameObject me;
     public float Speed;
 
+    private void Start()
+    {
+        Invoke("Suicide", 4f);
+    }
+
     void FixedUpdate()
     {
         me.transform.Translate(Vector2.up * Speed * Time.deltaTime);
+    }
+
+    void Suicide()
+    {
+        Destroy(me);
     }
 
     private void OnBecameInvisible()

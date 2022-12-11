@@ -66,7 +66,7 @@ public class Enemy : Actor
         }
 
         if (On_Rush)
-            Me.transform.Translate(Vector2.left * (MoveSpeed * 16) * Time.deltaTime);
+            Me.transform.Translate(Vector2.left * (MoveSpeed * 6.5f) * Time.deltaTime);
     }
 
    void MovingOn()
@@ -86,7 +86,7 @@ public class Enemy : Actor
 
         if (AttackTypeRaven)
         {
-            if (Math.Abs(Player.transform.position.x - Me.transform.position.x) <= 22.5f)
+            if (Math.Abs(Player.transform.position.x - Me.transform.position.x) <= 7f)
             {
                 if (Can_Rush == true)
                 {

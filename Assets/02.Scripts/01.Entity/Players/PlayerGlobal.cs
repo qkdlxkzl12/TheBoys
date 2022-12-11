@@ -108,7 +108,7 @@ public class PlayerGlobal : Actor
 
         if(Input.GetKeyDown(KeyCode.Tab))
         {
-            Ready_Slot.Enqueue(Element.Snowball);
+
         }
 
     }
@@ -230,13 +230,12 @@ public class PlayerGlobal : Actor
 
         IEnumerator Dead()
         {
-
-            //사망 시 이벤트 추가 필요
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(2.5f);
+            GameObject.Find("PlayerUI").GetComponent<PlayerUI>().DeadEvent();
             Destroy(Player);
         }
 
-        if(Dead_Statue == false)
+        if(Dead_Statue == true)
             StartCoroutine(Dead());
     }
 
