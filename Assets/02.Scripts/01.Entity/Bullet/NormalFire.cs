@@ -9,7 +9,7 @@ public class NormalFire : MonoBehaviour
 
     private void Start()
     {
-        Invoke("Suicide", 4f);
+        Invoke("Suicide", 6f);
     }
 
     void FixedUpdate()

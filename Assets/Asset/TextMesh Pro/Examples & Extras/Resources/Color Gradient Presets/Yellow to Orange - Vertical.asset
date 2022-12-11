@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Yellow to Orange - Vertical
   m_EditorClassIdentifier: 
   colorMode: 3
-  topLeft: {r: 1, g: 0.95496154, b: 0, a: 1}
-  topRight: {r: 1, g: 0.34635204, b: 0, a: 1}
-  bottomLeft: {r: 1, g: 0.86910975, b: 0, a: 1}
-  bottomRight: {r: 1, g: 0.38841486, b: 0, a: 1}
+  topLeft: {r: 1, g: 0, b: 0.024585724, a: 1}
+  topRight: {r: 0, g: 0, b: 0, a: 1}
+  bottomLeft: {r: 0.084905684, g: 0.084905684, b: 0.084905684, a: 1}
+  bottomRight: {r: 0.6132076, g: 0, b: 0.034574565, a: 1}

@@ -30,13 +30,7 @@ public class Enemy : Actor
     public GameObject Knives;
     [HideInInspector]
     public GameObject Player;
-    
-    [HideInInspector]
-    public bool Fire; //화상 버프
-    [HideInInspector]
-    public int FireStack; //화상 스택
-    [HideInInspector]
-    public bool Recharge; //충전 버프
+   
 
     private void Start()
     {

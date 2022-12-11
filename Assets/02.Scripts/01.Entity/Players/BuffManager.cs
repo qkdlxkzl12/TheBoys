@@ -10,7 +10,7 @@ public class BuffManager : MonoBehaviour
 {
     IEnumerator Illu;
 
-    public void DeBuff(Buffs Type, float Times)
+    public void DeBuff(Buffs Type, float Times, GameObject Unit = null)
     {
 
         switch (Type)
@@ -20,7 +20,11 @@ public class BuffManager : MonoBehaviour
                 break;
 
             case Buffs.Recharge:
-                recharge();
+                recharge(Unit);
+                break;
+
+            case Buffs.Flame:
+                burning(Unit);
                 break;
         }
 
@@ -48,17 +52,28 @@ public class BuffManager : MonoBehaviour
             }
         }
 
-        void recharge()
+        void recharge(GameObject Unit)
         {
-            GameObject[] Enemy_Bullets = GameObject.FindGameObjectsWithTag("EnemyBullet");
-
-            /*Actor[]
-
-            foreach 
-            */
-
-
+            if(Unit != null)
+            {
+                if(Unit.tag == "enemy")
+                {
+                    Unit.GetComponent<Actor>().Recharge = true;
+                }
+            }
         }
+
+        void burning(GameObject Unit)
+        {
+            if (Unit != null)
+            {
+                Unit.GetComponent<Actor>().Fire = true;
+            }
+        }
+    }
+
+    void Fire_Recycling()
+    {
 
     }
 

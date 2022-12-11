@@ -340,8 +340,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: GAME OVER
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 27a10d2e37beef44a98d6afe0c7925a2, type: 2}
-  m_sharedMaterial: {fileID: 5683138240459008279, guid: 27a10d2e37beef44a98d6afe0c7925a2, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9d4bceeda4e599c4d874669e14957b78, type: 2}
+  m_sharedMaterial: {fileID: 5683138240459008279, guid: 9d4bceeda4e599c4d874669e14957b78, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -404,7 +404,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &8798171660647431757

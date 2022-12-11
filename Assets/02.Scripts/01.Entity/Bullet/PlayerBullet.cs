@@ -39,7 +39,12 @@ public class PlayerBullet : Bullet
             {
                 me.transform.localScale = new Vector2(me.transform.localScale.x * 1.5f, me.transform.localScale.y * 1.5f);
             }
+
+            Invoke("Suicide", 3f);
         }
+        else
+            Invoke("Suicide", 5f);
+
     }
 
 
@@ -89,7 +94,7 @@ public class PlayerBullet : Bullet
     }
 
 
-    private void OnTriggerEnter2D(Collider2D coll)  // 피격 혹은 획득
+    private void OnTriggerEnter2D(Collider2D coll)  // 공격
     {
         if (coll.gameObject.CompareTag("Player") || coll.gameObject.CompareTag("Item") || coll.gameObject.CompareTag("Untagged") || coll.gameObject.CompareTag("PlayerBullet"))
         {
@@ -121,6 +126,8 @@ public class PlayerBullet : Bullet
                 GameManager.instance.player.GetComponent<PlayerGlobal>().Silver_Bullet = false;
                 AttackTo(act);
             }
+
+
 
             if(coll.gameObject.CompareTag("Enemy") || coll.gameObject.CompareTag("Boss"))
                 Destroy(me.gameObject);
@@ -184,6 +191,11 @@ public class PlayerBullet : Bullet
                 coll.gameObject.GetComponent<Enemy>().OnDead();
             }
         }
+    }
+
+    void Suicide()
+    {
+        Destroy(me);
     }
 
     //Test. 임시 불속성 매소드

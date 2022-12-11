@@ -12,6 +12,13 @@ public class Actor : MonoBehaviour
     protected int moveSpeed; //임시
     protected int attackDamage;
 
+    [HideInInspector]
+    public bool Fire; //화상 버프
+    [HideInInspector]
+    public int FireStack; //화상 스택
+    [HideInInspector]
+    public bool Recharge; //충전 버프
+
     public Actor()
     {
         maxHp = 5;
@@ -72,7 +79,7 @@ public class Actor : MonoBehaviour
     //액터가 죽을 때
     virtual protected void OnDie()
     {
-            Debug.Log(gameObject.name + "Die");
+            //Debug.Log(gameObject.name + "Die");
             Destroy(gameObject);
     }
 

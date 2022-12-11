@@ -250,11 +250,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3452882612565690855, guid: a1876a43232fa3747881a307124e8700, type: 3}
       propertyPath: trait
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3452882612565690855, guid: a1876a43232fa3747881a307124e8700, type: 3}
       propertyPath: synergy
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3452882612565690855, guid: a1876a43232fa3747881a307124e8700, type: 3}
       propertyPath: SpeedPower
@@ -271,6 +271,10 @@ PrefabInstance:
     - target: {fileID: 8867299135821310433, guid: a1876a43232fa3747881a307124e8700, type: 3}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8867299135895898636, guid: a1876a43232fa3747881a307124e8700, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1876a43232fa3747881a307124e8700, type: 3}
@@ -622,7 +626,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &590015694
 Transform:
   m_ObjectHideFlags: 0
@@ -631,7 +635,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 590015693}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.21, y: -2.84, z: 0}
+  m_LocalPosition: {x: 4.14, y: -4.07, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

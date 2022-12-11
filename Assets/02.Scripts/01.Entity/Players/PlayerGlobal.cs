@@ -61,6 +61,8 @@ public class PlayerGlobal : Actor
     //∆Øº∫
     public Trait trait;
 
+    bool SilverGun = false;
+    GameObject Barrier; //ΩØµÂ Ω∫«¡∂Û¿Ã∆Æ
     int Shield = 1; //ΩØµÂ∑Æ
     float Shield_Time = 3f; //ΩØµÂ ¡÷±‚
 
@@ -92,6 +94,7 @@ public class PlayerGlobal : Actor
 
         Buff = GameObject.Find("BuffManager").GetComponent<BuffManager>();
 
+        Barrier = Player.transform.Find("SHIELD").gameObject;
         Rtx = Player.transform.Find("RTX").gameObject;
 
         Trait_System();
@@ -108,7 +111,7 @@ public class PlayerGlobal : Actor
 
         if(Input.GetKeyDown(KeyCode.Tab))
         {
-
+            Ready_Slot.Enqueue(Element.Snowball);
         }
 
     }
@@ -181,6 +184,8 @@ public class PlayerGlobal : Actor
             if (synergy == Synergy.¿∫√—)
             {
                 Shield += 1;
+                SilverGun = true;
+                Barrier.SetActive(true);
             }
             else
             {
@@ -188,12 +193,14 @@ public class PlayerGlobal : Actor
                 {
                     Shield += 1;
                     Debug.Log("ΩØµÂ ¿Áª˝º∫");
+                    Barrier.SetActive(true);
                     Invoke("Trait_System", Shield_Time);
                 }
                 else
                 {
                     Shield = 0;
                     Debug.Log("ΩØµÂ ∆ƒ±‚");
+                    Barrier.SetActive(false);
                     Invoke("Trait_System", Shield_Time);
                 }
             }
@@ -227,6 +234,7 @@ public class PlayerGlobal : Actor
         Can_Shoot = false;
         Can_Move = false;
         Rtx.SetActive(false);
+        Destroy(Barrier);
 
         IEnumerator Dead()
         {
@@ -280,15 +288,17 @@ public class PlayerGlobal : Actor
         if (Shield > 0)
         {
             Shield -= value;
+            Barrier.SetActive(false);
 
-            if (synergy == Synergy.¿∫√— && Shield <= 0)
+            if (synergy == Synergy.¿∫√— && SilverGun == true)
             {
                 GameObject[] E_Bullets = GameObject.FindGameObjectsWithTag("EnemyBullet");
                 foreach (GameObject i in E_Bullets)
                     Destroy(i);
+                
+                SilverGun = false;
 
-                //player.synergy = Synergy.æ¯¿Ω;
-                Invoke("Trait_System", Shield_Time);
+                Invoke("Trait_System", Shield_Time + 1f);
             }
         }
         else
