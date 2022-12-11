@@ -14,37 +14,14 @@ public class RTX100 : MonoBehaviour
     public float Shooting_Time;
     public bool Can_Shoot = false;
 
-    public float Broken_Time;
-
-    bool turnOn_1 = false;
-    bool turnOn_2 = false;
-
     void Start()
     {
         player = GameManager.instance.player.gameObject;
         Shooting_Function();
 
-        if (player.GetComponent<PlayerGlobal>().synergy == Synergy.고장)
-        {
-            turnOn_2 = true;
-            Broken_Synergy();
-        }
-
         Targeting();
     }
 
-    void Update()
-    {
-        if(turnOn_1 == false)
-            Shooting_Function();
-
-        if (player.GetComponent<PlayerGlobal>().synergy == Synergy.고장 && turnOn_2 == false)
-        {
-            turnOn_2 = true;
-            Broken_Synergy();
-        }
-
-    }
 
     void FixedUpdate()
     { 
@@ -85,7 +62,6 @@ public class RTX100 : MonoBehaviour
 
     void Shooting_Function()
     {
-        turnOn_1 = true;
         IEnumerator Shot()
         {
             yield return new WaitForSeconds(Shooting_Time);
@@ -97,29 +73,6 @@ public class RTX100 : MonoBehaviour
         }
 
         StartCoroutine(Shot());
-    }
-
-    void Broken_Synergy()
-    {
-        IEnumerator Broke()
-        {
-            yield return new WaitForSeconds(Broken_Time);
-
-            GameObject[] Enemy_Bullets = GameObject.FindGameObjectsWithTag("EnemyBullet");
-
-            if(Enemy_Bullets != null)
-            {
-               int list = Random.Range(0, Enemy_Bullets.Length - 1);
-
-                GameObject EB = Enemy_Bullets[list];
-
-                EB.GetComponent<CircleCollider2D>().enabled = false;
-                EB.GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 32);
-            }
-
-            StartCoroutine(Broke());
-        }
-        StartCoroutine(Broke());
     }
 
 }

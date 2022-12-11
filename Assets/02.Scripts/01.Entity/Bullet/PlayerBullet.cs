@@ -28,23 +28,9 @@ public class PlayerBullet : Bullet
 
     private void Start()
     {
-        me.transform.parent = null;
         Init(element);
 
-        if (GameManager.instance.player.GetComponent<PlayerGlobal>().trait == Trait.µ¸º¸±â) //µ¸º¸±â Æ¯¼º
-        {
-            me.transform.localScale = new Vector2(me.transform.localScale.x * 2, me.transform.localScale.y * 2);
-
-            if (GameManager.instance.player.GetComponent<PlayerGlobal>().synergy == Synergy.´«º¸¶ó) //´«º¸¶ó ½Ã³ÊÁö
-            {
-                me.transform.localScale = new Vector2(me.transform.localScale.x * 1.5f, me.transform.localScale.y * 1.5f);
-            }
-
-            Invoke("Suicide", 3f);
-        }
-        else
-            Invoke("Suicide", 5f);
-
+        Invoke("Suicide", 5f);
     }
 
 
@@ -59,7 +45,6 @@ public class PlayerBullet : Bullet
             if(SnowBallScale != 0)
                 me.transform.localScale = new Vector2(me.transform.localScale.x * SnowBallScale, me.transform.localScale.y * SnowBallScale);
         }
-
     }
 
 

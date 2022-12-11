@@ -39,7 +39,7 @@ public class PlayerGlobal : Actor
     public float Shooting_Time;
 
     public int Mag; //탄창 밀집 개수
-    List<Element> Magazine = new List<Element>(); //탄창 큐
+    List<Element> Magazine = new List<Element>(); //약실
     Queue<Element> Ready_Slot = new Queue<Element>(); //탄창에 장전될 다음 총알들
 
 
@@ -58,15 +58,6 @@ public class PlayerGlobal : Actor
     //총알 
     public bool Silver_Bullet = false;
 
-    //특성
-    public Trait trait;
-
-    bool SilverGun = false;
-    GameObject Barrier; //쉴드 스프라이트
-    int Shield = 1; //쉴드량
-    float Shield_Time = 3f; //쉴드 주기
-
-    GameObject Rtx; //RTX
 
     //시너지
     public Synergy synergy;
@@ -94,10 +85,6 @@ public class PlayerGlobal : Actor
 
         Buff = GameObject.Find("BuffManager").GetComponent<BuffManager>();
 
-        Barrier = Player.transform.Find("SHIELD").gameObject;
-        Rtx = Player.transform.Find("RTX").gameObject;
-
-        Trait_System();
         Shooting_System();
     }
 
@@ -177,64 +164,12 @@ public class PlayerGlobal : Actor
         StartCoroutine(Shot());
     }
 
-    public void Trait_System()
-    {
-        if(trait == Trait.보호막)
-        {
-            if (synergy == Synergy.은총)
-            {
-                Shield += 1;
-                SilverGun = true;
-                Barrier.SetActive(true);
-            }
-            else
-            {
-                if (Shield <= 0)
-                {
-                    Shield += 1;
-                    Debug.Log("쉴드 재생성");
-                    Barrier.SetActive(true);
-                    Invoke("Trait_System", Shield_Time);
-                }
-                else
-                {
-                    Shield = 0;
-                    Debug.Log("쉴드 파기");
-                    Barrier.SetActive(false);
-                    Invoke("Trait_System", Shield_Time);
-                }
-            }
-        }
-
-        if (trait == Trait.돋보기)
-        {
-            //플레이어 불렛에서 사용
-        }
-
-        if (trait == Trait.RTX)
-        {
-            Rtx.SetActive(true);
-        }
-
-        if (trait == Trait.벼락)
-        {
-            //미사용
-        }
-
-        if (trait == Trait.광란)
-        {
-            Shooting_Time *= (1f - Random.Range(0.2f, 0.3f));
-        }
-    }
-
     public void Dead_Event()
     {
         Dead_Statue = true;
         Anime.SetBool("OnDead", true);
         Can_Shoot = false;
         Can_Move = false;
-        Rtx.SetActive(false);
-        Destroy(Barrier);
 
         IEnumerator Dead()
         {
@@ -285,24 +220,8 @@ public class PlayerGlobal : Actor
     //데미지를 받음
     override protected void Damaged(int value)
     {
-        if (Shield > 0)
-        {
-            Shield -= value;
-            Barrier.SetActive(false);
 
-            if (synergy == Synergy.은총 && SilverGun == true)
-            {
-                GameObject[] E_Bullets = GameObject.FindGameObjectsWithTag("EnemyBullet");
-                foreach (GameObject i in E_Bullets)
-                    Destroy(i);
-                
-                SilverGun = false;
-
-                Invoke("Trait_System", Shield_Time + 1f);
-            }
-        }
-        else
-            Basic_HP -= value;
+        Basic_HP -= value;
 
         if (Basic_HP <= 0)
         {
