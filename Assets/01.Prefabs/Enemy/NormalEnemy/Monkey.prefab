@@ -49,20 +49,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curHp: 0
+  Fire: 0
+  FireStack: 0
+  Recharge: 0
   Max_Hp: 7
-  MoveSpeed: 1
-  AttackSpeed: 1.5
-  MoveLoadingTime: 1.5
+  MoveSpeed: 1.25
+  AttackSpeed: 3.5
+  AttackNum: 1
+  MoveLoadingTime: 2
   Can_Act: 0
+  AttackTypeMonkey: 1
   AttackTypeRaven: 0
   AttackTypeLazoul: 0
   Me: {fileID: 5931281190413278267}
   Anime: {fileID: 2797661804945463626}
   Knives: {fileID: 2231771597775695767, guid: 06f132397d9bdce4da8dd9236fce586f, type: 3}
   Player: {fileID: 0}
-  Fire: 0
-  FireStack: 0
-  Recharge: 0
 --- !u!212 &6589755626359549973
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -171,4 +173,4 @@ CapsuleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0.025328273, y: -0.06803886}
   m_Size: {x: 1.6182187, y: 0.98882264}
-  m_Direction: 1
+  m_Direction: 0

@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-//#pragma warning disable
+#pragma warning disable 0414
 
 public class PlayerUI : MonoBehaviour
 {
