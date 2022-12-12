@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4512543551769128380}
   - component: {fileID: 4512543551769128371}
+  - component: {fileID: 2325766087365266977}
   m_Layer: 0
   m_Name: BuffManager
   m_TagString: Untagged
@@ -44,3 +45,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd4ec0bdef3a81c4ab2df8c37bc6d136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!58 &2325766087365266977
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4512543551769128370}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
