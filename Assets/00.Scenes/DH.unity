@@ -1712,6 +1712,7 @@ GameObject:
   - component: {fileID: 550141590}
   - component: {fileID: 550141591}
   - component: {fileID: 550141592}
+  - component: {fileID: 550141593}
   m_Layer: 0
   m_Name: TestManager
   m_TagString: Untagged
@@ -1759,7 +1760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02079eea9ac3b194bb766bc7762ad39b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  info: []
+  datas: []
 --- !u!114 &550141591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1786,6 +1787,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b76923d0f9665da4d93b6c451ff875ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &550141593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 550141587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02079eea9ac3b194bb766bc7762ad39b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  datas: []
 --- !u!1 &554048250
 GameObject:
   m_ObjectHideFlags: 0
@@ -2258,6 +2272,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81e3f537ae18c8e49b2193c63053d5c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curHp: 5
+  Fire: 0
+  FireStack: 0
+  Recharge: 0
   moveSpeed: 8
   obj: {fileID: 1526997942}
   obj2: {fileID: 1852113014}

@@ -11,6 +11,7 @@ public class Enemy : Actor
     Action a;
     //public Enemy(int hp, int attackDamage, int moveSpeed, float attackDelay) : base(hp,attackDamage,moveSpeed, attackDelay) { }
     public Enemy(int hp, int attackDamage) : base(hp, attackDamage) { }
+    protected bool isDying;
 
     public int Max_Hp; //최대 체력
     public float MoveSpeed; //이동 속도
@@ -164,6 +165,7 @@ public class Enemy : Actor
     public void OnDead()
     {
         Can_Act = false;
+        isDying = true;
         StopAllCoroutines();
         Me.GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 128);
         Dead_Motion();
@@ -171,12 +173,20 @@ public class Enemy : Actor
        IEnumerator Ondead()
         {
             yield return new WaitForSeconds(0.8f);
-
-            Debug.Log(gameObject.name + "Die");
-            Destroy(gameObject);
+            base.OnDie();
         }
 
         StartCoroutine(Ondead());
     }
 
+    protected override void OnDie()
+    {
+        OnDead();
+    }
+
+    protected override void Damaged(int value)
+    {
+        if(isDying == false)
+            base.Damaged(value);
+    }
 }

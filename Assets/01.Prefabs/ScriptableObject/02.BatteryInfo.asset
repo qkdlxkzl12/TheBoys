@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e517a94f42082fa4a90ea8b518174701, type: 3}
   m_Name: 02.BatteryInfo
   m_EditorClassIdentifier: 
+  id: 1003
   image: {fileID: 1858170863, guid: 97216867d38e7a644803848280f2606b, type: 3}
   name: "\uBC30\uD130\uB9AC"
   type: 0

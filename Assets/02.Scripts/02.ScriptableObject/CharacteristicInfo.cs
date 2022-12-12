@@ -11,6 +11,9 @@ public enum CharacteristicType { Magic, Passive, Awakening }
 public class CharacteristicInfo : ScriptableObject
 {
     [SerializeField]
+    protected int id;
+    public int Id { get { return id; } }
+    [SerializeField]
     protected Sprite image;
     public Sprite Image { get { return image; } }
     [SerializeField]
@@ -70,6 +73,10 @@ public class CharacteristicInfo : ScriptableObject
         }
     }
 
+    public void Init()
+    {
+        curLevel = 0;
+    }
     public bool IsSatisfyAwaken()
     {
         switch (type)
@@ -95,6 +102,7 @@ public class CharacteristicInfo : ScriptableObject
     public void LevelUp()
     {
         curLevel++;
+        CharacteristicManager.instance.GainTrait(this,curLevel);
         //특성 레벨 효과 부여
     }
 }

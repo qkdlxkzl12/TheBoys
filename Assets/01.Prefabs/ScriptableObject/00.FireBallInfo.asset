@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e517a94f42082fa4a90ea8b518174701, type: 3}
   m_Name: 00.FireBallInfo
   m_EditorClassIdentifier: 
+  id: 1001
   image: {fileID: 810261657, guid: 97216867d38e7a644803848280f2606b, type: 3}
   name: "\uD30C\uC774\uC5B4\uBCFC"
   type: 0

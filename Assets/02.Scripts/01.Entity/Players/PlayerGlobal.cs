@@ -5,9 +5,6 @@ using TMPro;
 using UnityEditor.Build;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
-public enum Trait { 보호막, 돋보기, RTX, 벼락, 광란, 없음 }
-public enum Synergy { 은총, 눈보라, 고장, 전격, 폭격, 없음 }
-
 public class PlayerGlobal : Actor
 {
     GameObject Player;
@@ -57,10 +54,6 @@ public class PlayerGlobal : Actor
 
     //총알 
     public bool Silver_Bullet = false;
-
-
-    //시너지
-    public Synergy synergy;
 
 
     private void Awake()

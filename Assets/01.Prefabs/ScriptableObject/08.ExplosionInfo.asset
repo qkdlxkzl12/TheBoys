@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f557c0c205901a843868e7c5d760fbcd, type: 3}
-  m_Name: 11.ExplosionInfo
+  m_Name: 08.ExplosionInfo
   m_EditorClassIdentifier: 
+  id: 3001
   image: {fileID: -383313837, guid: 526087fa84fc0f746939325026ee6fb2, type: 3}
   name: "\uC775\uC2A4\uD50C\uB85C\uC804"
   type: 2

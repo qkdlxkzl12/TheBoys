@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e517a94f42082fa4a90ea8b518174701, type: 3}
-  m_Name: 07.CrazyInfo
+  m_Name: 04.CrazyInfo
   m_EditorClassIdentifier: 
+  id: 2001
   image: {fileID: -1921716065, guid: 526087fa84fc0f746939325026ee6fb2, type: 3}
   name: "\uAD11\uB780"
   type: 1

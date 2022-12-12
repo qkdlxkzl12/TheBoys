@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e517a94f42082fa4a90ea8b518174701, type: 3}
-  m_Name: 04.SheildInfo
+  m_Name: 07.SheildInfo
   m_EditorClassIdentifier: 
+  id: 2004
   image: {fileID: 1211110032, guid: 526087fa84fc0f746939325026ee6fb2, type: 3}
   name: "\uBCF4\uD638\uB9C9"
   type: 1

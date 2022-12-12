@@ -100,7 +100,7 @@ public class PlayerBullet : Bullet
             {
                 AttackTo(act); //데미지 증가 (일단 이렇게 구현)
 
-                if (GameManager.instance.player.GetComponent<PlayerGlobal>().synergy == Synergy.눈보라)
+                //if (GameManager.instance.player.GetComponent<PlayerGlobal>().synergy == Synergy.눈보라)
                 {
                     AttackTo(act); //데미지 증가 (일단 이렇게 구현)
                 }
@@ -128,20 +128,20 @@ public class PlayerBullet : Bullet
         {
             if (element == Element.Snowball)
             {
-                if (GameManager.instance.player.GetComponent<PlayerGlobal>().synergy == Synergy.눈보라)
-                {
-                    if (act.curHp <= 4)
-                    {
-                        act.curHp = 666;
-                        coll.gameObject.GetComponent<Enemy>().OnDead();
-                    }
-                }
-                else
-                    if (act.curHp <= 3)
-                {
-                    act.curHp = 666;
-                    coll.gameObject.GetComponent<Enemy>().OnDead();
-                }
+                //if (GameManager.instance.player.GetComponent<PlayerGlobal>().synergy == Synergy.눈보라)
+                //{
+                //    if (act.curHp <= 4)
+                //    {
+                //        act.curHp = 666;
+                //        coll.gameObject.GetComponent<Enemy>().OnDead();
+                //    }
+                //}
+                //else
+                //    if (act.curHp <= 3)
+                //{
+                //    act.curHp = 666;
+                //    coll.gameObject.GetComponent<Enemy>().OnDead();
+                //}
             }
             else
                 if (act.curHp <= 2)
@@ -154,7 +154,7 @@ public class PlayerBullet : Bullet
         {
             if (element == Element.Snowball)
             {
-                if (GameManager.instance.player.GetComponent<PlayerGlobal>().synergy == Synergy.눈보라)
+                //if (GameManager.instance.player.GetComponent<PlayerGlobal>().synergy == Synergy.눈보라)
                 {
                     if (act.curHp <= 3)
                     {
@@ -162,7 +162,7 @@ public class PlayerBullet : Bullet
                         coll.gameObject.GetComponent<Enemy>().OnDead();
                     }
                 }
-                else
+                //else
                     if (act.curHp <= 2)
                 {
                     act.curHp = 666;
