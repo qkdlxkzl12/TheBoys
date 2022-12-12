@@ -54,7 +54,7 @@ public class CharacteristicInfo : ScriptableObject
         } 
     }
 
-    protected void Awake()
+    virtual protected void Awake()
     {
         switch (type)
         {

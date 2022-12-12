@@ -7,7 +7,7 @@ public class AwakeningCharacteristicInfo : CharacteristicInfo
 {
     [SerializeField]
     CharacteristicInfo[] baseCharacteristic;
-    private void Awake()
+    override protected void Awake()
     {
         if (baseCharacteristic.Length != 2)
         {

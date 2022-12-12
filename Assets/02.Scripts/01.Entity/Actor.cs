@@ -43,11 +43,11 @@ public class Actor : MonoBehaviour
             Debug.LogError("[ERROR:001]" + target.name + "'s type is not Actor");
             return;
         }
-        this.OnAttack();
+        this.OnAttack(target);
         target.TakeAttack(this.attackDamage);
     }
 
-    virtual public void OnAttack()
+    virtual public void OnAttack(Actor target)
     {
         //공격 시 발생하는 이벤트 작성(상속 후 내부적으로 구현)
     }
@@ -64,6 +64,7 @@ public class Actor : MonoBehaviour
         curHp -= value;
         if(curHp <= 0)
         {
+            curHp = 0;
             OnDie();
         }
 
@@ -79,7 +80,7 @@ public class Actor : MonoBehaviour
     //액터가 죽을 때
     virtual protected void OnDie()
     {
-            //Debug.Log(gameObject.name + "Die");
+            Debug.Log(gameObject.name + "Die");
             Destroy(gameObject);
     }
 

@@ -114,7 +114,7 @@ Transform:
   m_GameObject: {fileID: 3452882612565690846}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9, y: 0.9, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4591678224375787679}
@@ -148,21 +148,7 @@ MonoBehaviour:
   Can_Move: 1
   Move_Type: 1
   Dead_Statue: 0
-  P_Bullet:
-  - {fileID: 5095411567353551950, guid: 686d02a2d055a904bb6c9146dc4162e3, type: 3}
-  - {fileID: 5095411567353551950, guid: b0d3e527a300bec44adeb2adde4e3207, type: 3}
-  - {fileID: 5095411567353551950, guid: 6b5699f1f50b21f498b3e6961944094b, type: 3}
-  - {fileID: 5095411567353551950, guid: b50d56f9ba44f504e94b78d038db4980, type: 3}
-  - {fileID: 5095411567353551950, guid: e37be56902aca4d4d9a9201373479a4b, type: 3}
-  - {fileID: 5095411567353551950, guid: d174f8e34161326468d74c7f1090c090, type: 3}
-  Can_Shoot: 1
-  Shooting_Time: 0.33
-  Mag: 1
-  Can_Heal: 1
   Buff_Illusion: 0
-  Silver_Bullet: 0
-  trait: 2
-  synergy: 2
 --- !u!212 &3452882612565690840
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -249,8 +235,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.3679582, y: 0.6019832}
-  m_Size: {x: 1.4497622, y: 1.4497622}
+  m_Offset: {x: 0.008686452, y: 0.23112097}
+  m_Size: {x: 1.7974498, y: 0.88188446}
   m_Direction: 1
 --- !u!95 &7873142421257204111
 Animator:

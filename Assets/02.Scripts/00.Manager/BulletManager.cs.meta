@@ -5,6 +5,7 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - eBulletPrefab: {fileID: 2231771597775695767, guid: fb3cc611a3a7a014c99b433f00898f51, type: 3}
+  - pBulletPrefab: {fileID: 5635979440193643930, guid: e675d7a2075916a46bf46f4fdc533c3d, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

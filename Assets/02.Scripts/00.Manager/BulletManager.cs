@@ -8,12 +8,19 @@ public class BulletManager : MonoBehaviour
     public static BulletManager instance;
 
     [SerializeField]
-    GameObject eBulletPrefab;
-    int poolBulletCnt = 30;
+    private Sprite[] bulletSprites;
+    [SerializeField]
+    private GameObject eBulletPrefab;
+    [SerializeField]
+    private GameObject pBulletPrefab;
+    const int poolEBulletCnt = 30;
+    const int poolPBulletCnt = 20;
     [HideInInspector]
     public List<EnemyBullet> enemyBullets = new List<EnemyBullet>();
     [HideInInspector]
     public List<PlayerBullet> playerBullets = new List<PlayerBullet>();
+    public List<Element> playerMagazine = new List<Element>(); //실제로 플레이어의 탄창
+    int playerCurIndex;
     ArrayList useEnemyBullets = new ArrayList();
     private void Awake()
     {
@@ -29,12 +36,44 @@ public class BulletManager : MonoBehaviour
     }
     public void Init()
     {
-        for (int i = 0; i < poolBulletCnt; i++)
+        for (int i = 0; i < poolEBulletCnt; i++)
         {
             CreateBullet();
         }
+        for (int i = 0; i < poolPBulletCnt * 5; i++)
+        {
+            GameObject obj = Instantiate(pBulletPrefab, GameObject.Find("Bullets").transform);
+            PlayerBullet bullet = obj.GetComponent<PlayerBullet>();
+            obj.GetComponent<SpriteRenderer>().sprite = bulletSprites[i / poolPBulletCnt];
+            playerBullets.Add(bullet);
+            switch (i/ poolPBulletCnt)
+            {
+                case 0:
+                    bullet.Init(Element.Normal);
+                    break;
+                case 1:
+                    bullet.Init(Element.Battery);
+                    break;
+                case 2:
+                    bullet.Init(Element.Silver);
+                    break;
+                case 3:
+                    bullet.Init(Element.Snowball);
+                    break;
+                case 4:
+                    bullet.Init(Element.Fire);
+                    break;
+                default:
+                    break;
+            }
+            obj.name = $"PlayerBullet{bullet.element}";
+            obj.SetActive(false);
+
+        }
+        PlayerBulletAdd(cnt:5);
     }
 
+    #region 적총알 관련
     private EnemyBullet CreateBullet()
     {
         GameObject obj = Instantiate(eBulletPrefab, GameObject.Find("Bullets").transform);
@@ -44,7 +83,7 @@ public class BulletManager : MonoBehaviour
         return bullet;
     }
 
-    public EnemyBullet SelectBullet()
+    private EnemyBullet SelectBullet()
     {
         foreach (EnemyBullet bullet in enemyBullets)
         {
@@ -122,5 +161,35 @@ public class BulletManager : MonoBehaviour
             bullet.SetPositioning(v * distance, time);
         }
         useEnemyBullets.Clear();
+    }
+    #endregion
+
+    public void PlayerBulletFire(Vector3 pos)
+    {
+        Debug.Log(playerMagazine[playerCurIndex]);
+        for (int i = 0; i < playerBullets.Count; i++)
+        {
+            if(playerBullets[i].element == playerMagazine[playerCurIndex] && playerBullets[i].gameObject.activeSelf == false)
+            {
+                var fireBullet = playerBullets[i];
+                fireBullet.gameObject.SetActive(true);
+                fireBullet.transform.position = pos;
+                playerCurIndex = (playerCurIndex + 1) % playerMagazine.Count;
+                break;
+            }
+        }
+    }
+
+    public void PlayerBulletAdd(Element element = Element.Normal, int cnt = 1)
+    {
+        for (int i = 0; i < cnt; i++)
+        {
+            playerMagazine.Add(element);
+            var newBullet = Instantiate(pBulletPrefab).GetComponent<PlayerBullet>();
+            playerBullets.Add(newBullet);
+            newBullet.Init(element);
+            newBullet.gameObject.SetActive(false);
+            Debug.Log($"{element}타입의 총알 생성");
+        }
     }
 }

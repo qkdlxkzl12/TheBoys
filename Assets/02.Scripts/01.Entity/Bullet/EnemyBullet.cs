@@ -114,15 +114,20 @@ public class EnemyBullet : Bullet
         coroutine = null;
     }
 
-    public void ExstraMove(Vector2 vec)
-    {
-
-    }
-
     override protected void OnDie()
     {
         gameObject.SetActive(false);
         duringFiring = null;
         StopAllCoroutines();
+    }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        Actor hitter = col.GetComponent<Actor>();
+        if (col.CompareTag("Player"))
+        {
+            AttackTo(hitter);
+            OnDie();
+        }
     }
 }

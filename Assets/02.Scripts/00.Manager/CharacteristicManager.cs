@@ -11,8 +11,9 @@ public class CharacteristicManager : MonoBehaviour
     private CharacteristicInfo[] datas;
     Dictionary<CharacteristicInfo,Trait> trait = new Dictionary<CharacteristicInfo, Trait>();
 
-    public bool isOwnLens;
-    public bool isOwnCrazy;
+    public bool hasLens;
+    public bool hasCrazy;
+
     private void Awake()
     {
         if(instance == null)

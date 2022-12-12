@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 61d16c46038c7054ab7c2998b8cb1869
+guid: 043e9634808151c46a5c977cf3f866da
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 48
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -69,7 +69,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -105,7 +105,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -116,13 +116,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PLAYER_MOVEMENT_SPRITE_SHEET(x175)_(y140)_0
+      name: SPRITE_CHECK_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 1
         y: 0
-        width: 175
-        height: 140
+        width: 10
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,20 +130,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6e90dd165d99df548b8b2db1795c3bb5
-      internalID: -1675895476
+      spriteID: 3dd6b16813bae214ca9b8996bd92cfd9
+      internalID: 995308193
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PLAYER_MOVEMENT_SPRITE_SHEET(x175)_(y140)_1
+      name: SPRITE_CHECK_1
       rect:
         serializedVersion: 2
-        x: 175
+        x: 13
         y: 0
-        width: 175
-        height: 140
+        width: 10
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -151,20 +151,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dc5371a54ac476d49a68cd3171c4c585
-      internalID: -120145705
+      spriteID: dd3e0b1ae37a7a94ea400169ea7b5d92
+      internalID: 577331551
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PLAYER_MOVEMENT_SPRITE_SHEET(x175)_(y140)_2
+      name: SPRITE_CHECK_2
       rect:
         serializedVersion: 2
-        x: 350
-        y: 0
-        width: 175
-        height: 140
+        x: 25
+        y: 1
+        width: 10
+        height: 8
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -172,20 +172,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b52aa1b443e1ead4589631ba1add1e07
-      internalID: -1083979133
+      spriteID: dedb5a23a7e8b7847acec781a1f71514
+      internalID: -1254969174
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PLAYER_MOVEMENT_SPRITE_SHEET(x175)_(y140)_3
+      name: SPRITE_CHECK_3
       rect:
         serializedVersion: 2
-        x: 525
+        x: 36
         y: 0
-        width: 175
-        height: 140
+        width: 12
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -193,20 +193,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f252c4cab05a4c8498e3a7076d4a6a23
-      internalID: -267691749
+      spriteID: 7bc67257772dbdd49a8529ca2ca10c86
+      internalID: -711024733
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PLAYER_MOVEMENT_SPRITE_SHEET(x175)_(y140)_4
+      name: SPRITE_CHECK_4
       rect:
         serializedVersion: 2
-        x: 700
+        x: 49
         y: 0
-        width: 175
-        height: 140
+        width: 10
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -214,113 +214,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 456c30d0a8324cc47a143c6378679aae
-      internalID: 1301748122
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PLAYER_MOVEMENT_SPRITE_SHEET(x175)_(y140)_5
-      rect:
-        serializedVersion: 2
-        x: 875
-        y: 0
-        width: 175
-        height: 140
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2ca7151b0c5edb34199d5a433b29e8ab
-      internalID: -1854765356
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PLAYER_MOVEMENT_SPRITE_SHEET(x175)_(y140)_6
-      rect:
-        serializedVersion: 2
-        x: 1050
-        y: 0
-        width: 175
-        height: 140
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2373f822c314b114190a33fa8aaf8875
-      internalID: -877053749
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PLAYER_MOVEMENT_SPRITE_SHEET(x175)_(y140)_7
-      rect:
-        serializedVersion: 2
-        x: 1225
-        y: 0
-        width: 175
-        height: 140
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 84989a1f4eed26d4ebc562a4cb75ba34
-      internalID: 536101190
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PLAYER_MOVEMENT_SPRITE_SHEET(x175)_(y140)_8
-      rect:
-        serializedVersion: 2
-        x: 1400
-        y: 0
-        width: 175
-        height: 140
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d45492a05cff68942b97451d123ac7fd
-      internalID: 1878205079
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PLAYER_MOVEMENT_SPRITE_SHEET(x175)_(y140)_9
-      rect:
-        serializedVersion: 2
-        x: 1575
-        y: 0
-        width: 175
-        height: 140
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 29fc375bb196e2c4899b446c1f3ba412
-      internalID: -2094892528
+      spriteID: e7a62973a0091704bb011c870ec632af
+      internalID: 456503419
       vertices: []
       indices: 
       edges: []
@@ -336,16 +231,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      PLAYER_MOVEMENT_SPRITE_SHEET(x175)_(y140)_8: 1878205079
-      PLAYER_MOVEMENT_SPRITE_SHEET(x175)_(y140)_1: -120145705
-      PLAYER_MOVEMENT_SPRITE_SHEET(x175)_(y140)_0: -1675895476
-      PLAYER_MOVEMENT_SPRITE_SHEET(x175)_(y140)_4: 1301748122
-      PLAYER_MOVEMENT_SPRITE_SHEET(x175)_(y140)_9: -2094892528
-      PLAYER_MOVEMENT_SPRITE_SHEET(x175)_(y140)_2: -1083979133
-      PLAYER_MOVEMENT_SPRITE_SHEET(x175)_(y140)_7: 536101190
-      PLAYER_MOVEMENT_SPRITE_SHEET(x175)_(y140)_6: -877053749
-      PLAYER_MOVEMENT_SPRITE_SHEET(x175)_(y140)_5: -1854765356
-      PLAYER_MOVEMENT_SPRITE_SHEET(x175)_(y140)_3: -267691749
+      SPRITE_CHECK_4: 456503419
+      SPRITE_CHECK_2: -1254969174
+      SPRITE_CHECK_0: 995308193
+      SPRITE_CHECK_1: 577331551
+      SPRITE_CHECK_3: -711024733
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
