@@ -10,6 +10,8 @@ TagManager:
   - Item
   - PlayerBullet
   - Enemy
+  - Shield
+  - EnemySkill
   layers:
   - Default
   - TransparentFX
@@ -17,14 +19,14 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Enemy
+  - Boss
+  - PlayerBullet
+  - EnemyBullet
+  - EnemySkill
+  - Item
+  - GhostBullet
   - 
   - 
   - 

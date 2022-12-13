@@ -25,7 +25,7 @@ public class EnemyBullet : Bullet
         }
     }
 
-    private void InitState(Vector3 spawnPos, BulletType type, Vector2 moveDirection, int moveSpeed, float changeAmount = 0)
+    private void InitState(Vector3 spawnPos, BulletType type, Vector2 moveDirection, float moveSpeed, float changeAmount = 0)
     {
         if (type == BulletType.Round && changeAmount == 0)
         {
@@ -41,13 +41,13 @@ public class EnemyBullet : Bullet
         this.changeAmount = changeAmount;
         duringFiring = () => transform.position += this.moveDirection.ToVec3() * this.moveSpeed * Time.deltaTime;
     }
-    public EnemyBullet SetModeStaright(Vector3 spawnPos, Vector2 moveDir, int moveSpeed)
+    public EnemyBullet SetModeStaright(Vector3 spawnPos, Vector2 moveDir, float moveSpeed)
     {
         InitState(spawnPos, BulletType.Straight, moveDir, moveSpeed);
         return this;
     }
 
-    public EnemyBullet SetModeTargeting(Vector3 spawnPos, int moveSpeed)
+    public EnemyBullet SetModeTargeting(Vector3 spawnPos, float moveSpeed)
     {
         Vector3 targetDir = spawnPos.DistanceWithTarget();
         targetDir.Normalize();
@@ -55,7 +55,7 @@ public class EnemyBullet : Bullet
         return this;
     }
 
-    public EnemyBullet SetModeWave(Vector3 spawnPos, Vector2 moveDir, int moveSpeed, float chageAmount)
+    public EnemyBullet SetModeWave(Vector3 spawnPos, Vector2 moveDir, float moveSpeed, float chageAmount)
     {
         InitState(spawnPos, BulletType.Round, moveDir, moveSpeed, chageAmount);
         duringFiring += () =>
@@ -70,7 +70,7 @@ public class EnemyBullet : Bullet
     }
 
     //πÃ¿€º∫
-    public EnemyBullet SetModeTracking(Vector3 spawnPos, int moveSpeed, Vector2 startDir)
+    public EnemyBullet SetModeTracking(Vector3 spawnPos, float moveSpeed, Vector2 startDir)
     {
         startDir.Normalize();
         moveDirection = spawnPos;
@@ -124,7 +124,7 @@ public class EnemyBullet : Bullet
     private void OnTriggerEnter2D(Collider2D col)
     {
         Actor hitter = col.GetComponent<Actor>();
-        if (col.CompareTag("Player"))
+        if (col.CompareTag("Player")||col.CompareTag("Shield"))
         {
             AttackTo(hitter);
             OnDie();

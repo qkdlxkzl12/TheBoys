@@ -12,7 +12,8 @@ public class PlayerGlobal : Actor
     public Animator Anime;
     [HideInInspector]
     public SpriteRenderer Player_Sprite;
-
+    readonly Vector2 limitMovementLT = new Vector2(-1.2f,1.3f);
+    readonly Vector2 limitMovementRD = new Vector2(1.1f, -1);
     //기본
     public int Basic_HP; //기본 체력
     public float SpeedPower;//추가 이동속도
@@ -134,6 +135,16 @@ public class PlayerGlobal : Actor
         if (Can_Move == false)
             return;
         Vector2 vec = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * (isIllusion == true ? -1 : 1);
+        //움직임 제한
+        if (transform.position.x + limitMovementLT.x < -8.9f && vec.x < 0)
+            vec.x = 0;
+        if (transform.position.y + limitMovementLT.y > 5f && vec.y > 0)
+            vec.y = 0;
+        if (transform.position.x + limitMovementRD.x > 8.9f && vec.x > 0)
+            vec.x = 0;
+        if (transform.position.y + limitMovementRD.y < -4.3f && vec.y < 0)
+            vec.y = 0;
+        //-8.9, 5
 
 
         vec.Normalize();

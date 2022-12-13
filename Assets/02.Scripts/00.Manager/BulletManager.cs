@@ -10,6 +10,8 @@ public class BulletManager : MonoBehaviour
     [SerializeField]
     private Sprite[] bulletSprites;
     [SerializeField]
+    private Sprite[] enemyBulletSprites;
+    [SerializeField]
     private GameObject eBulletPrefab;
     [SerializeField]
     private GameObject pBulletPrefab;
@@ -66,12 +68,12 @@ public class BulletManager : MonoBehaviour
                 default:
                     break;
             }
-            obj.name = $"PlayerBullet{bullet.element}";
+            obj.name = $"PlayerBullet{bullet.element} {i}";
             obj.SetActive(false);
 
         }
-        PlayerBulletAdd(Element.Normal,cnt:5);
-        PlayerBulletAdd(Element.Snowball, cnt: 3);
+        PlayerBulletAdd(cnt: 5);
+        PlayerBulletAdd(Element.Fire,cnt: 5);
     }
 
     #region ÀûÃÑ¾Ë °ü·Ã
@@ -84,21 +86,43 @@ public class BulletManager : MonoBehaviour
         return bullet;
     }
 
-    private EnemyBullet SelectBullet()
+    private EnemyBullet SelectBullet(bool isBroken)
     {
         foreach (EnemyBullet bullet in enemyBullets)
         {
             if (bullet.gameObject.activeSelf == false)
             {
-                useEnemyBullets.Add((EnemyBullet)bullet);
+                useEnemyBullets.Add(bullet);
+                int rand = UnityEngine.Random.Range(0, 100);
+                if (isBroken == true && rand < 33)
+                {
+                    bullet.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
+                    bullet.gameObject.layer = 13;
+                }
+                else
+                {
+                    bullet.GetComponent<SpriteRenderer>().color = Color.white;
+                    bullet.gameObject.layer = 10;
+                }
                 return bullet;
             }
         }
         EnemyBullet newBullet = CreateBullet();
         useEnemyBullets.Add(newBullet);
+        int rand2 = UnityEngine.Random.Range(0, 100);
+        if (isBroken == true && rand2 < 25)
+        {
+            newBullet.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
+            newBullet.gameObject.layer = 13;
+        }
+        else
+        {
+            newBullet.GetComponent<SpriteRenderer>().color = Color.white;
+            newBullet.gameObject.layer = 10;
+        }
         return newBullet;
     }
-    public void FireRadial(Vector3 spawnPos, int moveSpeed, int cnt, Vector2 centerDir, int elapsedDegree = 10)
+    public void FireRadial(Vector3 spawnPos, float moveSpeed, int cnt, Vector2 centerDir, int elapsedDegree = 10,bool isBroken = false)
     {
         if (useEnemyBullets != null)
         {
@@ -106,12 +130,12 @@ public class BulletManager : MonoBehaviour
         }
         for (int i = 0; i < cnt; i++)
         {
-            EnemyBullet bullet = SelectBullet();
+            EnemyBullet bullet = SelectBullet(isBroken);
             float angle = centerDir.ToDeg() - ((cnt - 1) * elapsedDegree / 2) + (elapsedDegree * i);
             bullet.SetModeStaright(spawnPos, angle.ToVec2(), moveSpeed);
         }
     }
-    public void FireRadialWithWave(Vector3 spawnPos, int moveSpeed, Vector2 centerDir, int cnt, float changeAmount, int elapsedDegree = 10)
+    public void FireRadialWithWave(Vector3 spawnPos, float moveSpeed, Vector2 centerDir, int cnt, float changeAmount, int elapsedDegree = 10, bool isBroken = false)
     {
         if (useEnemyBullets != null)
         {
@@ -119,12 +143,12 @@ public class BulletManager : MonoBehaviour
         }
         for (int i = 0; i < cnt; i++)
         {
-            EnemyBullet bullet = SelectBullet();
+            EnemyBullet bullet = SelectBullet(isBroken);
             float angle = centerDir.ToDeg() - ((cnt - 1) * elapsedDegree / 2) + (elapsedDegree * i);
             bullet.SetModeWave(spawnPos, angle.ToVec2(), moveSpeed, changeAmount);
         }
     }
-    public void FireTracking(Vector3 spawnPos, int moveSpeed, Vector2 startDir = default(Vector2))
+    public void FireTracking(Vector3 spawnPos, float moveSpeed, Vector2 startDir = default(Vector2), bool isBroken = false)
     {
         if (useEnemyBullets == null)
         {
@@ -134,20 +158,20 @@ public class BulletManager : MonoBehaviour
         {
             startDir = spawnPos.DistanceWithTarget();
         }
-        EnemyBullet bullet = SelectBullet();
+        EnemyBullet bullet = SelectBullet(isBroken);
         bullet.SetModeTracking(spawnPos, moveSpeed, startDir);
     }
 
-    public void FireTargeting(Vector3 spawnPos, int moveSpeed)
+    public void FireTargeting(Vector3 spawnPos, float moveSpeed, bool isBroken = false)
     {
         if (useEnemyBullets == null)
         {
             useEnemyBullets.Clear();
         }
-        EnemyBullet bullet = SelectBullet();
+        EnemyBullet bullet = SelectBullet(isBroken);
         bullet.SetModeTargeting(spawnPos, moveSpeed);
     }
-    public void ExecutePositioning(float distance, float time)
+    public void ExecutePositioning(float distance, float time, bool isBroken = false)
     {
         if (useEnemyBullets == null)
         {
@@ -167,16 +191,16 @@ public class BulletManager : MonoBehaviour
 
     public void PlayerBulletFire(Vector3 pos)
     {
-        Debug.Log(playerMagazine[playerCurIndex]);
+        //Debug.Log(playerMagazine[playerCurIndex]);
         for (int i = 0; i < playerBullets.Count; i++)
         {
             if(playerBullets[i].element == playerMagazine[playerCurIndex] && playerBullets[i].gameObject.activeSelf == false)
             {
                 var fireBullet = playerBullets[i];
-                fireBullet.gameObject.SetActive(true);
                 fireBullet.transform.position = pos;
                 fireBullet.Init(fireBullet.element);
-                playerCurIndex = (playerCurIndex + 1) % playerMagazine.Count;
+                playerCurIndex++;
+                playerCurIndex %= playerMagazine.Count;
                 break;
             }
         }

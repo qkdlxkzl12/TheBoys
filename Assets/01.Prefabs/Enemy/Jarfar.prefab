@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5747368357286168881}
   - component: {fileID: 5838527963420743001}
   - component: {fileID: 2551366447942875293}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: JafarLazer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,9 +120,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curHp: 1
-  Fire: 0
-  FireStack: 0
-  Recharge: 0
   target: {fileID: 0}
 --- !u!61 &2551366447942875293
 BoxCollider2D:
@@ -164,7 +161,7 @@ GameObject:
   - component: {fileID: 2708190541094702469}
   - component: {fileID: 5580317490078162442}
   - component: {fileID: 8660175686764586084}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Jarfar
   m_TagString: Boss
   m_Icon: {fileID: 0}
@@ -228,7 +225,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 101
   m_Sprite: {fileID: 1755105563, guid: dbec78a3889e5b94787881a252bc0854, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -273,9 +270,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curHp: 400
-  Fire: 0
-  FireStack: 0
-  Recharge: 0
   face: {fileID: 8027784622327910957}
   lazer: {fileID: 5838527963420743001}
   fireOffset: {x: -2, y: 0.25, z: 0}
@@ -389,7 +383,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 50
+  m_SortingOrder: 1001
   m_Sprite: {fileID: 21300000, guid: 6c1c83f21eff6d048928e86a889d58f9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

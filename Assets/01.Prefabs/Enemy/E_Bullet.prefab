@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2231771597775695765}
   - component: {fileID: 372857898843209350}
   - component: {fileID: 7644000103816394473}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: E_Bullet
   m_TagString: EnemyBullet
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_Sprite: {fileID: 21300000, guid: 366e1efd47716544b9101ef526bd2cf1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -115,6 +115,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curHp: 5
-  Fire: 0
-  FireStack: 0
-  Recharge: 0

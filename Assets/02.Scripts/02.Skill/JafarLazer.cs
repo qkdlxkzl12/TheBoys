@@ -31,15 +31,9 @@ public class JafarLazer : AttatckableObject
     private void OnTriggerEnter2D(Collider2D col)
     {
         Actor actor = col.GetComponent<Actor>();
-        if(actor == null)
+        
+        if(col.CompareTag("Player") == true)
         {
-            Debug.LogError("Collision with non-Actor.");
-            return;
-        }    
-        if(actor.CompareTag("Player"))
-        {
-            Debug.Log("Hit!");
-            var player = actor as PlayerGlobal;
             this.AttackTo(actor);
         }
     }

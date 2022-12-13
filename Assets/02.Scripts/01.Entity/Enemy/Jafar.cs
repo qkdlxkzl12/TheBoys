@@ -8,12 +8,13 @@ enum JarfarAnimState { Idle, Teleport, TeleportAttack, Illusion, AdvanceSummon, 
 enum TeleportType {Default, Target, Up, Down}
 public class Jafar : Boss
 {
+    readonly Vector3[] spanwPos = { new Vector3(7, 3, 0), new Vector3(7, -3, 0)};
     [SerializeField]
     JarfarFace face;
     [SerializeField]
     JafarLazer lazer;
 
-    const float InitHp = 2500;
+    const float InitHp = 3500;
     public Jafar() : base(InitHp, 10, "사악한 마법사 : 자파") { }
     float thinkTime;
     Animator animator;
@@ -43,6 +44,7 @@ public class Jafar : Boss
         if (repeatCnt <= 0)
         {
             repeatCnt = 0;
+            SetAnimation(JarfarAnimState.Idle);
             StartCoroutine(ChoseAction());
         }
     }
@@ -51,51 +53,44 @@ public class Jafar : Boss
     {
         SetAnimation(JarfarAnimState.Idle);
         int chose = UnityEngine.Random.Range(0,100);
-        switch (chose/25)
+        if(chose < 17)
         {
-            case 0:
-                action = () => SetAnimation(JarfarAnimState.TeleportAttack);
-                repeatCnt = 3;
-                thinkTime = 2f;
-                break;
-            case 1:
-                action = () => SetAnimation(JarfarAnimState.Illusion);
-                thinkTime = 2f;
-                break;
-            case 2:
-                action = () => SetAnimation(JarfarAnimState.AdvanceSummon);
-                thinkTime = 2f;
-                break;
-            case 3:
-                action = () => SetAnimation(JarfarAnimState.WieldAttack);
-                attackType = UnityEngine.Random.Range(0, 4);
-                switch (attackType)
-                {
-                    case 0:
-                        repeatCnt = 5;
-                        break;
-                    case 1:
-                        repeatCnt = 3;
-                        break;
-                    case 2:
-                        repeatCnt = 3;
-                        break;
-                    case 3:
-                        repeatCnt = 3;
-                        break;
-                }
-                thinkTime = 2f;
-                break;
-            case 4:
-                action = () => SetAnimation(JarfarAnimState.Teleport);
-                thinkTime = 2f;
-                break;
+            action = () => SetAnimation(JarfarAnimState.TeleportAttack);
+            repeatCnt = 3;
+            thinkTime = 2.5f;
         }
-        while (thinkTime > 0)
+        else if(chose < 39)
         {
-            thinkTime -= Time.deltaTime;
-            yield return null;
+            action = () => SetAnimation(JarfarAnimState.Illusion);
+            thinkTime = 4f;
         }
+        else if(chose < 54)
+        {
+            action = () => SetAnimation(JarfarAnimState.AdvanceSummon);
+            thinkTime = 3.5f;
+        }
+        else
+        {
+            action = () => SetAnimation(JarfarAnimState.WieldAttack);
+            attackType = UnityEngine.Random.Range(0, 4);
+            switch (attackType)
+            {
+                case 0:
+                    repeatCnt = 5;
+                    break;
+                case 1:
+                    repeatCnt = 3;
+                    break;
+                case 2:
+                    repeatCnt = 3;
+                    break;
+                case 3:
+                    repeatCnt = 3;
+                    break;
+            }
+            thinkTime = 3f;
+        }
+        yield return new WaitForSeconds(thinkTime);
         animator.SetInteger("SkillRepeat", repeatCnt);
         action();
     }
@@ -136,21 +131,21 @@ public class Jafar : Boss
         {
             case 0:
                 if (UnityEngine.Random.Range(0, 2) == 0)
-                    StartCoroutine(GameManager.instance.Repeat(() => BulletManager.instance.FireRadial(firePos, 10, 5, Vector2.left, 15), 2, 0.1f));
+                    StartCoroutine(GameManager.instance.Repeat(() => BulletManager.instance.FireRadial(firePos, 10 * increaseAttackSpeed, 5, Vector2.left, 15,isBroken), 2, 0.1f));
                 else
-                    StartCoroutine(GameManager.instance.Repeat(() => BulletManager.instance.FireRadial(firePos, 10, 4, Vector2.left, 15), 2, 0.1f));
+                    StartCoroutine(GameManager.instance.Repeat(() => BulletManager.instance.FireRadial(firePos, 10 * increaseAttackSpeed, 4, Vector2.left, 15, isBroken), 2, 0.1f));
                 break;
             case 1:
-                BulletManager.instance.FireTargeting(firePos, 14);
+                BulletManager.instance.FireTargeting(firePos, 18 * increaseAttackSpeed, isBroken);
                 break;
             case 2:
                 float dir = UnityEngine.Random.Range(-3, 4) * 30;
-                StartCoroutine(GameManager.instance.Repeat(() => BulletManager.instance.FireTracking(firePos, 10, Vector2.left + dir.ToVec2()), 2, 0.1f));
+                StartCoroutine(GameManager.instance.Repeat(() => BulletManager.instance.FireTracking(firePos, 10 * increaseAttackSpeed, Vector2.left + dir.ToVec2(), isBroken), 2, 0.1f));
                 break;
             case 3:
                 //+환각
                 dir = UnityEngine.Random.Range(-3, 4) * 30;
-                StartCoroutine(GameManager.instance.Repeat(() => BulletManager.instance.FireTracking(firePos, 10, Vector2.left + dir.ToVec2()), 2, 0.1f));
+                StartCoroutine(GameManager.instance.Repeat(() => BulletManager.instance.FireTracking(firePos, 10 * increaseAttackSpeed, Vector2.left + dir.ToVec2(), isBroken), 2, 0.1f));
                 break;
         }
         repeatCnt--;
@@ -162,7 +157,7 @@ public class Jafar : Boss
         face.Use();
         var player = GameManager.instance.player.GetComponent<PlayerGlobal>();
         if (player != null)
-            BuffManager.instance.ApplyBuff(Buffs.Illusion, 5, player);
+            BuffManager.instance.ApplyBuff(Buffs.Illusion, 8, player);
         repeatCnt--;
         animator.SetInteger("SkillRepeat", repeatCnt);
     }
@@ -179,6 +174,15 @@ public class Jafar : Boss
         repeatCnt--;
         animator.SetInteger("SkillRepeat", repeatCnt);
         animator.SetBool("IsFireLazer", false);
+    }
+
+    void SpawnMob()
+    {
+        int rand = UnityEngine.Random.Range(0,3);
+        foreach (var pos in spanwPos)
+        {
+            MobManager.instance.SpawnMob(pos, rand);
+        }
     }
 
     void Telleport(TeleportType type)
@@ -210,6 +214,7 @@ public class Jafar : Boss
 
     protected override void OnDie()
     {
+        StopAllCoroutines();
         SetAnimation(JarfarAnimState.OnDie);
     }
 

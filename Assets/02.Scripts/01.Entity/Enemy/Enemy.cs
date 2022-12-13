@@ -9,8 +9,6 @@ using UnityEngine.UIElements;
 
 public class Enemy : Actor
 {
-    Action a;
-    //public Enemy(int hp, int attackDamage, int moveSpeed, float attackDelay) : base(hp,attackDamage,moveSpeed, attackDelay) { }
     public Enemy(float hp, float attackDamage) : base(hp, attackDamage) { }
     protected bool isDying;
 
@@ -50,7 +48,7 @@ public class Enemy : Actor
         curHp = Max_Hp;
         AttackUse = 0;
         AttackCoolLess = 0;
-       
+        increaseAttackSpeed = 1;
         Can_Rush = true;
 
         Invoke("TurnOn", MoveLoadingTime);
@@ -125,12 +123,12 @@ public class Enemy : Actor
                     Vector3 d = Player.transform.position - Me.transform.position;
                     float angle = Mathf.Atan2(d.y, d.x) * Mathf.Rad2Deg;
 
-                    Instantiate(Knives, new Vector3(Me.transform.position.x, Me.transform.position.y, Me.transform.position.z), Quaternion.AngleAxis(angle - 40, Vector3.forward));
-
-                    Instantiate(Knives, new Vector3(Me.transform.position.x, Me.transform.position.y, Me.transform.position.z), Quaternion.AngleAxis(angle - 90, Vector3.forward));
-
-                    Instantiate(Knives, new Vector3(Me.transform.position.x, Me.transform.position.y, Me.transform.position.z), Quaternion.AngleAxis(angle - 140, Vector3.forward));
-
+                    var bullet1 = Instantiate(Knives, new Vector3(Me.transform.position.x, Me.transform.position.y, Me.transform.position.z), Quaternion.AngleAxis(angle - 40, Vector3.forward)).GetComponent<NormalFire>();
+                    bullet1.Init(increaseAttackSpeed,isBroken);
+                    var bullet2 =Instantiate(Knives, new Vector3(Me.transform.position.x, Me.transform.position.y, Me.transform.position.z), Quaternion.AngleAxis(angle - 90, Vector3.forward)).GetComponent<NormalFire>();
+                    bullet2.Init(increaseAttackSpeed, isBroken);
+                    var bullet3 = Instantiate(Knives, new Vector3(Me.transform.position.x, Me.transform.position.y, Me.transform.position.z), Quaternion.AngleAxis(angle - 140, Vector3.forward)).GetComponent<NormalFire>();
+                    bullet3.Init(increaseAttackSpeed, isBroken);
                     AttackCoolLess = 0.5f;
                 }
                 else if (AttackTypeLazoul== true)
@@ -141,8 +139,8 @@ public class Enemy : Actor
                     Vector3 d = Player.transform.position - Me.transform.position;
                     float angle = Mathf.Atan2(d.y, d.x) * Mathf.Rad2Deg;
 
-                    Instantiate(Knives, new Vector3(Me.transform.position.x, Me.transform.position.y, Me.transform.position.z), Quaternion.AngleAxis(angle - 90, Vector3.forward));
-
+                    var bullet =  Instantiate(Knives, new Vector3(Me.transform.position.x, Me.transform.position.y, Me.transform.position.z), Quaternion.AngleAxis(angle - 90, Vector3.forward)).GetComponent<NormalFire>();
+                    bullet.Init(increaseAttackSpeed, isBroken);
                     AttackCoolLess = 0.5f;
                 }
                 else
@@ -151,9 +149,15 @@ public class Enemy : Actor
                     Invoke("Attack_Motion", onAttackingTime);
 
                     if (Me.GetComponent<SpriteRenderer>().flipX == false)
-                        Instantiate(Knives, new Vector3(Me.transform.position.x, Me.transform.position.y, Me.transform.position.z), Quaternion.AngleAxis(Me.transform.rotation.z + 90, Vector3.forward));
+                    {
+                        var bullet = Instantiate(Knives, new Vector3(Me.transform.position.x, Me.transform.position.y, Me.transform.position.z), Quaternion.AngleAxis(Me.transform.rotation.z + 90, Vector3.forward)).GetComponent<NormalFire>();
+                        bullet.Init(increaseAttackSpeed, isBroken);
+                    }
                     else
-                        Instantiate(Knives, new Vector3(Me.transform.position.x, Me.transform.position.y, Me.transform.position.z), Quaternion.AngleAxis(Me.transform.rotation.z - 90, Vector3.forward));
+                    {
+                        var bullet = Instantiate(Knives, new Vector3(Me.transform.position.x, Me.transform.position.y, Me.transform.position.z), Quaternion.AngleAxis(Me.transform.rotation.z - 90, Vector3.forward)).GetComponent<NormalFire>();
+                        bullet.Init(increaseAttackSpeed, isBroken);
+                    }
                 }
                 AttackUse++;
                 Invoke("Shoot", 1.5f);
@@ -193,10 +197,7 @@ public class Enemy : Actor
 
     void Dead_Motion()
     {
-        if(AttackTypeLazoul == false)
-        {
-            Anime.SetBool("onDead", true);
-        }
+        Anime.SetBool("onDead", true);
     }
 
     void TurnOn()
@@ -210,7 +211,7 @@ public class Enemy : Actor
         Can_Act = false;
         isDying = true;
         StopAllCoroutines();
-        Me.GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 128);
+        GetComponent<CapsuleCollider2D>().enabled = false;
         Dead_Motion();
 
        IEnumerator Ondead()

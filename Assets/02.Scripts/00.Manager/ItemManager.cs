@@ -43,7 +43,6 @@ public class ItemManager : MonoBehaviour
         {
             if(expOrb.gameObject.activeSelf == false)
             {
-                Debug.Log("ADD");
                 expOrb.transform.position = spawnPos;
                 expOrb.Activate(expAmount);
                 return;

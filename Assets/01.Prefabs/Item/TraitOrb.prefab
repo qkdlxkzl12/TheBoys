@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4104193891196101585}
   - component: {fileID: 2284133080705821669}
   - component: {fileID: 5894785316880172285}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: TraitOrb
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21ec724616fbcbc41a6873c5578dc688, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curHp: 5
 --- !u!58 &5894785316880172285
 CircleCollider2D:
   m_ObjectHideFlags: 0

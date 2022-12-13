@@ -43,7 +43,10 @@ public class PlayerBullet : Bullet
 
     public void Init(Element element )
     {
+        gameObject.SetActive(true);
         this.element = element;
+        OnHit = null;
+        OnUpdate = null;
         //돋보기 특성을 획득했으면
         if (CharacteristicManager.instance.hasLens == true)
         {
@@ -51,30 +54,48 @@ public class PlayerBullet : Bullet
             snoballForce = 0.2f;
         }
 
-        if (element == Element.Normal)
+        if (this.element == Element.Normal)
         {
             attackDamage = 10;
             OnUpdate = null;
-            OnHit = null;
+            OnHit = (target) => { };
         }
         else if (element == Element.Silver)
         {
             attackDamage = 15;
+            OnUpdate = null;
             OnHit = (target) => {
                 isStrong = true;
             };
         }
         else if (element == Element.Thunder)
         {
-            //사라짐
+            //폐지 추후 업데이트
         }
         else if (element == Element.Battery)
         {
-            //BuffManager에서 target에게 충전 적용
+            OnUpdate = null;
+            OnHit = (target) => {
+                attackDamage = 20;
+                BuffManager.instance.ApplyBuff(Buffs.Recharge, 10, target);
+                //BuffManager에서 target에게 충전 적용
+            };
+            if(CharacteristicManager.instance.isAwakenBattery == true)
+            {
+                OnHit += (target) => {
+                    Debug.Log("추가");
+                    BuffManager.instance.ApplyBuff(Buffs.Broken, 10, target);
+                    //BuffManager에서 target에게 충전 적용
+                };
+            }
+
         }
         else if (element == Element.Fire)
         {
+            OnUpdate = null;
             OnHit = (target) => {
+                attackDamage = 20;
+                BuffManager.instance.ApplyBuff(Buffs.Flame,5,target);
                 //BuffManager에서 target에게 화상 적용
             };
         }
@@ -100,6 +121,7 @@ public class PlayerBullet : Bullet
             {
                 isStrong = false;
                 attackDamage *= 1.5f;
+                Debug.Log("은총알 추가데미지" + attackDamage + gameObject.name);
             };
        OnHit += (target) =>
         {
@@ -112,19 +134,15 @@ public class PlayerBullet : Bullet
     private void OnTriggerEnter2D(Collider2D col)  // 공격
     {
             Actor act = col.GetComponent<Actor>();
+        
 
         if (col.gameObject.CompareTag("Enemy") || col.CompareTag("Boss"))
         {
+            if(OnHit == null)
+                Debug.Log("SUPER ERROR" + gameObject.name + Time.realtimeSinceStartup);
             OnHit(act);
-            //OnDeadChecking(coll);
         }
            
-
-            //if (element != Element.Silver && GameManager.instance.player.GetComponent<PlayerGlobal>().Silver_Bullet == true) // 은탄
-            {
-                //GameManager.instance.player.GetComponent<PlayerGlobal>().Silver_Bullet = false;
-                //AttackTo(act);
-            }
     }
 
 
@@ -187,8 +205,6 @@ public class PlayerBullet : Bullet
     }
     override protected void OnDie()
     {
-        OnHit = null;
-        OnUpdate = null;
         transform.localScale = Vector3.one;
         snoballForce = 0;
         gameObject.SetActive(false);

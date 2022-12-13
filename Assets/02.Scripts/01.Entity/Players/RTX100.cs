@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class RTX100 : MonoBehaviour
+public class RTX100 : Actor
 {
     public GameObject me;
 
@@ -23,7 +23,7 @@ public class RTX100 : MonoBehaviour
     }
 
 
-    void FixedUpdate()
+    void Update()
     { 
         Targeting();
     }
@@ -31,7 +31,7 @@ public class RTX100 : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D coll)  // ÇÇ°Ý È¤Àº È¹µæ
     {
         if (coll.gameObject.CompareTag("EnemyBullet"))
-            Destroy(coll.gameObject);
+            Debug.Log("ÃÑ¾Ë »èÁ¦");
     }
 
     void Targeting()

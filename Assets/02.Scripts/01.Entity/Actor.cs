@@ -9,21 +9,17 @@ public class Actor : MonoBehaviour
     [HideInInspector]
     public float curHp;
     protected int hp; //임시
-    protected int moveSpeed; //임시
+    protected float moveSpeed; //임시
     protected float attackDamage;
-
-    [HideInInspector]
-    public bool Fire; //화상 버프
-    [HideInInspector]
-    public int FireStack; //화상 스택
-    [HideInInspector]
-    public bool Recharge; //충전 버프
+    protected float increaseAttackSpeed = 1;
+    protected bool isBroken;
 
     public Actor()
     {
         maxHp = 5;
         curHp = maxHp;
         attackDamage = 1;
+        increaseAttackSpeed = 1;
     }
 
     public Actor(float hp, float attackDamage)
@@ -32,6 +28,7 @@ public class Actor : MonoBehaviour
         curHp = hp;
         this.attackDamage = attackDamage;
     }
+
     public void AttackTo(GameObject test) { }
 
     //대상을 공격함
@@ -79,10 +76,21 @@ public class Actor : MonoBehaviour
     //액터가 죽을 때
     virtual protected void OnDie()
     {
-            Debug.Log(gameObject.name + "Die");
             Destroy(gameObject);
     }
 
+    public void SetAttackSpeed(float value = -1)
+    {
+        if (value < 0)
+            increaseAttackSpeed = 1;
+        else
+            increaseAttackSpeed = value;
+    }
+
+    public void SetBroken(bool value = false)
+    {
+        isBroken = value;
+    }
 }
 
 

@@ -49,9 +49,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curHp: 0
-  Fire: 0
-  FireStack: 0
-  Recharge: 0
   Max_Hp: 172
   MoveSpeed: 1.25
   AttackSpeed: 3.5
@@ -105,7 +102,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 99
   m_Sprite: {fileID: -1377373519, guid: 942dbe3d73710f348bbf7cd7d1ce964c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

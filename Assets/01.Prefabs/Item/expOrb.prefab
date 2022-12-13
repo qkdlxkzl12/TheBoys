@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6817893382915424805}
   - component: {fileID: 4134202176794415251}
   - component: {fileID: 3425676157486989020}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: expOrb
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f1fe781e5823f14ea5e418cfafcc0e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curHp: 5
 --- !u!61 &3425676157486989020
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -8,6 +8,11 @@ public enum Buffs {Illusion, Recharge, Broken, Flame }
 
 public class BuffManager : MonoBehaviour
 {
+    
+    BuffTaker burnTaker;
+    BuffTaker rechargeTaker;
+    BuffTaker broken;
+
     public static BuffManager instance;
 
     IEnumerator Illu;
@@ -18,9 +23,12 @@ public class BuffManager : MonoBehaviour
             instance = this;
         else
             Destroy(this);
+        burnTaker = transform.GetChild(0).GetComponent<BuffTaker>();
+        rechargeTaker = transform.GetChild(1).GetComponent<BuffTaker>();
+        broken = transform.GetChild(2).GetComponent<BuffTaker>();
     }
 
-    public void ApplyBuff(Buffs type, float Times, Actor unit)
+    public void ApplyBuff(Buffs type,float time,  Actor unit)
     {
 
         switch (type)
@@ -30,13 +38,13 @@ public class BuffManager : MonoBehaviour
                 break;
 
             case Buffs.Recharge:
-                recharge(unit);
+                rechargeTaker.Apply(unit, time);
                 break;
             case Buffs.Broken:
-                recharge(unit);
+                broken.Apply(unit, time);
                 break;
             case Buffs.Flame:
-                burning(unit);
+                burnTaker.Apply(unit, time);
                 break;
         }
 
@@ -59,37 +67,12 @@ public class BuffManager : MonoBehaviour
             IEnumerator Ilus()
             {
                 player.SwitchMovement(true);
-                yield return new WaitForSeconds(Times);
+                yield return new WaitForSeconds(time);
                 player.SwitchMovement(false);
                 Debug.Log("환각 종료");
                 Illu = null;
             }
         }
-
-        void recharge(Actor getter)
-        {
-            if (getter is Enemy == false)
-                return;
-            PlayerGlobal player = getter as PlayerGlobal;
-        }
-
-        void burning(Actor getter)
-        {
-            if (getter != null)
-            {
-                getter.GetComponent<Actor>().Fire = true;
-            }
-        }
-    }
-
-    void Fire_Recycling()
-    {
-
-    }
-
-    private void Update()
-    {
-        
     }
 
 }

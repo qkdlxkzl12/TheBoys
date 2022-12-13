@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1794039386285079790}
   m_Layer: 0
   m_Name: Barrier
-  m_TagString: Untagged
+  m_TagString: Shield
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,8 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df06a3ff8d3ae424b8daef6019ff62f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Me: {fileID: 310229961714518416}
-  Shield_Time: 3
+  curHp: 5
+  shieldDelay: 10
 --- !u!212 &8271884208896112247
 SpriteRenderer:
   m_ObjectHideFlags: 0
