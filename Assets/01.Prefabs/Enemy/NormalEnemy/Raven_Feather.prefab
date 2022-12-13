@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 2231771597775695767}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.75, y: 0.75, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -126,6 +126,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curHp: 5
+  Fire: 0
+  FireStack: 0
+  Recharge: 0
 --- !u!114 &794904394666794829
 MonoBehaviour:
   m_ObjectHideFlags: 0
