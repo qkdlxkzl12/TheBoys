@@ -70,7 +70,8 @@ public class BulletManager : MonoBehaviour
             obj.SetActive(false);
 
         }
-        PlayerBulletAdd(cnt:5);
+        PlayerBulletAdd(Element.Normal,cnt:5);
+        PlayerBulletAdd(Element.Snowball, cnt: 3);
     }
 
     #region 적총알 관련
@@ -174,6 +175,7 @@ public class BulletManager : MonoBehaviour
                 var fireBullet = playerBullets[i];
                 fireBullet.gameObject.SetActive(true);
                 fireBullet.transform.position = pos;
+                fireBullet.Init(fireBullet.element);
                 playerCurIndex = (playerCurIndex + 1) % playerMagazine.Count;
                 break;
             }
@@ -191,5 +193,10 @@ public class BulletManager : MonoBehaviour
             newBullet.gameObject.SetActive(false);
             Debug.Log($"{element}타입의 총알 생성");
         }
+    }
+
+    public void Test()
+    {
+        PlayerBulletAdd(Element.Snowball);
     }
 }

@@ -38,9 +38,8 @@ public class PlayerGlobal : Actor
 
     //버프
     BuffManager Buff;
-
-    [HideInInspector]
-    public bool Buff_Illusion = false;
+    
+    private bool isIllusion = false;
 
 
     private void Awake()
@@ -61,10 +60,11 @@ public class PlayerGlobal : Actor
 
     private void Update()
     {
-        Shooting_System();
+        ShootingSystem();
+        MoveControll();
     }
 
-    public void Shooting_System()
+    public void ShootingSystem()
     {
         if (Dead_Statue == true)
             return;
@@ -76,7 +76,7 @@ public class PlayerGlobal : Actor
         }
     }
 
-    public override void TakeAttack(int damage)
+    public override void TakeAttack(float damage)
     {
         if (Dead_Statue == true|| DamageTime == true)
             return;
@@ -107,14 +107,13 @@ public class PlayerGlobal : Actor
         }
     }
 
-    protected override void Damaged(int value)
+    protected override void Damaged(float value)
     {
         if (Dead_Statue == false)
         {
             curHp -= value;
             if (curHp <= 0)
             {
-                Debug.Log("Hi");
                 Dead_Statue = true;
                 Anime.SetBool("OnDead", true);
                 Can_Move = false;
@@ -130,79 +129,19 @@ public class PlayerGlobal : Actor
         }
     }
 
-    void FixedUpdate() // 이동
+    void MoveControll() // 이동
     {
-        if(Can_Move == true)
-        {
-            if (Move_Type)
-            {
-                if (Buff_Illusion == false)
-                {
-                    Vector2 Vectors = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-                    Vectors.Normalize();
-                    transform.Translate(Vectors * (SpeedPower_Diagonal) * Time.deltaTime);
-                }
-                else if (Buff_Illusion == true)
-                {
-                    Vector2 Vectors = new Vector2(-Input.GetAxisRaw("Horizontal"), -Input.GetAxisRaw("Vertical"));
-                    Vectors.Normalize();
-                    transform.Translate(Vectors * (SpeedPower_Diagonal) * Time.deltaTime);
-                }
+        if (Can_Move == false)
+            return;
+        Vector2 vec = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * (isIllusion == true ? -1 : 1);
 
-            }
-            else
-            {
-                Regular_Move();
-            }
-        }
+
+        vec.Normalize();
+        transform.Translate(vec * (SpeedPower_Diagonal) * Time.deltaTime);
     }
 
-    void Regular_Move()
+    public void SwitchMovement(bool isSwitching)
     {
-        if (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.LeftArrow)) //북서
-        {
-            Player.transform.Translate(-(SpeedPower_Diagonal) * Time.deltaTime, (SpeedPower_Diagonal) * Time.deltaTime, 0);
-        }
-
-        else if (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.RightArrow)) //북동
-        {
-            Player.transform.Translate((SpeedPower_Diagonal) * Time.deltaTime, (SpeedPower_Diagonal) * Time.deltaTime, 0);
-        }
-
-        else if (Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.RightArrow)) // 남동
-        {
-            Player.transform.Translate((SpeedPower_Diagonal) * Time.deltaTime, -(SpeedPower_Diagonal) * Time.deltaTime, 0);
-        }
-
-        else if (Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.LeftArrow)) //남서
-        {
-            Player.transform.Translate(-(SpeedPower_Diagonal) * Time.deltaTime, -(SpeedPower_Diagonal) * Time.deltaTime, 0);
-        }
-
-        else if (Input.GetKey(KeyCode.UpArrow)) //위
-        {
-            Player.transform.Translate(0, (SpeedPower) * Time.deltaTime, 0);
-        }
-
-        else if (Input.GetKey(KeyCode.LeftArrow)) //왼
-        {
-            Player.transform.Translate(-(SpeedPower) * Time.deltaTime, 0, 0);
-        }
-
-        else if (Input.GetKey(KeyCode.DownArrow)) //아래
-        {
-            Player.transform.Translate(0, -(SpeedPower) * Time.deltaTime, 0);
-        }
-
-        else if (Input.GetKey(KeyCode.RightArrow)) //오른
-        {
-            Player.transform.Translate((SpeedPower) * Time.deltaTime, 0, 0);
-        }
-
-        else
-        {
-
-        }
+        isIllusion = isSwitching;
     }
-
 }

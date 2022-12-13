@@ -26,7 +26,7 @@ public class UiManager : MonoBehaviour
         
     }
 
-    public Slider InitBossUi(string name, int maxHp)
+    public Slider InitBossUi(string name, float maxHp)
     {
         Slider hpBar = bossUI.transform.GetComponentInChildren<Slider>();
         hpBar.maxValue = maxHp;

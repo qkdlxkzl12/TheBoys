@@ -11,7 +11,7 @@ public class Enemy : Actor
 {
     Action a;
     //public Enemy(int hp, int attackDamage, int moveSpeed, float attackDelay) : base(hp,attackDamage,moveSpeed, attackDelay) { }
-    public Enemy(int hp, int attackDamage) : base(hp, attackDamage) { }
+    public Enemy(float hp, float attackDamage) : base(hp, attackDamage) { }
     protected bool isDying;
 
     [Header("Statue")]
@@ -44,12 +44,13 @@ public class Enemy : Actor
     private void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
-
+        if (AttackTypeRaven == true)
+            AttackNum = UnityEngine.Random.Range(2, 4);
         //Anime = Me.GetComponent<Animator>();
         curHp = Max_Hp;
         AttackUse = 0;
         AttackCoolLess = 0;
-
+       
         Can_Rush = true;
 
         Invoke("TurnOn", MoveLoadingTime);
@@ -63,7 +64,10 @@ public class Enemy : Actor
         }
 
         if (On_Rush)
-            Me.transform.Translate(Vector2.left * (MoveSpeed * 16f) * Time.deltaTime);
+        {
+            GetComponent<SpriteRenderer>().flipX = ((transform.position.x - Player.transform.position.x) < 0) ? false : true;
+            transform.Translate(Vector2.left * (MoveSpeed * 16f) * Time.deltaTime);
+        }
     }
 
    void MovingOn()
@@ -74,11 +78,11 @@ public class Enemy : Actor
 
         if(Player.transform.position.x - Me.transform.position.x <= 0)
         {
-            Me.GetComponent<SpriteRenderer>().flipX= false;
+            GetComponent<SpriteRenderer>().flipX= false;
         }   
         else
         {
-            Me.GetComponent<SpriteRenderer>().flipX = true;
+            GetComponent<SpriteRenderer>().flipX = true;
         }
     }
 
@@ -113,7 +117,7 @@ public class Enemy : Actor
         {
             if (Can_Act)
             {
-                if (AttackTypeMonkey == false)
+                if(AttackTypeRaven == true)
                 {
                     Attack_Motion();
                     Invoke("Attack_Motion", onAttackingTime);
@@ -121,11 +125,23 @@ public class Enemy : Actor
                     Vector3 d = Player.transform.position - Me.transform.position;
                     float angle = Mathf.Atan2(d.y, d.x) * Mathf.Rad2Deg;
 
-                    Instantiate(Knives, new Vector3(Me.transform.position.x, Me.transform.position.y, Me.transform.position.z), Quaternion.AngleAxis(angle - 70, Vector3.forward));
+                    Instantiate(Knives, new Vector3(Me.transform.position.x, Me.transform.position.y, Me.transform.position.z), Quaternion.AngleAxis(angle - 40, Vector3.forward));
 
                     Instantiate(Knives, new Vector3(Me.transform.position.x, Me.transform.position.y, Me.transform.position.z), Quaternion.AngleAxis(angle - 90, Vector3.forward));
 
-                    Instantiate(Knives, new Vector3(Me.transform.position.x, Me.transform.position.y, Me.transform.position.z), Quaternion.AngleAxis(angle - 110, Vector3.forward));
+                    Instantiate(Knives, new Vector3(Me.transform.position.x, Me.transform.position.y, Me.transform.position.z), Quaternion.AngleAxis(angle - 140, Vector3.forward));
+
+                    AttackCoolLess = 0.5f;
+                }
+                else if (AttackTypeLazoul== true)
+                {
+                    Attack_Motion();
+                    Invoke("Attack_Motion", onAttackingTime);
+
+                    Vector3 d = Player.transform.position - Me.transform.position;
+                    float angle = Mathf.Atan2(d.y, d.x) * Mathf.Rad2Deg;
+
+                    Instantiate(Knives, new Vector3(Me.transform.position.x, Me.transform.position.y, Me.transform.position.z), Quaternion.AngleAxis(angle - 90, Vector3.forward));
 
                     AttackCoolLess = 0.5f;
                 }
@@ -140,7 +156,7 @@ public class Enemy : Actor
                         Instantiate(Knives, new Vector3(Me.transform.position.x, Me.transform.position.y, Me.transform.position.z), Quaternion.AngleAxis(Me.transform.rotation.z - 90, Vector3.forward));
                 }
                 AttackUse++;
-                Invoke("Shoot", 0.5f);
+                Invoke("Shoot", 1.5f);
             }
         }
 
@@ -211,9 +227,22 @@ public class Enemy : Actor
         OnDead();
     }
 
-    protected override void Damaged(int value)
+    protected override void Damaged(float value)
     {
         if(isDying == false)
             base.Damaged(value);
+    }
+    public void OnTriggerEnter2D(Collider2D col)
+    {
+        Actor act = col.gameObject.GetComponent<Actor>();
+        if (col.CompareTag("Player"))
+        {
+            AttackTo(act);
+        }
+    }
+
+    public void CeateAward()
+    {
+        ItemManager.instance.CreateExpOrb(transform.position, 30);
     }
 }

@@ -11,7 +11,7 @@ public class AttatckableObject : Actor
         this.isIgnoringHit = isIgnoringHit; 
     }
 
-    override protected void Damaged(int value)
+    override protected void Damaged(float value)
     {
         if (isIgnoringHit == true)
             return;

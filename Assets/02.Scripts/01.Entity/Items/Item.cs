@@ -37,7 +37,7 @@ public class Item : Actor
         }
     }
 
-    public override void TakeAttack(int damage)
+    public override void TakeAttack(float damage)
     {
         Debug.LogError("Item is doesn't take damaged");
     }

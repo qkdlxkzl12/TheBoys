@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using System;
 using DG.Tweening;
 
-public class Boss : Enemy
+public class Boss : Actor
 {
     protected Vector3 initPos { get; } = new Vector3(7, 0, 0);
     private Vector3 comeoutPos { get; } = new Vector3(16, 5, 0);
@@ -30,7 +30,7 @@ public class Boss : Enemy
         InitUiInfo();
     }
 
-    public Boss(int hp, int attackDamage, string bossName) : base(hp, attackDamage)
+    public Boss(float hp, float attackDamage, string bossName) : base(hp, attackDamage)
     {
         this.bossName = $"<b>{bossName}</b>";
     }
@@ -45,17 +45,30 @@ public class Boss : Enemy
         bossSlider = UiManager.instance.InitBossUi(bossName, maxHp);
     }
 
-    override protected void Damaged(int value)
+    override protected void Damaged(float value)
     {
         base.Damaged(value);
         bossSlider.value = curHp;
     }
 
-    protected override void OnDie()
+    public void CreateAward()
     {
-        //애니메이션 실행
-        
-        //삭제
+        ItemManager.instance.CreateTraitOrb(transform.position);
+        ItemManager.instance.CreateExpOrb(transform.position, 20);
+        ItemManager.instance.CreateExpOrb(transform.position, 20);
+    }
+
+    public void DestroyObject()
+    {
         base.OnDie();
+    }
+
+    public void OnTriggerEnter2D(Collider2D col)
+    {
+        Actor act = col.gameObject.GetComponent<Actor>();
+        if (col.CompareTag("Player"))
+        {
+            AttackTo(act);
+        }
     }
 }

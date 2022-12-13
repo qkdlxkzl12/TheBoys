@@ -7,6 +7,7 @@ using System;
 
 public class PlayerBullet : Bullet
 {
+    static bool isStrong;
     public Element element;
     public BulletType type;
 
@@ -43,14 +44,25 @@ public class PlayerBullet : Bullet
     public void Init(Element element )
     {
         this.element = element;
-        OnUpdate = () => transform.Translate(MoveSpeed * Time.deltaTime, 0, 0);
+        //돋보기 특성을 획득했으면
+        if (CharacteristicManager.instance.hasLens == true)
+        {
+            transform.localScale = Vector3.one * 1.1f;
+            snoballForce = 0.2f;
+        }
+
         if (element == Element.Normal)
         {
-            attackDamage = 2;
+            attackDamage = 10;
+            OnUpdate = null;
+            OnHit = null;
         }
         else if (element == Element.Silver)
         {
-            //GameManager.instance.player.GetComponent<PlayerGlobal>().Silver_Bullet = true;
+            attackDamage = 15;
+            OnHit = (target) => {
+                isStrong = true;
+            };
         }
         else if (element == Element.Thunder)
         {
@@ -62,23 +74,34 @@ public class PlayerBullet : Bullet
         }
         else if (element == Element.Fire)
         {
-            OnHit += (target) => {
+            OnHit = (target) => {
                 //BuffManager에서 target에게 화상 적용
             };
         }
         else if (element == Element.Snowball)
         {
-            OnUpdate += () => {
-                snoballForce += Time.deltaTime * 0.1f;
-                transform.localScale += Vector3.one * snoballForce;
+            attackDamage = 15;
+            OnUpdate = () => {
+                snoballForce += Time.deltaTime;
+                if(Time.timeScale != 0)
+                    transform.localScale += Vector3.one * snoballForce * 0.01f;
+                transform.Rotate(Vector3.forward * Time.deltaTime * 30);
                 };
             OnHit = (target) => {
-                Debug.Log(snoballForce);
+                attackDamage *= (1 + snoballForce);
+                transform.rotation = Quaternion.Euler(0, 0, 0);
                 snoballForce = 0;
             };
-
         }
-        OnHit = (target) =>
+        OnUpdate += () => transform.position += Vector3.right * MoveSpeed * Time.deltaTime;
+        //은총알 버프가 활성화되어 있을 때
+        if (isStrong == true)
+            OnHit += (target) =>
+            {
+                isStrong = false;
+                attackDamage *= 1.5f;
+            };
+       OnHit += (target) =>
         {
             AttackTo(target);
             OnDie();
@@ -164,6 +187,10 @@ public class PlayerBullet : Bullet
     }
     override protected void OnDie()
     {
+        OnHit = null;
+        OnUpdate = null;
+        transform.localScale = Vector3.one;
+        snoballForce = 0;
         gameObject.SetActive(false);
     }
 }

@@ -4,34 +4,47 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public enum Buffs {Illusion, Recharge, Flame}
+public enum Buffs {Illusion, Recharge, Broken, Flame }
 
 public class BuffManager : MonoBehaviour
 {
+    public static BuffManager instance;
+
     IEnumerator Illu;
 
-    public void DeBuff(Buffs Type, float Times, GameObject Unit = null)
+    public void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(this);
+    }
+
+    public void ApplyBuff(Buffs type, float Times, Actor unit)
     {
 
-        switch (Type)
+        switch (type)
         {
             case Buffs.Illusion:
-                illusion();
+                Illusion(unit);
                 break;
 
             case Buffs.Recharge:
-                recharge(Unit);
+                recharge(unit);
                 break;
-
+            case Buffs.Broken:
+                recharge(unit);
+                break;
             case Buffs.Flame:
-                burning(Unit);
+                burning(unit);
                 break;
         }
 
-        void illusion()
+        void Illusion(Actor getter)
         {
-            GameManager.instance.player.GetComponent<PlayerGlobal>().Buff_Illusion = true;
-
+            if (getter is PlayerGlobal == false)
+                return;
+            PlayerGlobal player = getter as PlayerGlobal;
             if (Illu != null)
             {
                 StopCoroutine(Illu);
@@ -45,29 +58,26 @@ public class BuffManager : MonoBehaviour
 
             IEnumerator Ilus()
             {
+                player.SwitchMovement(true);
                 yield return new WaitForSeconds(Times);
-                GameManager.instance.player.GetComponent<PlayerGlobal>().Buff_Illusion = false;
+                player.SwitchMovement(false);
                 Debug.Log("환각 종료");
                 Illu = null;
             }
         }
 
-        void recharge(GameObject Unit)
+        void recharge(Actor getter)
         {
-            if(Unit != null)
-            {
-                if(Unit.tag == "enemy")
-                {
-                    Unit.GetComponent<Actor>().Recharge = true;
-                }
-            }
+            if (getter is Enemy == false)
+                return;
+            PlayerGlobal player = getter as PlayerGlobal;
         }
 
-        void burning(GameObject Unit)
+        void burning(Actor getter)
         {
-            if (Unit != null)
+            if (getter != null)
             {
-                Unit.GetComponent<Actor>().Fire = true;
+                getter.GetComponent<Actor>().Fire = true;
             }
         }
     }

@@ -119,6 +119,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 836800fd4a7b95343887e1289de338da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curHp: 1
+  Fire: 0
+  FireStack: 0
+  Recharge: 0
   target: {fileID: 0}
 --- !u!61 &2551366447942875293
 BoxCollider2D:
@@ -158,6 +162,8 @@ GameObject:
   - component: {fileID: 2708190541094702467}
   - component: {fileID: 2708190541094702464}
   - component: {fileID: 2708190541094702469}
+  - component: {fileID: 5580317490078162442}
+  - component: {fileID: 8660175686764586084}
   m_Layer: 0
   m_Name: Jarfar
   m_TagString: Boss
@@ -266,10 +272,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d986e0393642cc4ea45830e7a0c7c1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossName: "\uC0AC\uC545\uD55C \uB9C8\uBC95\uC0AC : \uC790\uD30C"
+  curHp: 400
+  Fire: 0
+  FireStack: 0
+  Recharge: 0
   face: {fileID: 8027784622327910957}
   lazer: {fileID: 5838527963420743001}
   fireOffset: {x: -2, y: 0.25, z: 0}
+--- !u!70 &5580317490078162442
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2708190541094702465}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.37021947, y: -0.10695195}
+  m_Size: {x: 2.3121114, y: 4.36492}
+  m_Direction: 0
+--- !u!50 &8660175686764586084
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2708190541094702465}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &3777515095416812071
 GameObject:
   m_ObjectHideFlags: 0

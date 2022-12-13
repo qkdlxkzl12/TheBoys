@@ -10,8 +10,6 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public static GameManager instance;
     [HideInInspector]
-    public Action<GameObject> speicalAvility;
-    [HideInInspector]
     public GameObject target { get; set; }
     [HideInInspector]
     public GameObject player { get; set; }
@@ -49,57 +47,6 @@ public class GameManager : MonoBehaviour
         GameObject target = GameObject.FindGameObjectWithTag("Target");
         this.target = target != null ? target : player;
     }
-    void Test()
-    {
-        switch (testIndex)
-        {
-            case 1:Test1();
-                break;
-            case 2:Test2();
-                break;
-            case 3:Test3();
-                break;
-            case 4:Test4();
-                break;
-        }
-
-    }
-    public void Test1()
-    {
-        vec2 = new Vector2(-2, 0);
-        speed = 13;
-        test = 18f;
-        vec3 = new Vector3(8, 0, 0);
-        BulletManager.instance.FireRadial(vec3, speed, 5, vec3.DistanceWithTarget(), 10);
-    }
-    public void Test2()
-    {
-        BulletManager.instance.FireRadialWithWave(vec3, 5, vec3.DistanceWithTarget(), 10, 30, 15);
-        BulletManager.instance.FireRadialWithWave(vec3, 5, vec3.DistanceWithTarget() + test.ToVec2().ToVec3(), 10, -30, 15);
-        Invoke("Test2_1", 1f);
-        Invoke("Test2_1", 1.7f);
-        Invoke("Test2_1", 2.4f);
-    }
-    public void Test2_1()
-    {
-        vec3 = new Vector3(6, 0, 0);
-        speed = 13;
-        BulletManager.instance.FireRadial(vec3, speed, 7, vec3.DistanceWithTarget(), 8);
-    }
-    public void Test3()
-    {
-        BulletManager.instance.FireRadialWithWave(vec3, speed, vec3.DistanceWithTarget(), 10, 30, 10);
-        BulletManager.instance.ExecutePositioning(3, 1);
-        BulletManager.instance.FireRadialWithWave(vec3, speed, vec3.DistanceWithTarget() + test.ToVec2().ToVec3(), 10, -30, 10);
-        BulletManager.instance.ExecutePositioning(1.5f, 1);
-    }
-    public void Test4()
-    {
-        y = UnityEngine.Random.Range(-4, 4);
-        vec3 = new Vector3(8, y, 0);
-        BulletManager.instance.FireTracking(vec3, 13);
-    }
-
 
     public IEnumerator Repeat(Action func, int repeat, float delay)
     {
@@ -110,6 +57,12 @@ public class GameManager : MonoBehaviour
             curRepeat++;
             yield return new WaitForSeconds(delay);
         }
+    }
+
+    public static Vector3 RandomDir()
+    {
+        float degree = UnityEngine.Random.Range(0, 360);
+        return degree.ToVec2().normalized;
     }
 }
 

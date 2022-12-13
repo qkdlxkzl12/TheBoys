@@ -5,12 +5,12 @@ using System;
 
 public class Actor : MonoBehaviour
 {
-    protected int maxHp;
+    protected float maxHp;
     [HideInInspector]
-    public int curHp;
+    public float curHp;
     protected int hp; //임시
     protected int moveSpeed; //임시
-    protected int attackDamage;
+    protected float attackDamage;
 
     [HideInInspector]
     public bool Fire; //화상 버프
@@ -26,10 +26,10 @@ public class Actor : MonoBehaviour
         attackDamage = 1;
     }
 
-    public Actor(int hp, int attackDamage)
+    public Actor(float hp, float attackDamage)
     {
         maxHp = hp;
-        curHp = maxHp;
+        curHp = hp;
         this.attackDamage = attackDamage;
     }
     public void AttackTo(GameObject test) { }
@@ -46,20 +46,19 @@ public class Actor : MonoBehaviour
         this.OnAttack(target);
         target.TakeAttack(this.attackDamage);
     }
-
     virtual public void OnAttack(Actor target)
     {
         //공격 시 발생하는 이벤트 작성(상속 후 내부적으로 구현)
     }
 
-    virtual public void TakeAttack(int damage)
+    virtual public void TakeAttack(float damage)
     {
         //공격을 받으면 발생하는 이벤트
         Damaged(damage);
     }
 
     //데미지를 받음
-    virtual protected void Damaged(int value)
+    virtual protected void Damaged(float value)
     {
         curHp -= value;
         if(curHp <= 0)

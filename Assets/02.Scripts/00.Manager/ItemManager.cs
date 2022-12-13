@@ -36,21 +36,22 @@ public class ItemManager : MonoBehaviour
     }
 
 
-    public void CreateExpOrb(Vector3 pos,int expAmount)
+    public void CreateExpOrb(Vector3 pos,int expAmount, float errorRange = 1)
     {
+        var spawnPos = pos + GameManager.RandomDir() * Random.Range(0, errorRange);
         foreach (Exp expOrb in expOrbs)
         {
             if(expOrb.gameObject.activeSelf == false)
             {
                 Debug.Log("ADD");
-                expOrb.transform.position = pos;
+                expOrb.transform.position = spawnPos;
                 expOrb.Activate(expAmount);
                 return;
             }
         }
         Exp newExpOrb = Instantiate(expPrefab, parent).GetComponent<Exp>();
         expOrbs.Add(newExpOrb);
-        newExpOrb.transform.position = pos;
+        newExpOrb.transform.position = spawnPos;
         newExpOrb.Activate(expAmount);
     }
 

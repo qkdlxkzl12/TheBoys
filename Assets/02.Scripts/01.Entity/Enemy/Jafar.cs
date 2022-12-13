@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using DG.Tweening;
 
-enum JarfarAnimState { Idle, Teleport, TeleportAttack, Illusion, AdvanceSummon, WieldAttack }
+enum JarfarAnimState { Idle, Teleport, TeleportAttack, Illusion, AdvanceSummon, WieldAttack, OnDie }
 enum TeleportType {Default, Target, Up, Down}
 public class Jafar : Boss
 {
@@ -13,7 +13,8 @@ public class Jafar : Boss
     [SerializeField]
     JafarLazer lazer;
 
-    public Jafar() : base(100, 10, "사악한 마법사 : 자파") { }
+    const float InitHp = 2500;
+    public Jafar() : base(InitHp, 10, "사악한 마법사 : 자파") { }
     float thinkTime;
     Animator animator;
     Action action;
@@ -25,8 +26,16 @@ public class Jafar : Boss
 
     protected override void Start()
     {
+        Init();
         base.Start();
         animator = GetComponent<Animator>();
+    }
+
+    private void Init()
+    {
+        maxHp = InitHp;
+        curHp = InitHp;
+        attackDamage = 10;
     }
 
     void EndAction()
@@ -41,7 +50,7 @@ public class Jafar : Boss
     protected override IEnumerator ChoseAction()
     {
         SetAnimation(JarfarAnimState.Idle);
-        int chose = UnityEngine.Random.Range(75,100);
+        int chose = UnityEngine.Random.Range(0,100);
         switch (chose/25)
         {
             case 0:
@@ -113,6 +122,9 @@ public class Jafar : Boss
             case JarfarAnimState.Teleport:
                 animator.SetInteger("SkillNumber", 5);
                 break;
+            case JarfarAnimState.OnDie:
+                animator.SetBool("IsDie", true);
+                break;
             default:
                 break;
         }
@@ -148,6 +160,9 @@ public class Jafar : Boss
     void DebuffIllusion()
     {
         face.Use();
+        var player = GameManager.instance.player.GetComponent<PlayerGlobal>();
+        if (player != null)
+            BuffManager.instance.ApplyBuff(Buffs.Illusion, 5, player);
         repeatCnt--;
         animator.SetInteger("SkillRepeat", repeatCnt);
     }
@@ -192,4 +207,13 @@ public class Jafar : Boss
         StartCoroutine(TelleportAttack(durationTime));
         lazer.Fire(durationTime);
     }
+
+    protected override void OnDie()
+    {
+        SetAnimation(JarfarAnimState.OnDie);
+    }
+
+    
+
+
 }
