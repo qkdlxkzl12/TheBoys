@@ -45,12 +45,17 @@ public class RTX100 : Actor
         {
             Can_Shoot = true;
 
-            if (Boss != null)
-            {
-                E_Targets[0] = Boss;
-            }
-
             Vector3 d = E_Targets[0].transform.position - me.transform.position;
+
+            float angle = Mathf.Atan2(d.y, d.x) * Mathf.Rad2Deg;
+
+            me.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        }
+        else if (Boss != null)
+        {
+            Can_Shoot = true;
+
+            Vector3 d = Boss.transform.position - me.transform.position;
 
             float angle = Mathf.Atan2(d.y, d.x) * Mathf.Rad2Deg;
 

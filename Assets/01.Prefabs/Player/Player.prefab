@@ -565,7 +565,7 @@ PrefabInstance:
     - target: {fileID: 2085609097271519338, guid: e92dcd1d734bdc64788f33417eb1cea6, type: 3}
       propertyPath: RTX_Bullets
       value: 
-      objectReference: {fileID: 5635979440193643930, guid: e675d7a2075916a46bf46f4fdc533c3d, type: 3}
+      objectReference: {fileID: 5635979440193643930, guid: 670f20861eaec0e4b8591eecaea8dda0, type: 3}
     - target: {fileID: 2085609097271519338, guid: e92dcd1d734bdc64788f33417eb1cea6, type: 3}
       propertyPath: Shooting_Time
       value: 1.33

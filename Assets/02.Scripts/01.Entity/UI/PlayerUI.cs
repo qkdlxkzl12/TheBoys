@@ -22,7 +22,7 @@ public class PlayerUI : MonoBehaviour
     {
         GamePause.SetActive(false);
         GameLose.SetActive(false);
-        //GameClear.SetActive(false);
+        GameClear.SetActive(false);
     }
 
     void Start()
