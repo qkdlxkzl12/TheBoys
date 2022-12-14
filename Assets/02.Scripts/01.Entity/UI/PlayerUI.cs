@@ -43,7 +43,7 @@ public class PlayerUI : MonoBehaviour
 
     public void DeadEvent()
     {
-        GameObject.Find("PlayerUI").transform.parent = null;
+        GameObject.Find("PauseUI").transform.parent = null;
         GameLose.SetActive(true);
         TurnStop = true;
         Time.timeScale = 0;

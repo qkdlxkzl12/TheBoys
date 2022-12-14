@@ -106,6 +106,12 @@ public class PlayerGlobal : Actor
             autoHeal = Regeneration();
             StartCoroutine(autoHeal);
         }
+
+        if(curHp >= 3)
+        {
+            GameObject.Find("BloodyUI").SetActive(false);
+        }
+
     }
 
     protected override void Damaged(float value)
@@ -113,6 +119,12 @@ public class PlayerGlobal : Actor
         if (Dead_Statue == false)
         {
             curHp -= value;
+
+            if (curHp <= 2)
+            {
+                GameObject.Find("BloodyUI").SetActive(true);
+            }
+
             if (curHp <= 0)
             {
                 Dead_Statue = true;
@@ -122,7 +134,7 @@ public class PlayerGlobal : Actor
                 IEnumerator Dead()
                 {
                     yield return new WaitForSeconds(2.5f);
-                    GameObject.Find("PlayerUI").GetComponent<PlayerUI>().DeadEvent();
+                    GameObject.Find("PauseUI").GetComponent<PlayerUI>().DeadEvent();
                     //Destroy(Player);
                 }
                 StartCoroutine(Dead());

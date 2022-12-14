@@ -41,4 +41,10 @@ public class UiManager : MonoBehaviour
     {
         bossUI.SetActive(false);
     }
+
+    public void GameClearUI()
+    {
+        GameObject.Find("PauseUI").GetComponent<PlayerUI>().DeadEvent();
+    }
+
 }
